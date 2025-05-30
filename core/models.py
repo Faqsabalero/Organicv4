@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 class CustomUser(AbstractUser):
     ROL_CHOICES = (
         ('ADMIN', 'Admin'),
@@ -28,6 +29,15 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.nombre
+
+class CarritoItem(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField(default=1)
+    fecha_agregado = models.DateTimeField(auto_now_add=True)
+    session_key = models.CharField(max_length=40)
+
+    class Meta:
+        ordering = ['-fecha_agregado']
 
 class Asignacion(models.Model):
     PLAN_PAGO_CHOICES = (

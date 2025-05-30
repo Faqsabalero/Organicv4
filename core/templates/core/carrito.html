@@ -1,150 +1,137 @@
 {% extends "core/base.html" %}
+{% load core_filters %}
 
-{% block title %}Carrito - {{ producto.nombre }} - Organic Shops{% endblock %}
+{% block title %}Carrito de Compras - Organic Shops{% endblock %}
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
         <div class="px-6 py-4 bg-green-700">
-            <h2 class="text-2xl font-bold text-white">Detalles del Producto</h2>
+            <h2 class="text-2xl font-bold text-white">Carrito de Compras</h2>
         </div>
 
-        <div class="flex flex-col md:flex-row">
-            <!-- Imagen del producto -->
-            <div class="md:w-1/2">
-                <div class="relative h-96 md:h-full">
-                    <img src="{{ producto.imagen_url }}" 
-                         alt="{{ producto.nombre }}" 
-                         class="absolute inset-0 w-full h-full object-cover">
-                </div>
-            </div>
-
-            <!-- Detalles del producto -->
-            <div class="md:w-1/2 p-8">
-                <div class="flex flex-col h-full">
-                    <!-- Información del producto -->
-                    <div class="flex-grow">
-                        <h1 class="text-3xl font-bold text-gray-900 mb-4">
-                            {{ producto.nombre }}
-                        </h1>
-                        
-                        <div class="mb-6">
-                            <span class="text-4xl font-bold text-green-700">
-                                ${{ producto.precio }} ARS
-                            </span>
+        <div class="p-6">
+            {% if items %}
+                <!-- Lista de productos -->
+                <div class="space-y-6">
+                    {% for item in items %}
+                    <div class="flex items-center space-x-4 py-4 border-b border-gray-200">
+                        <!-- Imagen del producto -->
+                        <div class="flex-shrink-0 w-24 h-24">
+                            <img src="{{ item.producto.imagen_url }}" 
+                                 alt="{{ item.producto.nombre }}" 
+                                 class="w-full h-full object-cover rounded-md">
                         </div>
 
-                        <div class="prose prose-green mb-6">
-                            <p class="text-gray-600">
-                                {{ producto.descripcion }}
-                            </p>
-                        </div>
-
-                        <!-- Selector de cantidad -->
-                        <div class="mb-8">
-                            <label for="cantidad" class="block text-sm font-medium text-gray-700 mb-2">
-                                Cantidad
-                            </label>
-                            <div class="flex items-center space-x-3">
-                                <button type="button" 
-                                        class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
-                                        onclick="decrementQuantity()">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input type="number" 
-                                       id="cantidad" 
-                                       name="cantidad" 
-                                       value="1" 
-                                       min="1" 
-                                       class="w-20 text-center border-gray-300 rounded-md focus:ring-green-600 focus:border-green-600">
-                                <button type="button" 
-                                        class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
-                                        onclick="incrementQuantity()">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Email comprador -->
-                        <div class="mb-8">
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                                Correo Electrónico (opcional)
-                            </label>
-                            <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent" />
-                        </div>
-
-                        <!-- Total -->
-                        <div class="mb-8 p-4 bg-green-50 rounded-lg">
-                            <div class="flex justify-between items-center">
-                                <span class="text-lg font-semibold text-gray-700">Total:</span>
-                                <span class="text-2xl font-bold text-green-700" id="total">
-                                    ${{ producto.precio }} ARS
+                        <!-- Detalles del producto -->
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-semibold text-gray-900">{{ item.producto.nombre }}</h3>
+                            <p class="text-sm text-gray-500">{{ item.producto.descripcion|truncatechars:100 }}</p>
+                            <div class="mt-2 flex items-center space-x-4">
+                                <span class="text-green-700 font-semibold">${{ item.producto.precio }} ARS</span>
+                                <span class="text-gray-500">Cantidad: {{ item.cantidad }}</span>
+                                <span class="text-green-700 font-semibold">
+                                    Subtotal: ${{ item.producto.precio|multiply:item.cantidad }} ARS
                                 </span>
                             </div>
                         </div>
+
+                        <!-- Botón eliminar -->
+                        <button onclick="eliminarItem({{ item.id }})" 
+                                class="flex-shrink-0 text-red-600 hover:text-red-800 focus:outline-none">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Total y botón de compra -->
+                <div class="mt-8 space-y-4">
+                    <div class="flex justify-between items-center p-4 bg-green-50 rounded-lg">
+                        <span class="text-xl font-semibold text-gray-700">Total:</span>
+                        <span class="text-2xl font-bold text-green-700">${{ total }} ARS</span>
                     </div>
 
-                        <!-- Botón de compra -->
-                        <div class="mt-6">
-                            <button onclick="procesarCompra()" 
-                                    class="w-full bg-green-700 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>Comprar Ahora</span>
-                            </button>
-                            <p class="text-sm text-gray-500 text-center mt-2">
-                                Pago seguro a través de Mercado Pago
-                            </p>
-                        </div>
+                    <!-- Email comprador -->
+                    <div class="mt-4">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                            Correo Electrónico (opcional)
+                        </label>
+                        <input type="email" 
+                               id="email" 
+                               name="email" 
+                               placeholder="tuemail@ejemplo.com" 
+                               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+                    </div>
+
+                    <button onclick="procesarCompra()" 
+                            class="w-full bg-green-700 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Proceder al Pago</span>
+                    </button>
+                    <p class="text-sm text-gray-500 text-center">
+                        Pago seguro a través de Mercado Pago
+                    </p>
                 </div>
-            </div>
+            {% else %}
+                <!-- Carrito vacío -->
+                <div class="text-center py-12">
+                    <div class="text-6xl text-gray-300 mb-4">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3 class="text-xl font-medium text-gray-900 mb-2">Tu carrito está vacío</h3>
+                    <p class="text-gray-500 mb-6">¡Agrega algunos productos para comenzar!</p>
+                    <a href="{% url 'core:home' %}" 
+                       class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600">
+                        Ir a la Tienda
+                    </a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
 
 <script>
-function incrementQuantity() {
-    const input = document.getElementById('cantidad');
-    input.value = parseInt(input.value) + 1;
-    updateTotal();
-}
-
-function decrementQuantity() {
-    const input = document.getElementById('cantidad');
-    const newValue = parseInt(input.value) - 1;
-    if (newValue >= 1) {
-        input.value = newValue;
-        updateTotal();
+function eliminarItem(itemId) {
+    if (confirm('¿Estás seguro de que deseas eliminar este producto del carrito?')) {
+        fetch(`/carrito/eliminar/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Error al eliminar el producto del carrito.');
+            }
+        })
+        .catch(error => {
+            alert('Error al eliminar el producto del carrito.');
+        });
     }
 }
 
-function updateTotal() {
-    const cantidad = parseInt(document.getElementById('cantidad').value);
-    const precioUnitario = parseFloat("{{ producto.precio }}");
-    const total = cantidad * precioUnitario;
-    document.getElementById('total').textContent = `$${total.toFixed(2)} ARS`;
-}
-
 function procesarCompra() {
-    // Aquí se integraría con Mercado Pago
-    const cantidad = document.getElementById('cantidad').value;
     const email = document.getElementById('email').value;
-    fetch("{% url 'core:procesar_compra' producto.id %}", {
+    fetch("{% url 'core:procesar_compra_carrito' %}", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-CSRFToken': '{{ csrf_token }}'
         },
         body: new URLSearchParams({
-            'cantidad': cantidad,
             'email': email
         })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('Compra procesada correctamente. ID de venta: ' + data.venta_id);
-            // Aquí se puede redirigir o mostrar confirmación
+            alert('Compra procesada correctamente. ID de venta: ' + data.ventas.join(', '));
+            location.reload();
         } else {
             alert('Error: ' + data.error);
         }
@@ -153,11 +140,5 @@ function procesarCompra() {
         alert('Error al procesar la compra.');
     });
 }
-
-// Actualizar total cuando se cambia manualmente la cantidad
-document.getElementById('cantidad').addEventListener('change', function(e) {
-    if (parseInt(this.value) < 1) this.value = 1;
-    updateTotal();
-});
 </script>
 {% endblock %}

@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 nohup.out
+
+# Ignorar archivos binarios y base de datos
+__pycache__/
+*.pyc
+db.sqlite3

@@ -7,7 +7,7 @@
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
         <div class="px-6 py-4 bg-green-700">
-            <h2 class="text-2xl font-bold text-white">Detalles del Producto</h2>
+            <h2 class="text-2xl font-bold text-white">Agregar al Carrito</h2>
         </div>
 
         <div class="flex flex-col md:flex-row">
@@ -22,7 +22,8 @@
 
             <!-- Detalles del producto -->
             <div class="md:w-1/2 p-8">
-                <div class="flex flex-col h-full">
+                <form method="POST" class="flex flex-col h-full">
+                    {% csrf_token %}
                     <!-- Información del producto -->
                     <div class="flex-grow">
                         <h1 class="text-3xl font-bold text-gray-900 mb-4">
@@ -41,86 +42,94 @@
                             </p>
                         </div>
 
-                        <form method="post" class="space-y-6">
-                            {% csrf_token %}
-                            <!-- Selector de cantidad -->
-                            <div class="mb-8">
-                                <label for="cantidad" class="block text-sm font-medium text-gray-700 mb-2">
-                                    Cantidad
-                                </label>
-                                <div class="flex items-center space-x-3">
-                                    <button type="button" 
-                                            class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
-                                            onclick="decrementQuantity()">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <input type="number" 
-                                           id="cantidad" 
-                                           name="cantidad" 
-                                           value="1" 
-                                           min="1" 
-                                           class="w-20 text-center border-gray-300 rounded-md focus:ring-green-600 focus:border-green-600">
-                                    <button type="button" 
-                                            class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
-                                            onclick="incrementQuantity()">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Total -->
-                            <div class="mb-8 p-4 bg-green-50 rounded-lg">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-lg font-semibold text-gray-700">Total:</span>
-                                    <span class="text-2xl font-bold text-green-700" id="total">
-                                        ${{ producto.precio }} ARS
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- Botón de agregar al carrito -->
-                            <div class="mt-6">
-                                <button type="submit" 
-                                        class="w-full bg-green-700 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    <span>Agregar al Carrito</span>
+                        <!-- Selector de cantidad -->
+                        <div class="mb-8">
+                            <label for="cantidad" class="block text-sm font-medium text-gray-700 mb-2">
+                                Cantidad
+                            </label>
+                            <div class="flex items-center space-x-3">
+                                <button type="button" 
+                                        class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
+                                        onclick="decrementQuantity()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" 
+                                       id="cantidad" 
+                                       name="cantidad" 
+                                       value="1" 
+                                       min="1" 
+                                       class="w-20 text-center border-gray-300 rounded-md focus:ring-green-600 focus:border-green-600">
+                                <button type="button" 
+                                        class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
+                                        onclick="incrementQuantity()">
+                                    <i class="fas fa-plus"></i>
                                 </button>
                             </div>
-                        </form>
+                        </div>
+
+                        <!-- Total -->
+                        <div class="mb-8 p-4 bg-green-50 rounded-lg">
+                            <div class="flex justify-between items-center">
+                                <span class="text-lg font-semibold text-gray-700">Total:</span>
+                                <span class="text-2xl font-bold text-green-700" id="total">
+                                    ${{ producto.precio }} ARS
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                    <!-- Botón agregar al carrito -->
+                    <div class="mt-6">
+                        <button type="submit" 
+                                class="w-full bg-green-700 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
+                            <i class="fas fa-cart-plus"></i>
+                            <span>Agregar al Carrito</span>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-function incrementQuantity() {
-    const input = document.getElementById('cantidad');
-    input.value = parseInt(input.value) + 1;
-    updateTotal();
-}
-
-function decrementQuantity() {
-    const input = document.getElementById('cantidad');
-    const newValue = parseInt(input.value) - 1;
-    if (newValue >= 1) {
-        input.value = newValue;
+document.addEventListener('DOMContentLoaded', function() {
+    function incrementQuantity() {
+        const input = document.getElementById('cantidad');
+        input.value = parseInt(input.value) + 1;
         updateTotal();
     }
-}
 
-function updateTotal() {
-    const cantidad = parseInt(document.getElementById('cantidad').value);
-    const precioUnitario = parseFloat("{{ producto.precio }}");
-    const total = cantidad * precioUnitario;
-    document.getElementById('total').textContent = `$${total.toFixed(2)} ARS`;
-}
+    function decrementQuantity() {
+        const input = document.getElementById('cantidad');
+        const newValue = parseInt(input.value) - 1;
+        if (newValue >= 1) {
+            input.value = newValue;
+            updateTotal();
+        }
+    }
 
-// Actualizar total cuando se cambia manualmente la cantidad
-document.getElementById('cantidad').addEventListener('change', function(e) {
-    if (parseInt(this.value) < 1) this.value = 1;
-    updateTotal();
+    function updateTotal() {
+        const cantidad = parseInt(document.getElementById('cantidad').value);
+        const precioUnitario = parseFloat("{{ producto.precio }}");
+        const total = cantidad * precioUnitario;
+        document.getElementById('total').textContent = `$${total.toFixed(2)} ARS`;
+    }
+
+    // Actualizar total cuando se cambia manualmente la cantidad
+    const cantidadInput = document.getElementById('cantidad');
+    if (cantidadInput) {
+        cantidadInput.addEventListener('change', function(e) {
+            if (parseInt(this.value) < 1) this.value = 1;
+            updateTotal();
+        });
+    }
+
+    // Asignar funciones a botones
+    const incrementBtn = document.querySelector('button[onclick="incrementQuantity()"]');
+    const decrementBtn = document.querySelector('button[onclick="decrementQuantity()"]');
+    if (incrementBtn) incrementBtn.addEventListener('click', incrementQuantity);
+    if (decrementBtn) decrementBtn.addEventListener('click', decrementQuantity);
 });
 </script>
 {% endblock %}

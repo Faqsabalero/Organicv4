@@ -1,4 +1,4 @@
- from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import logout
@@ -8,14 +8,14 @@ from django.db.models import Count
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from .forms import CustomLoginForm, AsignacionForm, UserCreationFormWithRol, ProductoForm
-from .models import Producto, Asignacion
-
+from .models import Producto, Asignacion, CarritoItem, Venta
+from decimal import Decimal
+from django.http import JsonResponse
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
     authentication_form = CustomLoginForm
     redirect_authenticated_user = True
-
 
 class CustomLogoutView(LogoutView):
     next_page = 'core:home'
@@ -106,9 +106,6 @@ def distribuidor_view(request):
         'asignaciones_creadas': asignaciones_creadas,
         'productos_distintos': productos_distintos
     })
-
-from decimal import Decimal
-from django.http import JsonResponse
 
 def carrito_view(request, producto_id=None):
     if producto_id:
