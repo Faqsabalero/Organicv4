@@ -10,6 +10,9 @@ class CustomUser(AbstractUser):
         ('SUPERUSUARIO', 'Superusuario'),
     )
     rol = models.CharField(max_length=20, choices=ROL_CHOICES, default='DISTRIBUIDOR')
+    nombre = models.CharField(max_length=100, blank=True, null=True)
+    dni = models.CharField(max_length=20, blank=True, null=True)
+    domicilio = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # Si el usuario es un superusuario, asignar el rol SUPERUSUARIO

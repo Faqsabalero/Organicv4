@@ -247,3 +247,84 @@ def register_user(request):
         form = UserCreationFormWithRol(user=request.user)
     
     return render(request, 'core/register.html', {'form': form})
+
+def checkout_view(request):
+    if not request.session.session_key:
+        request.session.create()
+    
+    items = CarritoItem.objects.filter(session_key=request.session.session_key)
+    if not items:
+        messages.warning(request, 'Tu carrito está vacío.')
+        return redirect('core:carrito')
+    
+    total = sum(item.producto.precio * item.cantidad for item in items)
+    
+    return render(request, 'core/checkout.html', {
+        'items': items,
+        'total': total
+    })
+
+def procesar_pago(request):
+    if request.method != 'POST':
+        return redirect('core:checkout')
+    
+    try:
+        if not request.session.session_key:
+            messages.error(request, 'No hay sesión activa.')
+            return redirect('core:carrito')
+        
+        items = CarritoItem.objects.filter(session_key=request.session.session_key)
+        if not items:
+            messages.error(request, 'El carrito está vacío.')
+            return redirect('core:carrito')
+        
+        # Obtener datos del formulario
+        nombre = request.POST.get('nombre', '').strip()
+        email = request.POST.get('email', '').strip()
+        dni = request.POST.get('dni', '').strip()
+        domicilio = request.POST.get('domicilio', '').strip()
+        
+        # Validar campos obligatorios
+        if not all([nombre, email, dni, domicilio]):
+            messages.error(request, 'Todos los campos son obligatorios.')
+            return redirect('core:checkout')
+        
+        # Validar DNI
+        if not dni.isdigit() or len(dni) < 7 or len(dni) > 8:
+            messages.error(request, 'El DNI debe tener entre 7 y 8 dígitos.')
+            return redirect('core:checkout')
+        
+        # Actualizar datos del usuario si está autenticado
+        if request.user.is_authenticated:
+            user = request.user
+            user.nombre = nombre
+            user.email = email
+            user.dni = dni
+            user.domicilio = domicilio
+            user.save()
+        
+        total_venta = Decimal('0')
+        ventas = []
+
+        # Crear las ventas
+        for item in items:
+            subtotal = item.producto.precio * item.cantidad
+            total_venta += subtotal
+            
+            venta = Venta.objects.create(
+                producto=item.producto,
+                cantidad=item.cantidad,
+                total=subtotal,
+                email_comprador=email
+            )
+            ventas.append(venta.id)
+        
+        # Limpiar el carrito
+        items.delete()
+        
+        messages.success(request, f'¡Compra procesada correctamente! Total: ${total_venta} ARS. IDs de venta: {", ".join(map(str, ventas))}')
+        return redirect('core:home')
+        
+    except Exception as e:
+        messages.error(request, f'Error al procesar el pago: {str(e)}')
+        return redirect('core:checkout')
