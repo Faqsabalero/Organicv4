@@ -304,6 +304,14 @@ def checkout_view(request):
         'total': total
     })
 
+@login_required
+def ventas_web_view(request):
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
+    
+    ventas = Venta.objects.all()
+    return render(request, 'core/ventas_web.html', {'ventas': ventas})
+
 def procesar_pago(request):
     if request.method != 'POST':
         return redirect('core:checkout')
@@ -335,6 +343,7 @@ def procesar_pago(request):
             return redirect('core:checkout')
         
         # Actualizar datos del usuario si está autenticado
+        comprador = None
         if request.user.is_authenticated:
             user = request.user
             user.nombre = nombre
@@ -342,6 +351,7 @@ def procesar_pago(request):
             user.dni = dni
             user.domicilio = domicilio
             user.save()
+            comprador = user
         
         total_venta = Decimal('0')
         ventas = []
@@ -355,7 +365,10 @@ def procesar_pago(request):
                 producto=item.producto,
                 cantidad=item.cantidad,
                 total=subtotal,
-                email_comprador=email
+                email_comprador=email,
+                nombre_comprador=nombre,
+                comprador=comprador,
+                estado_pago='PAGADO'  # Asumimos que el pago es exitoso
             )
             ventas.append(venta.id)
         

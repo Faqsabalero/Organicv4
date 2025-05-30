@@ -67,12 +67,23 @@ class Asignacion(models.Model):
         return f'{self.producto.nombre} - {self.distribuidor.username}'
 
 class Venta(models.Model):
+    ESTADO_CHOICES = (
+        ('PENDIENTE', 'Pendiente'),
+        ('PAGADO', 'Pagado'),
+        ('CANCELADO', 'Cancelado'),
+    )
+    
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     cantidad = models.PositiveIntegerField()
     total = models.DecimalField(max_digits=10, decimal_places=2)
     fecha_venta = models.DateTimeField(auto_now_add=True)
     email_comprador = models.EmailField(null=True, blank=True)
-    estado_pago = models.CharField(max_length=20, default='PENDIENTE')
+    nombre_comprador = models.CharField(max_length=100, null=True, blank=True)
+    comprador = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='compras')
+    estado_pago = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='PENDIENTE')
     
     def __str__(self):
         return f'Venta {self.id} - {self.producto.nombre}'
+    
+    class Meta:
+        ordering = ['-fecha_venta']

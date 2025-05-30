@@ -36,6 +36,7 @@
                 {% if user.is_authenticated %}
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
                         <a href="{% url 'core:asignar' %}" class="hover:text-green-300 transition">Mi Panel</a>
+                        <a href="{% url 'core:ventas_web' %}" class="hover:text-green-300 transition">Ventas WEB</a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
                         <a href="{% url 'core:distribuidor' %}" class="hover:text-green-300 transition">Mi Panel</a>
                     {% elif user.rol == 'REVENDEDOR' %}
@@ -105,6 +106,9 @@
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
                         <a href="{% url 'core:asignar' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
                             Mi Panel
+                        </a>
+                        <a href="{% url 'core:ventas_web' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
+                            Ventas WEB
                         </a>
                         <a href="{% url 'core:register' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
                             Registrar Usuario
