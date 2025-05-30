@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import logout
@@ -110,38 +110,84 @@ def distribuidor_view(request):
 from decimal import Decimal
 from django.http import JsonResponse
 
-def carrito_view(request, producto_id):
-    producto = get_object_or_404(Producto, id=producto_id)
-    return render(request, 'core/carrito.html', {'producto': producto})
+def carrito_view(request, producto_id=None):
+    if producto_id:
+        producto = get_object_or_404(Producto, id=producto_id)
+        # Agregar producto al carrito
+        if request.method == 'POST':
+            cantidad = int(request.POST.get('cantidad', 1))
+            if not request.session.session_key:
+                request.session.create()
+            
+            CarritoItem.objects.create(
+                producto=producto,
+                cantidad=cantidad,
+                session_key=request.session.session_key
+            )
+            messages.success(request, 'Producto agregado al carrito.')
+            return redirect('core:carrito')
+        
+        return render(request, 'core/agregar_carrito.html', {'producto': producto})
+    
+    # Vista del carrito
+    if not request.session.session_key:
+        request.session.create()
+    
+    items = CarritoItem.objects.filter(session_key=request.session.session_key)
+    total = sum(item.producto.precio * item.cantidad for item in items)
+    
+    return render(request, 'core/carrito.html', {
+        'items': items,
+        'total': total
+    })
 
-def procesar_compra(request, producto_id):
+def eliminar_carrito_item(request, item_id):
     if request.method != 'POST':
         return JsonResponse({'error': 'Método no permitido'}, status=405)
     
     try:
-        producto = get_object_or_404(Producto, id=producto_id)
-        cantidad = int(request.POST.get('cantidad', 1))
+        item = get_object_or_404(CarritoItem, id=item_id, session_key=request.session.session_key)
+        item.delete()
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
+
+def procesar_compra_carrito(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+    
+    try:
+        if not request.session.session_key:
+            return JsonResponse({'error': 'No hay sesión activa'}, status=400)
+        
+        items = CarritoItem.objects.filter(session_key=request.session.session_key)
+        if not items:
+            return JsonResponse({'error': 'El carrito está vacío'}, status=400)
+        
         email = request.POST.get('email', '')
+        total_venta = Decimal('0')
+        ventas = []
+
+        for item in items:
+            subtotal = item.producto.precio * item.cantidad
+            total_venta += subtotal
+            
+            venta = Venta.objects.create(
+                producto=item.producto,
+                cantidad=item.cantidad,
+                total=subtotal,
+                email_comprador=email
+            )
+            ventas.append(venta.id)
         
-        if cantidad < 1:
-            return JsonResponse({'error': 'Cantidad inválida'}, status=400)
+        # Limpiar el carrito
+        items.delete()
         
-        total = Decimal(producto.precio) * Decimal(cantidad)
-        
-        # Crear la venta
-        venta = Venta.objects.create(
-            producto=producto,
-            cantidad=cantidad,
-            total=total,
-            email_comprador=email
-        )
-        
-        # Aquí se integraría con Mercado Pago
-        # Por ahora solo retornamos éxito
         return JsonResponse({
             'success': True,
-            'message': 'Venta procesada correctamente',
-            'venta_id': venta.id
+            'message': 'Compra procesada correctamente',
+            'ventas': ventas,
+            'total': str(total_venta)
         })
         
     except Exception as e:

@@ -99,8 +99,8 @@
                     {% endif %}
                 </div>
                 <div class="mt-6 flex flex-col space-y-2">
-                    <a href="{% url 'core:carrito' producto.id %}" class="bg-green-700 text-white py-2 rounded-md font-semibold hover:bg-green-800 transition text-center">
-                        Comprar
+                    <a href="{% url 'core:agregar_carrito' producto.id %}" class="bg-green-700 text-white py-2 rounded-md font-semibold hover:bg-green-800 transition text-center">
+                        Agregar al Carrito
                     </a>
                     {% if user.is_authenticated and user.rol == 'ADMIN' %}
                     <a href="{% url 'core:editar_producto' producto.id %}" class="bg-gray-100 text-gray-700 py-2 rounded-md font-semibold hover:bg-gray-200 transition text-center">
