@@ -14,12 +14,16 @@
         <div class="border-b border-gray-200">
             <nav class="flex -mb-px" aria-label="Tabs">
                 <button onclick="showTab('asignaciones')" 
-                        class="tab-button w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600">
+                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600">
                     Asignaciones
                 </button>
                 <button onclick="showTab('ventas')" 
-                        class="tab-button w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
                     Ventas
+                </button>
+                <button onclick="showTab('ventasWeb')" 
+                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Ventas WEB
                 </button>
             </nav>
         </div>
@@ -201,6 +205,164 @@
                 </div>
             </div>
         </div>
+
+        <!-- Tab Content: Ventas WEB -->
+        <div id="ventasWebTab" class="hidden">
+            <div class="p-6">
+                <!-- Resumen Comercial -->
+                <div class="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Total Ventas -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Ventas</p>
+                                <p class="text-2xl font-bold text-green-600">${{ total_ventas_web|floatformat:2 }} ARS</p>
+                            </div>
+                            <div class="bg-green-100 rounded-full p-3">
+                                <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">
+                            <span class="{% if porcentaje_cambio_ventas >= 0 %}text-green-600{% else %}text-red-600{% endif %}">
+                                <i class="fas fa-{% if porcentaje_cambio_ventas >= 0 %}arrow-up{% else %}arrow-down{% endif %}"></i>
+                                {{ porcentaje_cambio_ventas|abs|floatformat:1 }}%
+                            </span>
+                            vs mes anterior
+                        </p>
+                    </div>
+
+                    <!-- Costos Totales -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Costos Totales</p>
+                                <p class="text-2xl font-bold text-red-600">${{ costos_totales_web|floatformat:2 }} ARS</p>
+                            </div>
+                            <div class="bg-red-100 rounded-full p-3">
+                                <i class="fas fa-chart-line text-red-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">
+                            {{ porcentaje_costos|floatformat:1 }}% del total de ventas
+                        </p>
+                    </div>
+
+                    <!-- Ganancias Netas -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Ganancias Netas</p>
+                                <p class="text-2xl font-bold text-blue-600">${{ ganancias_netas_web|floatformat:2 }} ARS</p>
+                            </div>
+                            <div class="bg-blue-100 rounded-full p-3">
+                                <i class="fas fa-chart-pie text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">
+                            Margen: {{ margen_ganancia|floatformat:1 }}%
+                        </p>
+                    </div>
+
+                    <!-- Total Clientes -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Clientes</p>
+                                <p class="text-2xl font-bold text-purple-600">{{ total_clientes }}</p>
+                            </div>
+                            <div class="bg-purple-100 rounded-full p-3">
+                                <i class="fas fa-users text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">
+                            {{ porcentaje_clientes_registrados|floatformat:1 }}% registrados
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Tabla de Ventas Web -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 bg-green-700">
+                        <h2 class="text-2xl font-bold text-white">Registro de Ventas Web</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Fecha
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Cliente
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Usuario
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Productos
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Total
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Estado
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% for venta in ventas_web %}
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {{ venta.fecha_venta|date:"d/m/Y H:i" }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {% if venta.comprador %}
+                                                {{ venta.comprador.nombre }}
+                                            {% else %}
+                                                {{ venta.nombre_comprador }}
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {% if venta.comprador %}
+                                                {{ venta.comprador.username }}
+                                            {% else %}
+                                                <span class="text-gray-500 italic">No registrado</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-900">
+                                            <ul class="list-disc list-inside">
+                                                <li>{{ venta.producto.nombre }} ({{ venta.cantidad }} unidades)</li>
+                                            </ul>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            ${{ venta.total }} ARS
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {% if venta.estado_pago == 'PENDIENTE' %}
+                                                    bg-yellow-100 text-yellow-800
+                                                {% else %}
+                                                    bg-green-100 text-green-800
+                                                {% endif %}">
+                                                {{ venta.estado_pago }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                                            No hay ventas web registradas
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -215,7 +377,8 @@
     function showTab(tabName) {
         // Update tab buttons
         document.querySelectorAll('.tab-button').forEach(button => {
-            if (button.textContent.trim().toLowerCase() === tabName) {
+            const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '');
+            if (buttonText === tabName.toLowerCase()) {
                 button.classList.remove('text-gray-500', 'border-transparent');
                 button.classList.add('border-green-500', 'text-green-600');
             } else {
@@ -227,6 +390,7 @@
         // Show/hide content
         document.getElementById('asignacionesTab').classList.toggle('hidden', tabName !== 'asignaciones');
         document.getElementById('ventasTab').classList.toggle('hidden', tabName !== 'ventas');
+        document.getElementById('ventasWebTab').classList.toggle('hidden', tabName !== 'ventasWeb');
     }
 </script>
 {% endblock %}

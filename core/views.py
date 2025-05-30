@@ -60,6 +60,36 @@ def asignar_view(request):
 
     ganancia = total_ventas - costo_total
 
+    # Calcular estadísticas de ventas web
+    from django.db.models import Sum, Count, F
+    from django.utils import timezone
+    from datetime import timedelta
+    
+    hoy = timezone.now()
+    mes_actual = hoy.month
+    mes_anterior = (hoy - timedelta(days=30)).month
+    
+    ventas_web = Venta.objects.filter(comprador__isnull=True) | Venta.objects.filter(comprador__rol='CLIENTE')
+    ventas_web_mes = ventas_web.filter(fecha_venta__month=mes_actual)
+    ventas_web_mes_anterior = ventas_web.filter(fecha_venta__month=mes_anterior)
+    
+    total_ventas_web = ventas_web_mes.aggregate(total=Sum('total', default=0))['total']
+    total_ventas_anterior = ventas_web_mes_anterior.aggregate(total=Sum('total', default=0))['total'] or 1
+    
+    porcentaje_cambio_ventas = ((total_ventas_web - total_ventas_anterior) / total_ventas_anterior) * 100
+    
+    costos_totales_web = ventas_web_mes.aggregate(
+        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
+    )['costos']
+    
+    ganancias_netas_web = total_ventas_web - costos_totales_web
+    porcentaje_costos = (costos_totales_web / total_ventas_web * 100) if total_ventas_web else 0
+    margen_ganancia = (ganancias_netas_web / total_ventas_web * 100) if total_ventas_web else 0
+    
+    total_clientes = ventas_web.values('email_comprador').distinct().count()
+    clientes_registrados = ventas_web.filter(comprador__isnull=False).values('comprador').distinct().count()
+    porcentaje_clientes_registrados = (clientes_registrados / total_clientes * 100) if total_clientes else 0
+
     # Set panel title based on user role
     panel_title = "Mi Panel" if request.user.rol == 'ADMIN' else "Panel de Administración"
     
@@ -71,6 +101,16 @@ def asignar_view(request):
         'costo_total': costo_total,
         'ganancia': ganancia,
         'panel_title': panel_title,
+        # Datos de ventas web
+        'ventas_web': ventas_web.order_by('-fecha_venta'),
+        'total_ventas_web': total_ventas_web,
+        'porcentaje_cambio_ventas': porcentaje_cambio_ventas,
+        'costos_totales_web': costos_totales_web,
+        'ganancias_netas_web': ganancias_netas_web,
+        'porcentaje_costos': porcentaje_costos,
+        'margen_ganancia': margen_ganancia,
+        'total_clientes': total_clientes,
+        'porcentaje_clientes_registrados': porcentaje_clientes_registrados,
     }
 
     return render(request, 'core/asignar.html', context)

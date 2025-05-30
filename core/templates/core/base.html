@@ -35,20 +35,7 @@
                 </a>
                 {% if user.is_authenticated %}
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
-                        <div class="relative group">
-                            <button class="hover:text-green-300 transition flex items-center space-x-1">
-                                <span>Mi Panel</span>
-                                <i class="fas fa-chevron-down text-xs"></i>
-                            </button>
-                            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block">
-                                <a href="{% url 'core:asignar' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">
-                                    Panel Principal
-                                </a>
-                                <a href="{% url 'core:ventas_web' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50">
-                                    Ventas WEB
-                                </a>
-                            </div>
-                        </div>
+                        <a href="{% url 'core:asignar' %}" class="hover:text-green-300 transition">Mi Panel</a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
                         <a href="{% url 'core:distribuidor' %}" class="hover:text-green-300 transition">Mi Panel</a>
                     {% elif user.rol == 'REVENDEDOR' %}
