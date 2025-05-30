@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import logout, login
+from .models import CustomUser, Producto, Asignacion, CarritoItem, Venta
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.db.models import Count
