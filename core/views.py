@@ -310,8 +310,78 @@ def ventas_web_view(request):
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
+    from django.db.models import Sum, Count, F, ExpressionWrapper, DecimalField
+    from django.db.models.functions import ExtractMonth, Now
+    from django.utils import timezone
+    from datetime import timedelta
+    
+    # Obtener el mes actual y el mes anterior
+    hoy = timezone.now()
+    mes_actual = hoy.month
+    mes_anterior = (hoy - timedelta(days=30)).month
+    
+    # Calcular métricas generales
     ventas = Venta.objects.all()
-    return render(request, 'core/ventas_web.html', {'ventas': ventas})
+    ventas_mes_actual = ventas.filter(fecha_venta__month=mes_actual)
+    ventas_mes_anterior = ventas.filter(fecha_venta__month=mes_anterior)
+    
+    total_ventas = ventas_mes_actual.aggregate(
+        total=Sum('total', default=0)
+    )['total']
+    
+    total_ventas_anterior = ventas_mes_anterior.aggregate(
+        total=Sum('total', default=0)
+    )['total'] or 1  # Evitar división por cero
+    
+    porcentaje_cambio_ventas = ((total_ventas - total_ventas_anterior) / total_ventas_anterior) * 100
+    
+    # Calcular costos y ganancias
+    costos_totales = ventas_mes_actual.aggregate(
+        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
+    )['costos']
+    
+    ganancias_netas = total_ventas - costos_totales
+    porcentaje_costos = (costos_totales / total_ventas * 100) if total_ventas else 0
+    margen_ganancia = (ganancias_netas / total_ventas * 100) if total_ventas else 0
+    
+    # Estadísticas de clientes
+    total_clientes = ventas.values('email_comprador').distinct().count()
+    clientes_registrados = ventas.filter(comprador__isnull=False).values('comprador').distinct().count()
+    porcentaje_clientes_registrados = (clientes_registrados / total_clientes * 100) if total_clientes else 0
+    
+    clientes_nuevos = ventas_mes_actual.values('email_comprador').distinct().count()
+    porcentaje_clientes_nuevos = (clientes_nuevos / total_clientes * 100) if total_clientes else 0
+    
+    # Productos más vendidos
+    productos_top = ventas_mes_actual.values(
+        'producto__nombre'
+    ).annotate(
+        nombre=F('producto__nombre'),
+        unidades=Sum('cantidad'),
+        ingresos=Sum('total')
+    ).order_by('-unidades')[:5]
+    
+    # Tasa de conversión (clientes que completaron la compra)
+    total_visitas = CarritoItem.objects.values('session_key').distinct().count() or 1
+    tasa_conversion = (ventas.count() / total_visitas) * 100
+    
+    context = {
+        'ventas': ventas.order_by('-fecha_venta'),
+        'total_ventas': total_ventas,
+        'porcentaje_cambio_ventas': porcentaje_cambio_ventas,
+        'costos_totales': costos_totales,
+        'ganancias_netas': ganancias_netas,
+        'porcentaje_costos': porcentaje_costos,
+        'margen_ganancia': margen_ganancia,
+        'total_clientes': total_clientes,
+        'porcentaje_clientes_registrados': porcentaje_clientes_registrados,
+        'clientes_nuevos': clientes_nuevos,
+        'porcentaje_clientes_nuevos': porcentaje_clientes_nuevos,
+        'productos_top': productos_top,
+        'tasa_conversion': tasa_conversion,
+    }
+    
+    return render(request, 'core/ventas_web.html', context)
 
 def procesar_pago(request):
     if request.method != 'POST':
