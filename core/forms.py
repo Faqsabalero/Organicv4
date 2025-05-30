@@ -34,12 +34,16 @@ class UserCreationFormWithRol(UserCreationForm):
             })
         # Filtrar las opciones del campo rol según el usuario
         if 'rol' in self.fields:
-            if user and user.rol == 'ADMIN':
-                # Si es ADMIN, solo mostrar DISTRIBUIDOR y REVENDEDOR
-                choices = [choice for choice in self.fields['rol'].choices if choice[0] in ['DISTRIBUIDOR', 'REVENDEDOR']]
-            else:
-                # Para SUPERUSUARIO, mostrar todos excepto SUPERUSUARIO
-                choices = [choice for choice in self.fields['rol'].choices if choice[0] != 'SUPERUSUARIO']
+            if user:
+                if user.rol == 'ADMIN':
+                    # Si es ADMIN, solo mostrar DISTRIBUIDOR y REVENDEDOR
+                    choices = [choice for choice in self.fields['rol'].choices if choice[0] in ['DISTRIBUIDOR', 'REVENDEDOR']]
+                elif user.rol == 'DISTRIBUIDOR':
+                    # Si es DISTRIBUIDOR, solo mostrar REVENDEDOR
+                    choices = [choice for choice in self.fields['rol'].choices if choice[0] == 'REVENDEDOR']
+                else:
+                    # Para SUPERUSUARIO, mostrar todos excepto SUPERUSUARIO
+                    choices = [choice for choice in self.fields['rol'].choices if choice[0] != 'SUPERUSUARIO']
             self.fields['rol'].choices = choices
 
 class ProductoForm(forms.ModelForm):
@@ -82,7 +86,12 @@ class AsignacionForm(forms.ModelForm):
             )
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
-        # Filtrar distribuidores para mostrar solo usuarios con rol DISTRIBUIDOR
-        self.fields['distribuidor'].queryset = CustomUser.objects.filter(rol='DISTRIBUIDOR')
+        # Filtrar distribuidores según el rol del usuario
+        if user and user.rol == 'DISTRIBUIDOR':
+            # Si es distribuidor, solo mostrar revendedores
+            self.fields['distribuidor'].queryset = CustomUser.objects.filter(rol='REVENDEDOR')
+        else:
+            # Si es admin o superusuario, mostrar distribuidores
+            self.fields['distribuidor'].queryset = CustomUser.objects.filter(rol='DISTRIBUIDOR')

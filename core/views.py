@@ -31,7 +31,7 @@ def asignar_view(request):
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
     if request.method == 'POST':
-        form = AsignacionForm(request.POST)
+        form = AsignacionForm(request.POST, user=request.user)
         if form.is_valid():
             asignacion = form.save(commit=False)
             asignacion.admin = request.user
@@ -41,7 +41,7 @@ def asignar_view(request):
         else:
             messages.error(request, 'Por favor corrija los errores en el formulario.')
     else:
-        form = AsignacionForm()
+        form = AsignacionForm(user=request.user)
     
     asignaciones = Asignacion.objects.all().order_by('-fecha_asignacion')
 
@@ -79,13 +79,31 @@ def distribuidor_view(request):
     if request.user.rol != 'DISTRIBUIDOR':
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
-    asignaciones = Asignacion.objects.filter(distribuidor=request.user).order_by('-fecha_asignacion')
+    if request.method == 'POST':
+        form = AsignacionForm(request.POST, user=request.user)
+        if form.is_valid():
+            asignacion = form.save(commit=False)
+            asignacion.admin = request.user
+            asignacion.save()
+            messages.success(request, 'Asignación creada correctamente.')
+            return redirect('core:distribuidor')
+        else:
+            messages.error(request, 'Por favor corrija los errores en el formulario.')
+    else:
+        form = AsignacionForm(user=request.user)
+    
+    # Filtrar asignaciones propias y las que ha creado
+    asignaciones_propias = Asignacion.objects.filter(distribuidor=request.user).order_by('-fecha_asignacion')
+    asignaciones_creadas = Asignacion.objects.filter(admin=request.user).order_by('-fecha_asignacion')
+    
     productos_distintos = Asignacion.objects.filter(distribuidor=request.user).aggregate(
         total=Count('producto', distinct=True)
     )['total']
     
     return render(request, 'core/distribuidor.html', {
-        'asignaciones': asignaciones,
+        'form': form,
+        'asignaciones_propias': asignaciones_propias,
+        'asignaciones_creadas': asignaciones_creadas,
         'productos_distintos': productos_distintos
     })
 
