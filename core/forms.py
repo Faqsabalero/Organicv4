@@ -32,6 +32,10 @@ class UserCreationFormWithRol(UserCreationForm):
             self.fields[field].widget.attrs.update({
                 'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600'
             })
+        # Excluir el rol SUPERUSUARIO de las opciones del campo rol
+        if 'rol' in self.fields:
+            choices = [choice for choice in self.fields['rol'].choices if choice[0] != 'SUPERUSUARIO']
+            self.fields['rol'].choices = choices
 
 class ProductoForm(forms.ModelForm):
     class Meta:
