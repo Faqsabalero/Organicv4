@@ -34,6 +34,8 @@
                         <a href="{% url 'core:asignar' %}" class="hover:text-green-300 transition">Mi Panel</a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
                         <a href="{% url 'core:distribuidor' %}" class="hover:text-green-300 transition">Mi Panel</a>
+                    {% elif user.rol == 'REVENDEDOR' %}
+                        <a href="{% url 'core:revendedor' %}" class="hover:text-green-300 transition">Mi Panel</a>
                     {% endif %}
                     <div class="relative inline-block">
                         <button class="flex items-center space-x-1 hover:text-green-300 transition" onclick="toggleUserMenu()">
@@ -97,11 +99,18 @@
                         <a href="{% url 'core:register' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
                             Registrar Usuario
                         </a>
-                {% elif user.rol == 'DISTRIBUIDOR' %}
-                    <a href="{% url 'core:distribuidor' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
-                        Mi Panel
-                    </a>
-                {% endif %}
+                    {% elif user.rol == 'DISTRIBUIDOR' %}
+                        <a href="{% url 'core:distribuidor' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
+                            Mi Panel
+                        </a>
+                        <a href="{% url 'core:register' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
+                            Registrar Revendedor
+                        </a>
+                    {% elif user.rol == 'REVENDEDOR' %}
+                        <a href="{% url 'core:revendedor' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
+                            Mi Panel
+                        </a>
+                    {% endif %}
                 <div class="border-t border-gray-200">
                     <div class="px-4 py-3 bg-gray-50">
                         <p class="text-sm text-gray-700">Conectado como:</p>

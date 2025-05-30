@@ -159,11 +159,21 @@ def editar_producto(request, producto_id):
     
     return render(request, 'core/editar_producto.html', {'form': form})
 
+@login_required
+def revendedor_view(request):
+    if request.user.rol != 'REVENDEDOR':
+        return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
+    
+    asignaciones = Asignacion.objects.filter(distribuidor=request.user).order_by('-fecha_asignacion')
+    return render(request, 'core/revendedor.html', {
+        'asignaciones': asignaciones
+    })
+
 def register_user(request):
     if not request.user.is_authenticated:
         return redirect('core:login')
         
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO', 'DISTRIBUIDOR']:
         return HttpResponseForbidden("No tiene permiso para registrar usuarios.")
         
     if request.method == 'POST':
