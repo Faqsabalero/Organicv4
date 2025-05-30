@@ -8,8 +8,9 @@ class CustomUser(AbstractUser):
         ('DISTRIBUIDOR', 'Distribuidor'),
         ('REVENDEDOR', 'Revendedor'),
         ('SUPERUSUARIO', 'Superusuario'),
+        ('CLIENTE', 'Cliente'),
     )
-    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default='DISTRIBUIDOR')
+    rol = models.CharField(max_length=20, choices=ROL_CHOICES, default='CLIENTE')
     nombre = models.CharField(max_length=100, blank=True, null=True)
     dni = models.CharField(max_length=20, blank=True, null=True)
     domicilio = models.TextField(blank=True, null=True)

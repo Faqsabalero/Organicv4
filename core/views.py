@@ -258,7 +258,7 @@ def registro_rapido(request):
         domicilio = request.POST.get('domicilio')
         
         try:
-            # Crear usuario con rol DISTRIBUIDOR por defecto
+            # Crear usuario con rol CLIENTE por defecto
             user = CustomUser.objects.create_user(
                 username=username,
                 password=password,
@@ -266,7 +266,7 @@ def registro_rapido(request):
                 nombre=nombre,
                 dni=dni,
                 domicilio=domicilio,
-                rol='DISTRIBUIDOR'
+                rol='CLIENTE'
             )
             
             # Iniciar sesión automáticamente
