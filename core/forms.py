@@ -25,16 +25,21 @@ class UserCreationFormWithRol(UserCreationForm):
         model = CustomUser
         fields = ('username', 'email', 'rol', 'password1', 'password2')
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
         # Agregar clases de Tailwind CSS a los campos
         for field in self.fields:
             self.fields[field].widget.attrs.update({
                 'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600'
             })
-        # Excluir el rol SUPERUSUARIO de las opciones del campo rol
+        # Filtrar las opciones del campo rol según el usuario
         if 'rol' in self.fields:
-            choices = [choice for choice in self.fields['rol'].choices if choice[0] != 'SUPERUSUARIO']
+            if user and user.rol == 'ADMIN':
+                # Si es ADMIN, solo mostrar DISTRIBUIDOR y REVENDEDOR
+                choices = [choice for choice in self.fields['rol'].choices if choice[0] in ['DISTRIBUIDOR', 'REVENDEDOR']]
+            else:
+                # Para SUPERUSUARIO, mostrar todos excepto SUPERUSUARIO
+                choices = [choice for choice in self.fields['rol'].choices if choice[0] != 'SUPERUSUARIO']
             self.fields['rol'].choices = choices
 
 class ProductoForm(forms.ModelForm):

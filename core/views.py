@@ -167,12 +167,12 @@ def register_user(request):
         return HttpResponseForbidden("No tiene permiso para registrar usuarios.")
         
     if request.method == 'POST':
-        form = UserCreationFormWithRol(request.POST)
+        form = UserCreationFormWithRol(request.POST, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, 'Usuario creado exitosamente.')
             return redirect('core:asignar')
     else:
-        form = UserCreationFormWithRol()
+        form = UserCreationFormWithRol(user=request.user)
     
     return render(request, 'core/register.html', {'form': form})
