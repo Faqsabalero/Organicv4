@@ -59,6 +59,9 @@ def asignar_view(request):
 
     ganancia = total_ventas - costo_total
 
+    # Set panel title based on user role
+    panel_title = "Mi Panel" if request.user.rol == 'ADMIN' else "Panel de Administración"
+    
     context = {
         'form': form,
         'asignaciones': asignaciones,
@@ -66,6 +69,7 @@ def asignar_view(request):
         'cantidad_vendida': cantidad_vendida,
         'costo_total': costo_total,
         'ganancia': ganancia,
+        'panel_title': panel_title,
     }
 
     return render(request, 'core/asignar.html', context)
@@ -138,7 +142,6 @@ def cambiar_estado_asignacion(request, asignacion_id):
     return redirect('core:asignar')
 
 @login_required
-@login_required
 def editar_producto(request, producto_id):
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para editar productos.")
@@ -157,6 +160,9 @@ def editar_producto(request, producto_id):
     return render(request, 'core/editar_producto.html', {'form': form})
 
 def register_user(request):
+    if not request.user.is_authenticated:
+        return redirect('core:login')
+        
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para registrar usuarios.")
         
