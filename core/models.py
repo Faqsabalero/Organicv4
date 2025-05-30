@@ -5,12 +5,14 @@ class CustomUser(AbstractUser):
     ROL_CHOICES = (
         ('ADMIN', 'Admin'),
         ('DISTRIBUIDOR', 'Distribuidor'),
+        ('SUPERUSUARIO', 'Superusuario'),
     )
     rol = models.CharField(max_length=20, choices=ROL_CHOICES, default='DISTRIBUIDOR')
 
     def save(self, *args, **kwargs):
+        # Si el usuario es un superusuario, asignar el rol SUPERUSUARIO
         if self.is_superuser:
-            self.rol = 'ADMIN'
+            self.rol = 'SUPERUSUARIO'
         super().save(*args, **kwargs)
 
     def __str__(self):

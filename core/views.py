@@ -27,7 +27,7 @@ def home_view(request):
 
 @login_required
 def asignar_view(request):
-    if request.user.rol != 'ADMIN':
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
     if request.method == 'POST':
@@ -127,7 +127,7 @@ def procesar_compra(request, producto_id):
 
 @login_required
 def cambiar_estado_asignacion(request, asignacion_id):
-    if request.user.rol != 'ADMIN':
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para cambiar el estado.")
     
     asignacion = get_object_or_404(Asignacion, id=asignacion_id)
@@ -140,7 +140,7 @@ def cambiar_estado_asignacion(request, asignacion_id):
 @login_required
 @login_required
 def editar_producto(request, producto_id):
-    if request.user.rol != 'ADMIN':
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para editar productos.")
     
     producto = get_object_or_404(Producto, id=producto_id)
@@ -157,7 +157,7 @@ def editar_producto(request, producto_id):
     return render(request, 'core/editar_producto.html', {'form': form})
 
 def register_user(request):
-    if request.user.rol != 'ADMIN':
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para registrar usuarios.")
         
     if request.method == 'POST':
