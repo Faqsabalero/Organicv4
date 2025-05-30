@@ -107,6 +107,7 @@
 
                     <!-- Botón Confirmar Pago -->
                     <button type="submit" 
+                            id="confirmarPago"
                             class="flex-1 bg-green-700 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
                         <i class="fas fa-credit-card"></i>
                         <span>Confirmar Pago</span>
@@ -122,11 +123,31 @@
     </div>
 </div>
 
+<!-- Modal de Registro -->
+<div id="registroModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+        <h3 class="text-2xl font-bold text-gray-900 mb-4">¿Deseas registrarte?</h3>
+        <p class="text-gray-600 mb-6">
+            Regístrate ahora para recibir descuentos exclusivos en tus futuras compras.
+        </p>
+        <div class="flex flex-col gap-4">
+            <button onclick="redirigirARegistro()" 
+                    class="w-full bg-green-700 text-white px-6 py-3 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors">
+                Sí, quiero registrarme
+            </button>
+            <button onclick="continuarSinRegistro()" 
+                    class="w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-md font-semibold text-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
+                No, gracias
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
-// Validación del formulario
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const dniInput = document.getElementById('dni');
+    const modal = document.getElementById('registroModal');
     
     // Validación del DNI en tiempo real
     dniInput.addEventListener('input', function() {
@@ -142,29 +163,47 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Validación antes del envío
     form.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevenir envío del formulario
+        
         const nombre = document.getElementById('nombre').value.trim();
         const email = document.getElementById('email').value.trim();
         const dni = document.getElementById('dni').value.trim();
         const domicilio = document.getElementById('domicilio').value.trim();
         
         if (!nombre || !email || !dni || !domicilio) {
-            e.preventDefault();
             alert('Por favor, completa todos los campos obligatorios.');
             return false;
         }
         
         if (dni.length < 7 || dni.length > 8) {
-            e.preventDefault();
             alert('Por favor, ingresa un DNI válido (7-8 dígitos).');
             return false;
         }
         
-        // Confirmación antes del envío
-        if (!confirm('¿Confirmas que los datos son correctos y deseas proceder con el pago?')) {
-            e.preventDefault();
-            return false;
-        }
+        // Mostrar modal de registro
+        modal.classList.remove('hidden');
     });
 });
+
+function redirigirARegistro() {
+    const form = document.querySelector('form');
+    const formData = new FormData(form);
+    
+    // Redirigir al formulario de registro con los datos del checkout
+    window.location.href = "{% url 'core:registro_rapido' %}?" + new URLSearchParams({
+        nombre: formData.get('nombre'),
+        email: formData.get('email'),
+        dni: formData.get('dni'),
+        domicilio: formData.get('domicilio')
+    }).toString();
+}
+
+function continuarSinRegistro() {
+    const modal = document.getElementById('registroModal');
+    modal.classList.add('hidden');
+    
+    // Enviar el formulario original
+    document.querySelector('form').submit();
+}
 </script>
 {% endblock %}

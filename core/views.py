@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.db.models import Count
@@ -247,6 +247,46 @@ def register_user(request):
         form = UserCreationFormWithRol(user=request.user)
     
     return render(request, 'core/register.html', {'form': form})
+
+def registro_rapido(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        nombre = request.POST.get('nombre')
+        email = request.POST.get('email')
+        dni = request.POST.get('dni')
+        domicilio = request.POST.get('domicilio')
+        
+        try:
+            # Crear usuario con rol DISTRIBUIDOR por defecto
+            user = CustomUser.objects.create_user(
+                username=username,
+                password=password,
+                email=email,
+                nombre=nombre,
+                dni=dni,
+                domicilio=domicilio,
+                rol='DISTRIBUIDOR'
+            )
+            
+            # Iniciar sesión automáticamente
+            login(request, user)
+            
+            messages.success(request, '¡Cuenta creada exitosamente! Bienvenido/a.')
+            return redirect('core:home')
+            
+        except Exception as e:
+            messages.error(request, f'Error al crear la cuenta: {str(e)}')
+            return redirect('core:checkout')
+    else:
+        # GET: mostrar formulario con datos pre-llenados
+        context = {
+            'nombre': request.GET.get('nombre', ''),
+            'email': request.GET.get('email', ''),
+            'dni': request.GET.get('dni', ''),
+            'domicilio': request.GET.get('domicilio', '')
+        }
+        return render(request, 'core/registro_rapido.html', context)
 
 def checkout_view(request):
     if not request.session.session_key:
