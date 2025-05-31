@@ -93,6 +93,20 @@ def asignar_view(request):
     # Set panel title based on user role
     panel_title = "Mi Panel" if request.user.rol == 'ADMIN' else "Panel de Administración"
     
+    # --- FINANZAS CALCULATIONS ---
+    # Combine metrics from both assignment sales and web sales
+    overall_total_sales = total_ventas + (total_ventas_web or 0)
+    overall_total_cost = costo_total + (costos_totales_web or 0)
+    overall_profit = ganancia + (ganancias_netas_web or 0)
+    
+    # Calculate percentages safely
+    if overall_total_sales > 0:
+        overall_cost_percent = (overall_total_cost / overall_total_sales) * 100
+        overall_profit_margin = (overall_profit / overall_total_sales) * 100
+    else:
+        overall_cost_percent = 0
+        overall_profit_margin = 0
+    
     context = {
         'form': form,
         'asignaciones': asignaciones,
@@ -111,6 +125,12 @@ def asignar_view(request):
         'margen_ganancia': margen_ganancia,
         'total_clientes': total_clientes,
         'porcentaje_clientes_registrados': porcentaje_clientes_registrados,
+        # Datos consolidados para la pestaña Finanzas
+        'finanzas_total_sales': overall_total_sales,
+        'finanzas_total_cost': overall_total_cost,
+        'finanzas_total_profit': overall_profit,
+        'finanzas_cost_percent': overall_cost_percent,
+        'finanzas_profit_margin': overall_profit_margin,
     }
 
     return render(request, 'core/asignar.html', context)
