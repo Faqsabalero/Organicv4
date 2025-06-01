@@ -5,7 +5,7 @@ from django.contrib.auth import logout, login
 from .models import CustomUser, Producto, Asignacion, CarritoItem, Venta
 from django.http import HttpResponseForbidden
 from django.contrib import messages
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from .forms import CustomLoginForm, AsignacionForm, UserCreationFormWithRol, ProductoForm
@@ -370,24 +370,24 @@ def ventas_web_view(request):
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
-    from django.db.models import Sum, Count, F, ExpressionWrapper, DecimalField
-    from django.db.models.functions import ExtractMonth, Now
+    from django.db.models import Q, Sum, Count, F
     from django.utils import timezone
     from datetime import timedelta
     
-    # Obtener el mes actual y el mes anterior
     hoy = timezone.now()
     mes_actual = hoy.month
     mes_anterior = (hoy - timedelta(days=30)).month
     
-    # Calcular métricas generales
-    ventas = Venta.objects.all()
+    # Filtrar solo ventas web (sin comprador o comprador con rol CLIENTE)
+    ventas = Venta.objects.filter(
+        Q(comprador__isnull=True) | Q(comprador__rol='CLIENTE')
+    )
     ventas_mes_actual = ventas.filter(fecha_venta__month=mes_actual)
     ventas_mes_anterior = ventas.filter(fecha_venta__month=mes_anterior)
     
     total_ventas = ventas_mes_actual.aggregate(
         total=Sum('total', default=0)
-    )['total']
+    )['total'] or 0
     
     total_ventas_anterior = ventas_mes_anterior.aggregate(
         total=Sum('total', default=0)
@@ -398,7 +398,7 @@ def ventas_web_view(request):
     # Calcular costos y ganancias
     costos_totales = ventas_mes_actual.aggregate(
         costos=Sum(F('producto__costo') * F('cantidad'), default=0)
-    )['costos']
+    )['costos'] or 0
     
     ganancias_netas = total_ventas - costos_totales
     porcentaje_costos = (costos_totales / total_ventas * 100) if total_ventas else 0
