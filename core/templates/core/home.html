@@ -151,7 +151,7 @@
 </section>
 
 <!-- Modales -->
-<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-20 pb-20" id="investigation-modal" role="dialog">
+<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-4 pb-20" id="investigation-modal" role="dialog">
             <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300 max-h-[80vh] overflow-y-auto">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
                     <i class="fas fa-times"></i>
@@ -179,7 +179,7 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-20 pb-20" id="phytobreeding-modal" role="dialog">
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-4 pb-20" id="phytobreeding-modal" role="dialog">
             <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300 max-h-[80vh] overflow-y-auto">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
                     <i class="fas fa-times"></i>
@@ -207,7 +207,7 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-20 pb-20" id="manufacturing-modal" role="dialog">
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-4 pb-20" id="manufacturing-modal" role="dialog">
             <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300 max-h-[80vh] overflow-y-auto">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
                     <i class="fas fa-times"></i>
@@ -624,23 +624,9 @@
                 
                 // Calcular la posición óptima para el modal
                 const buttonRect = event.currentTarget.getBoundingClientRect();
-                const modalRect = modalContent.getBoundingClientRect();
-                const viewportHeight = window.innerHeight;
                 
-                // Calcular la posición ideal para que el modal sea visible
-                let targetScrollTop;
-                
-                if (modalRect.height < viewportHeight) {
-                    // Si el modal es más pequeño que la ventana, centrarlo en la vista
-                    targetScrollTop = window.scrollY + (buttonRect.top - (viewportHeight - modalRect.height) / 2);
-                } else {
-                    // Si el modal es más grande, alinearlo con la parte superior de la ventana
-                    targetScrollTop = window.scrollY + buttonRect.top - 20;
-                }
-                
-                // Asegurarnos de que el scroll no vaya más allá del contenido
-                const maxScroll = document.documentElement.scrollHeight - viewportHeight;
-                targetScrollTop = Math.min(targetScrollTop, maxScroll);
+                // Ajustar el scroll para que el modal aparezca justo encima del botón
+                const targetScrollTop = window.scrollY + buttonRect.top - 100;
                 
                 // Aplicar el scroll suavemente
                 window.scrollTo({
