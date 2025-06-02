@@ -8,6 +8,19 @@
     animation: fadeIn 0.5s ease-out forwards;
 }
 
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin-slow {
+    animation: spin-slow 20s linear infinite;
+}
+
 /* Hover scale effect */
 .hover-scale {
     transition: transform 0.2s ease-in-out;

@@ -214,6 +214,61 @@
     </div>
 </section>
 
+<!-- Banner Section -->
+<section class="relative py-24 overflow-hidden">
+    <!-- Fondo con gradiente y patrón -->
+    <div class="absolute inset-0 bg-gradient-to-r from-green-900 to-green-700">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
+        <!-- Contenido del banner -->
+        <div class="md:w-1/2 text-center md:text-left">
+            <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-semibold mb-4">
+                Descubre más
+            </span>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                Mejora tu calidad de vida con productos naturales
+            </h2>
+            <p class="text-green-100 text-lg mb-8 leading-relaxed">
+                Nuestros productos están diseñados para ayudarte a alcanzar un mejor bienestar de manera natural y segura.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a href="#products" class="inline-flex items-center justify-center px-8 py-4 bg-white text-green-800 font-semibold rounded-lg shadow-lg hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+                    <span class="flex items-center">
+                        <i class="fas fa-leaf mr-2"></i>
+                        Ver Catálogo
+                    </span>
+                </a>
+                <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    <span class="flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        Contactar
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Imagen decorativa -->
+        <div class="md:w-1/2 relative">
+            <div class="relative w-full aspect-square max-w-md mx-auto">
+                <!-- Círculos decorativos -->
+                <div class="absolute inset-0 animate-spin-slow" style="animation-duration: 20s;">
+                    <div class="absolute inset-0 border-2 border-white/20 rounded-full"></div>
+                    <div class="absolute inset-4 border-2 border-white/20 rounded-full"></div>
+                    <div class="absolute inset-8 border-2 border-white/20 rounded-full"></div>
+                </div>
+                <!-- Imagen central -->
+                <div class="absolute inset-12 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
+                    <img src="https://storage.googleapis.com/a1aa/image/924b4e0b-cd3a-406c-4a54-84888bc92068.jpg" 
+                         alt="Productos naturales" 
+                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- News Section -->
 <section class="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-white" id="news">
     <div class="text-center max-w-3xl mx-auto mb-16 animate-fadeIn">
@@ -432,59 +487,89 @@
 </section>
 
 <!-- Modales -->
-<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="investigation-modal" role="dialog">
-   <div class="bg-white rounded-lg max-w-lg w-full p-6 relative shadow-lg">
-    <button aria-label="Close modal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none" id="investigation-modal-close" type="button">
-     <i class="fas fa-times fa-lg"></i>
-    </button>
-    <h3 class="text-2xl font-bold text-green-700 mb-4" id="investigation-modal-title" tabindex="0">
-     Investigación con ONGs
-    </h3>
-    <img alt="Research lab with scientists analyzing cannabis plants under microscopes and lab equipment" class="w-32 h-32 rounded-full object-cover mb-4 mx-auto" height="128" src="https://storage.googleapis.com/a1aa/image/6f794ea5-295d-4b25-95e2-803fcd013ce8.jpg" width="128"/>
-    <p class="text-gray-700 mb-4">
-     Contamos con un equipo de expertos que estudian las propiedades terapéuticas del cannabis para desarrollar productos efectivos y seguros. Nuestra investigación se realiza en colaboración con diversas ONGs para garantizar un enfoque ético y responsable.
-    </p>
-    <p class="text-gray-700">
-     Además, participamos en proyectos comunitarios y educativos para difundir el conocimiento sobre los beneficios del cannabis medicinal y promover su uso seguro y legal.
-    </p>
-   </div>
-  </div>
+<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300" id="investigation-modal" role="dialog">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+        <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="text-center mb-6">
+            <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Investigación</span>
+            <h3 class="text-3xl font-bold text-green-800 mb-2" id="investigation-modal-title" tabindex="0">
+                Investigación con ONGs
+            </h3>
+        </div>
+        <div class="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
+            <img alt="Research lab with scientists analyzing cannabis plants" 
+                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" 
+                 src="https://storage.googleapis.com/a1aa/image/6f794ea5-295d-4b25-95e2-803fcd013ce8.jpg"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        </div>
+        <div class="space-y-4 text-gray-600 leading-relaxed">
+            <p>
+                Contamos con un equipo de expertos que estudian las propiedades terapéuticas del cannabis para desarrollar productos efectivos y seguros. Nuestra investigación se realiza en colaboración con diversas ONGs para garantizar un enfoque ético y responsable.
+            </p>
+            <p>
+                Además, participamos en proyectos comunitarios y educativos para difundir el conocimiento sobre los beneficios del cannabis medicinal y promover su uso seguro y legal.
+            </p>
+        </div>
+    </div>
+</div>
 
-  <div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="phytobreeding-modal" role="dialog">
-   <div class="bg-white rounded-lg max-w-lg w-full p-6 relative shadow-lg">
-    <button aria-label="Close modal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none" id="phytobreeding-modal-close" type="button">
-     <i class="fas fa-times fa-lg"></i>
-    </button>
-    <h3 class="text-2xl font-bold text-green-700 mb-4" id="phytobreeding-modal-title" tabindex="0">
-     Fitomejoramiento
-    </h3>
-    <img alt="Greenhouse with cannabis plants growing under controlled environment with sunlight and irrigation" class="w-32 h-32 rounded-full object-cover mb-4 mx-auto" height="128" src="https://storage.googleapis.com/a1aa/image/5152ec04-f547-41c3-db6b-0775ee77a5f0.jpg" width="128"/>
-    <p class="text-gray-700 mb-4">
-     Nuestros cultivos se realizan bajo estrictos controles de calidad para garantizar la pureza y potencia de cada planta. Utilizamos técnicas avanzadas de fitomejoramiento para optimizar las características terapéuticas y la resistencia de las plantas.
-    </p>
-    <p class="text-gray-700">
-     Además, trabajamos en colaboración con expertos para asegurar que cada cultivo cumpla con los más altos estándares de calidad y sostenibilidad.
-    </p>
-   </div>
-  </div>
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300" id="phytobreeding-modal" role="dialog">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+        <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="text-center mb-6">
+            <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Cultivo</span>
+            <h3 class="text-3xl font-bold text-green-800 mb-2" id="phytobreeding-modal-title" tabindex="0">
+                Fitomejoramiento
+            </h3>
+        </div>
+        <div class="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
+            <img alt="Greenhouse with cannabis plants" 
+                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" 
+                 src="https://storage.googleapis.com/a1aa/image/5152ec04-f547-41c3-db6b-0775ee77a5f0.jpg"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        </div>
+        <div class="space-y-4 text-gray-600 leading-relaxed">
+            <p>
+                Nuestros cultivos se realizan bajo estrictos controles de calidad para garantizar la pureza y potencia de cada planta. Utilizamos técnicas avanzadas de fitomejoramiento para optimizar las características terapéuticas y la resistencia de las plantas.
+            </p>
+            <p>
+                Además, trabajamos en colaboración con expertos para asegurar que cada cultivo cumpla con los más altos estándares de calidad y sostenibilidad.
+            </p>
+        </div>
+    </div>
+</div>
 
-  <div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" id="manufacturing-modal" role="dialog">
-   <div class="bg-white rounded-lg max-w-lg w-full p-6 relative shadow-lg">
-    <button aria-label="Close modal" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 focus:outline-none" id="manufacturing-modal-close" type="button">
-     <i class="fas fa-times fa-lg"></i>
-    </button>
-    <h3 class="text-2xl font-bold text-green-700 mb-4" id="manufacturing-modal-title" tabindex="0">
-     Manufacturacion en lab
-    </h3>
-    <img alt="Packaging and distribution of medicinal cannabis products with eco-friendly materials" class="w-32 h-32 rounded-full object-cover mb-4 mx-auto" height="128" src="https://storage.googleapis.com/a1aa/image/24f506c8-9915-487b-fdbc-a7bc2bfefd10.jpg" width="128"/>
-    <p class="text-gray-700 mb-4">
-     Entregamos nuestros productos a farmacias y centros de salud, asegurando un acceso responsable y legal. Nuestro proceso de manufactura cumple con estrictas normas de calidad y seguridad.
-    </p>
-    <p class="text-gray-700">
-     Trabajamos con materiales eco-amigables y procesos sostenibles para minimizar el impacto ambiental y garantizar la eficacia de nuestros productos.
-    </p>
-   </div>
-  </div>
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300" id="manufacturing-modal" role="dialog">
+    <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+        <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="text-center mb-6">
+            <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Producción</span>
+            <h3 class="text-3xl font-bold text-green-800 mb-2" id="manufacturing-modal-title" tabindex="0">
+                Manufacturación en lab
+            </h3>
+        </div>
+        <div class="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
+            <img alt="Laboratory manufacturing process" 
+                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" 
+                 src="https://storage.googleapis.com/a1aa/image/24f506c8-9915-487b-fdbc-a7bc2bfefd10.jpg"/>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        </div>
+        <div class="space-y-4 text-gray-600 leading-relaxed">
+            <p>
+                Entregamos nuestros productos a farmacias y centros de salud, asegurando un acceso responsable y legal. Nuestro proceso de manufactura cumple con estrictas normas de calidad y seguridad.
+            </p>
+            <p>
+                Trabajamos con materiales eco-amigables y procesos sostenibles para minimizar el impacto ambiental y garantizar la eficacia de nuestros productos.
+            </p>
+        </div>
+    </div>
+</div>
 
 <script>
     // Carousel logic
@@ -517,25 +602,39 @@
 
     showItem(currentIndex);
 
-    // Modal logic
+    // Modal logic with animations
     document.addEventListener('DOMContentLoaded', function() {
-        // Función para mostrar el modal
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
+            const modalContent = modal.querySelector('.bg-white');
+            
             if (modal) {
+                // Show modal container with fade
                 modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.add('opacity-100');
+                    modalContent.classList.add('opacity-100', 'scale-100');
+                }, 10);
             }
         }
         
-        // Función para cerrar el modal
         function closeModal(modalId) {
             const modal = document.getElementById(modalId);
+            const modalContent = modal.querySelector('.bg-white');
+            
             if (modal) {
-                modal.classList.add('hidden');
+                // Hide modal with fade
+                modal.classList.remove('opacity-100');
+                modalContent.classList.remove('opacity-100', 'scale-100');
+                
+                // Wait for animation to complete before hiding
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
             }
         }
         
-        // Asignar eventos a las tarjetas (basado en aria-controls)
+        // Asignar eventos a las tarjetas
         const modalTriggers = document.querySelectorAll('[aria-controls]');
         modalTriggers.forEach(trigger => {
             trigger.addEventListener('click', function() {
@@ -544,7 +643,7 @@
             });
         });
         
-        // Asignar eventos a los botones de cierre de cada modal
+        // Asignar eventos a los botones de cierre
         const closeButtons = document.querySelectorAll('button[id$="-close"]');
         closeButtons.forEach(button => {
             button.addEventListener('click', function() {
@@ -553,12 +652,22 @@
             });
         });
         
-        // Opcional: Cerrar modal al presionar ESC
+        // Cerrar modal al hacer clic fuera o presionar ESC
+        document.addEventListener('click', function(event) {
+            const modals = document.querySelectorAll('[aria-modal="true"]');
+            modals.forEach(modal => {
+                if (event.target === modal && !modal.classList.contains('hidden')) {
+                    const modalId = modal.id;
+                    closeModal(modalId);
+                }
+            });
+        });
+        
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 document.querySelectorAll('[aria-modal="true"]').forEach(modal => {
                     if (!modal.classList.contains('hidden')) {
-                        modal.classList.add('hidden');
+                        closeModal(modal.id);
                     }
                 });
             }
