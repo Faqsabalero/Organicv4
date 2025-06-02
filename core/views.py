@@ -217,6 +217,8 @@ def editar_producto_view(request, producto_id):
         producto.nombre = request.POST.get('nombre')
         producto.descripcion = request.POST.get('descripcion')
         producto.precio = request.POST.get('precio')
+        producto.precio_distribuidor = request.POST.get('precio_distribuidor')
+        producto.precio_revendedor = request.POST.get('precio_revendedor')
         producto.imagen_url = request.POST.get('imagen_url')
         
         # Solo actualizar el costo si el usuario es admin o superusuario
@@ -241,6 +243,8 @@ def crear_producto_view(request):
             nombre=request.POST.get('nombre'),
             descripcion=request.POST.get('descripcion'),
             precio=request.POST.get('precio'),
+            precio_distribuidor=request.POST.get('precio_distribuidor'),
+            precio_revendedor=request.POST.get('precio_revendedor'),
             imagen_url=request.POST.get('imagen_url'),
         )
         

@@ -1,4 +1,4 @@
-{% extends "core/base.html" %}
+ {% extends "core/base.html" %}
 {% load custom_filters %}
 
 {% block title %}Gestionar Productos - Organic Shops{% endblock %}
@@ -23,7 +23,13 @@
                             Producto
                         </th>
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Precio
+                            Precio Público
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Precio Distribuidor
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Precio Revendedor
                         </th>
                         {% if request.user.rol in 'ADMIN,SUPERUSUARIO'|split:"," %}
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -33,9 +39,6 @@
                             Margen
                         </th>
                         {% endif %}
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Estado
-                        </th>
                         <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                             Acciones
                         </th>
@@ -58,6 +61,12 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">${{ producto.precio }} ARS</div>
                         </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${{ producto.precio_distribuidor }} ARS</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm text-gray-900">${{ producto.precio_revendedor }} ARS</div>
+                        </td>
                         {% if request.user.rol in 'ADMIN,SUPERUSUARIO'|split:"," %}
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-red-600">${{ producto.costo }} ARS</div>
@@ -70,20 +79,10 @@
                             {% endwith %}
                         </td>
                         {% endif %}
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                Activo
-                            </span>
-                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <div class="flex justify-end space-x-2">
-                                <a href="{% url 'core:editar_producto' producto.id %}" class="text-blue-600 hover:text-blue-900">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button onclick="toggleProducto({{ producto.id }})" class="text-red-600 hover:text-red-900">
-                                    <i class="fas fa-toggle-off"></i>
-                                </button>
-                            </div>
+                            <a href="{% url 'core:editar_producto' producto.id %}" class="text-blue-600 hover:text-blue-900">
+                                <i class="fas fa-edit"></i>
+                            </a>
                         </td>
                     </tr>
                     {% empty %}
