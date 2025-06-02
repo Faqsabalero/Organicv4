@@ -464,15 +464,31 @@ def procesar_compra_carrito(request):
 
 @login_required
 def cambiar_estado_asignacion(request, asignacion_id):
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+    asignacion = get_object_or_404(Asignacion, id=asignacion_id)
+    
+    # Verificar permisos
+    if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
+        # Admins pueden cambiar cualquier asignación
+        puede_cambiar = True
+    elif request.user.rol == 'DISTRIBUIDOR':
+        # Distribuidores solo pueden cambiar asignaciones que ellos hicieron a revendedores
+        puede_cambiar = (asignacion.admin == request.user and asignacion.distribuidor.rol == 'REVENDEDOR')
+    else:
+        puede_cambiar = False
+    
+    if not puede_cambiar:
         return HttpResponseForbidden("No tiene permiso para cambiar el estado.")
     
-    asignacion = get_object_or_404(Asignacion, id=asignacion_id)
     asignacion.estado = 'PAGADO' if asignacion.estado == 'PENDIENTE' else 'PENDIENTE'
     asignacion.save()
     
     messages.success(request, f'Estado actualizado a {asignacion.get_estado_display()}')
-    return redirect('core:asignar')
+    
+    # Redirigir según el rol
+    if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
+        return redirect('core:asignar')
+    else:
+        return redirect('core:distribuidor')
 
 @login_required
 def editar_producto(request, producto_id):
