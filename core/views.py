@@ -137,14 +137,15 @@ def asignar_view(request):
         'panel_title': panel_title,
         # Datos de ventas web
         'ventas': ventas_web.order_by('-fecha_venta'),
-        'total_ventas': total_ventas_web,
+        'total_ventas': total_ventas,
         'porcentaje_cambio_ventas': porcentaje_cambio_ventas,
-        'costos_totales': costos_totales_web,
-        'ganancias_netas': ganancias_netas_web,
+        'costos_totales': costos_totales,
+        'ganancias_netas': ganancias_netas,
         'porcentaje_costos': porcentaje_costos,
         'margen_ganancia': margen_ganancia,
         'total_clientes': total_clientes,
         'porcentaje_clientes_registrados': porcentaje_clientes_registrados,
+        'productos_top': productos_top,
     }
 
     return render(request, 'core/asignar.html', context)
