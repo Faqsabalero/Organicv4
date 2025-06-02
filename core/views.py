@@ -194,6 +194,31 @@ def asignar_view(request):
     return render(request, 'core/asignar.html', context)
 
 @login_required
+def editar_producto_view(request, producto_id):
+    """Vista para editar un producto"""
+    # Verificar que el usuario sea admin o superusuario
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return redirect('core:home')
+    
+    producto = get_object_or_404(Producto, id=producto_id)
+    
+    if request.method == 'POST':
+        # Actualizar los campos básicos
+        producto.nombre = request.POST.get('nombre')
+        producto.descripcion = request.POST.get('descripcion')
+        producto.precio = request.POST.get('precio')
+        producto.imagen_url = request.POST.get('imagen_url')
+        
+        # Solo actualizar el costo si el usuario es admin o superusuario
+        if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
+            producto.costo = request.POST.get('costo')
+        
+        producto.save()
+        return redirect('core:home')
+    
+    return render(request, 'core/editar_producto.html', {'producto': producto})
+
+@login_required
 def ventas_web_view(request):
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
