@@ -5,7 +5,7 @@ from django.contrib.auth import logout, login
 from .models import CustomUser, Producto, Asignacion, CarritoItem, Venta
 from django.http import HttpResponseForbidden
 from django.contrib import messages
-from django.db.models import Count, Q, Sum, F
+from django.db.models import Count, Q, Sum, F, Case, When, Value
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from .forms import CustomLoginForm, AsignacionForm, UserCreationFormWithRol, ProductoForm
@@ -66,12 +66,27 @@ def asignar_view(request):
     asignaciones_mes = asignaciones_pagadas.filter(fecha_asignacion__month=mes_actual)
     asignaciones_mes_anterior = asignaciones_pagadas.filter(fecha_asignacion__month=mes_anterior)
     
+    # Calcular totales usando Case para determinar el precio según el rol del distribuidor
     total_ventas_asignacion = asignaciones_mes.aggregate(
-        total=Sum(F('producto__precio_distribuidor') * F('cantidad'), default=0)
+        total=Sum(
+            Case(
+                When(distribuidor__rol='DISTRIBUIDOR', then=F('producto__precio_distribuidor') * F('cantidad')),
+                When(distribuidor__rol='REVENDEDOR', then=F('producto__precio_revendedor') * F('cantidad')),
+                default=F('producto__precio') * F('cantidad'),
+            ),
+            default=0
+        )
     )['total'] or 0
     
     total_ventas_asignacion_anterior = asignaciones_mes_anterior.aggregate(
-        total=Sum(F('producto__precio_distribuidor') * F('cantidad'), default=0)
+        total=Sum(
+            Case(
+                When(distribuidor__rol='DISTRIBUIDOR', then=F('producto__precio_distribuidor') * F('cantidad')),
+                When(distribuidor__rol='REVENDEDOR', then=F('producto__precio_revendedor') * F('cantidad')),
+                default=F('producto__precio') * F('cantidad'),
+            ),
+            default=0
+        )
     )['total'] or 1
     
     # Costos Web
@@ -143,7 +158,13 @@ def asignar_view(request):
     ).annotate(
         tipo=Value('Asignación', output_field=CharField()),
         unidades=Sum('cantidad'),
-        ingresos=Sum(F('producto__precio_distribuidor') * F('cantidad')),
+        ingresos=Sum(
+            Case(
+                When(distribuidor__rol='DISTRIBUIDOR', then=F('producto__precio_distribuidor') * F('cantidad')),
+                When(distribuidor__rol='REVENDEDOR', then=F('producto__precio_revendedor') * F('cantidad')),
+                default=F('producto__precio') * F('cantidad'),
+            )
+        ),
         costos=Sum(F('producto__costo') * F('cantidad')),
         ganancia=F('ingresos') - F('costos')
     )
