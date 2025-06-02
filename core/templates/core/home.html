@@ -606,7 +606,7 @@
 
     // Modal logic with animations
     document.addEventListener('DOMContentLoaded', function() {
-    function openModal(modalId) {
+    function openModal(modalId, event) {
         const modal = document.getElementById(modalId);
         const modalContent = modal.querySelector('.bg-white');
         
@@ -619,15 +619,21 @@
             
             // Show modal container with fade
             modal.classList.remove('hidden');
+            
+            // Calcular la posición del modal basada en el botón que lo activó
+            const buttonRect = event.currentTarget.getBoundingClientRect();
+            const modalRect = modalContent.getBoundingClientRect();
+            
+            // Ajustar la posición del scroll para que el modal aparezca cerca del botón
+            const targetScrollTop = window.scrollY + buttonRect.top - 100; // 100px arriba del botón
+            window.scrollTo({
+                top: targetScrollTop,
+                behavior: 'smooth'
+            });
+            
             setTimeout(() => {
                 modal.classList.add('opacity-100');
                 modalContent.classList.add('opacity-100', 'scale-100');
-                
-                // Centrar el modal en la ventana visible
-                const viewportHeight = window.innerHeight;
-                const modalHeight = modalContent.offsetHeight;
-                const scrollTop = Math.max(0, (viewportHeight - modalHeight) / 2);
-                modal.scrollTop = scrollTop;
             }, 10);
         }
     }
@@ -659,9 +665,9 @@
         // Asignar eventos a las tarjetas
         const modalTriggers = document.querySelectorAll('[aria-controls]');
         modalTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function() {
+            trigger.addEventListener('click', function(event) {
                 const modalId = trigger.getAttribute('aria-controls');
-                openModal(modalId);
+                openModal(modalId, event);
             });
         });
         
