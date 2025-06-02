@@ -78,7 +78,7 @@
                                     <i class="fas fa-user-tie text-green-600"></i>
                                     <span>Distribuidor</span>
                                 </label>
-                                {{ form.distribuidor|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {{ form.distribuidor }}
                                 {% if form.distribuidor.errors %}
                                     <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
                                         <i class="fas fa-exclamation-circle"></i>
@@ -91,7 +91,7 @@
                                     <i class="fas fa-box text-green-600"></i>
                                     <span>Producto</span>
                                 </label>
-                                {{ form.producto|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {{ form.producto }}
                                 {% if form.producto.errors %}
                                     <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
                                         <i class="fas fa-exclamation-circle"></i>
@@ -104,7 +104,7 @@
                                     <i class="fas fa-hashtag text-green-600"></i>
                                     <span>Cantidad</span>
                                 </label>
-                                {{ form.cantidad|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {{ form.cantidad }}
                                 {% if form.cantidad.errors %}
                                     <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
                                         <i class="fas fa-exclamation-circle"></i>
@@ -117,7 +117,7 @@
                                     <i class="fas fa-credit-card text-green-600"></i>
                                     <span>Plan de Pago</span>
                                 </label>
-                                {{ form.plan_pago|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {{ form.plan_pago }}
                                 {% if form.plan_pago.errors %}
                                     <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
                                         <i class="fas fa-exclamation-circle"></i>
