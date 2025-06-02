@@ -182,61 +182,6 @@
         <!-- Tab Content: Ventas -->
         <div id="ventasTab" class="hidden">
             <div class="p-6">
-                <!-- Métricas de Ventas Web -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <!-- Total Ventas -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Ventas Web</p>
-                                <p class="text-2xl font-bold text-green-600">${{ total_ventas|floatformat:2 }} ARS</p>
-                            </div>
-                            <div class="bg-green-100 rounded-full p-3">
-                                <i class="fas fa-shopping-cart text-green-600 text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Costos -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Costos</p>
-                                <p class="text-2xl font-bold text-red-600">${{ costos_totales|floatformat:2 }} ARS</p>
-                            </div>
-                            <div class="bg-red-100 rounded-full p-3">
-                                <i class="fas fa-tags text-red-600 text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ganancias -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Ganancias</p>
-                                <p class="text-2xl font-bold text-blue-600">${{ ganancias_netas|floatformat:2 }} ARS</p>
-                            </div>
-                            <div class="bg-blue-100 rounded-full p-3">
-                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Clientes -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Clientes</p>
-                                <p class="text-2xl font-bold text-purple-600">{{ total_clientes }}</p>
-                            </div>
-                            <div class="bg-purple-100 rounded-full p-3">
-                                <i class="fas fa-users text-purple-600 text-xl"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Tabla de Ventas Web -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="px-6 py-4 bg-green-700">
@@ -319,74 +264,82 @@
         <!-- Tab Content: Finanzas -->
         <div id="finanzasTab" class="hidden">
             <div class="p-6">
-                <!-- Resumen Financiero Consolidado -->
-                <div class="mb-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Total Ventas Consolidado -->
+                <!-- Métricas de Ventas Web -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <!-- Total Ventas -->
                     <div class="bg-white rounded-lg shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-gray-500">Total Ventas Consolidado</p>
-                                <p class="text-2xl font-bold text-green-600">${{ finanzas_total_sales|floatformat:2 }} ARS</p>
+                                <p class="text-sm font-medium text-gray-500">Total Ventas Web</p>
+                                <p class="text-2xl font-bold text-green-600">${{ total_ventas|floatformat:2 }} ARS</p>
                             </div>
                             <div class="bg-green-100 rounded-full p-3">
-                                <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                                <i class="fas fa-shopping-cart text-green-600 text-xl"></i>
                             </div>
                         </div>
+                        <p class="mt-2 text-sm text-gray-500">
+                            {% if porcentaje_cambio_ventas > 0 %}
+                                <span class="text-green-600">↑ {{ porcentaje_cambio_ventas|floatformat:1 }}%</span>
+                            {% else %}
+                                <span class="text-red-600">↓ {{ porcentaje_cambio_ventas|abs|floatformat:1 }}%</span>
+                            {% endif %}
+                            vs mes anterior
+                        </p>
                     </div>
 
-                    <!-- Costos Totales Consolidados -->
+                    <!-- Costos -->
                     <div class="bg-white rounded-lg shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-gray-500">Costos Totales</p>
-                                <p class="text-2xl font-bold text-red-600">${{ finanzas_total_cost|floatformat:2 }} ARS</p>
+                                <p class="text-sm font-medium text-gray-500">Costos</p>
+                                <p class="text-2xl font-bold text-red-600">${{ costos_totales|floatformat:2 }} ARS</p>
                             </div>
                             <div class="bg-red-100 rounded-full p-3">
-                                <i class="fas fa-chart-line text-red-600 text-xl"></i>
+                                <i class="fas fa-tags text-red-600 text-xl"></i>
                             </div>
                         </div>
                         <p class="mt-2 text-sm text-gray-500">
-                            {{ finanzas_cost_percent|floatformat:1 }}% del total de ventas
+                            {{ porcentaje_costos|floatformat:1 }}% del total de ventas
                         </p>
                     </div>
 
-                    <!-- Ganancias Netas Consolidadas -->
+                    <!-- Ganancias -->
                     <div class="bg-white rounded-lg shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-gray-500">Ganancias Netas</p>
-                                <p class="text-2xl font-bold text-blue-600">${{ finanzas_total_profit|floatformat:2 }} ARS</p>
+                                <p class="text-sm font-medium text-gray-500">Ganancias</p>
+                                <p class="text-2xl font-bold text-blue-600">${{ ganancias_netas|floatformat:2 }} ARS</p>
                             </div>
                             <div class="bg-blue-100 rounded-full p-3">
-                                <i class="fas fa-chart-pie text-blue-600 text-xl"></i>
+                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
                             </div>
                         </div>
                         <p class="mt-2 text-sm text-gray-500">
-                            Margen: {{ finanzas_profit_margin|floatformat:1 }}%
+                            Margen: {{ margen_ganancia|floatformat:1 }}%
                         </p>
                     </div>
 
-                    <!-- Desglose de Ventas -->
+                    <!-- Clientes -->
                     <div class="bg-white rounded-lg shadow-lg p-6">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm font-medium text-gray-500">Desglose de Ventas</p>
-                                <div class="mt-2">
-                                    <p class="text-sm">Web: ${{ total_ventas_web|floatformat:2 }}</p>
-                                    <p class="text-sm">Asignaciones: ${{ total_ventas|floatformat:2 }}</p>
-                                </div>
+                                <p class="text-sm font-medium text-gray-500">Total Clientes</p>
+                                <p class="text-2xl font-bold text-purple-600">{{ total_clientes }}</p>
                             </div>
                             <div class="bg-purple-100 rounded-full p-3">
-                                <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
+                                <i class="fas fa-users text-purple-600 text-xl"></i>
                             </div>
                         </div>
+                        <p class="mt-2 text-sm text-gray-500">
+                            {{ porcentaje_clientes_registrados|floatformat:1 }}% registrados
+                        </p>
                     </div>
                 </div>
 
-                <!-- Tabla de Resumen -->
+                <!-- Productos Más Vendidos -->
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden mt-6">
                     <div class="px-6 py-4 bg-green-700">
-                        <h2 class="text-2xl font-bold text-white">Resumen Financiero</h2>
+                        <h2 class="text-2xl font-bold text-white">Productos Más Vendidos</h2>
                     </div>
                     <div class="p-6">
                         <div class="overflow-x-auto">
@@ -394,65 +347,36 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Categoría
+                                            Producto
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Ventas Web
+                                            Unidades Vendidas
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Asignaciones
-                                        </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Total
+                                            Ingresos
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    <!-- Ventas -->
-                                    <tr>
+                                    {% for producto in productos_top %}
+                                    <tr class="hover:bg-gray-50">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                            Ventas Totales
+                                            {{ producto.nombre }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            ${{ total_ventas_web|floatformat:2 }}
+                                            {{ producto.unidades }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            ${{ total_ventas|floatformat:2 }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-green-600 font-semibold">
-                                            ${{ finanzas_total_sales|floatformat:2 }}
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            ${{ producto.ingresos|floatformat:2 }} ARS
                                         </td>
                                     </tr>
-                                    <!-- Costos -->
+                                    {% empty %}
                                     <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                            Costos
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            ${{ costos_totales_web|floatformat:2 }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            ${{ costo_total|floatformat:2 }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-red-600 font-semibold">
-                                            ${{ finanzas_total_cost|floatformat:2 }}
+                                        <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">
+                                            No hay datos de ventas disponibles.
                                         </td>
                                     </tr>
-                                    <!-- Ganancias -->
-                                    <tr>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                            Ganancias
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            ${{ ganancias_netas_web|floatformat:2 }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            ${{ ganancia|floatformat:2 }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-blue-600 font-semibold">
-                                            ${{ finanzas_total_profit|floatformat:2 }}
-                                        </td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
