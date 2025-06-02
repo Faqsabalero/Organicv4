@@ -74,26 +74,40 @@ def asignar_view(request):
         total=Sum(F('producto__precio') * F('cantidad'), default=0)
     )['total'] or 1
     
+    # Métricas de Ventas Web
+    ganancias_web = total_ventas_web - costos_web
+    porcentaje_costos_web = (costos_web / total_ventas_web * 100) if total_ventas_web else 0
+    margen_ganancia_web = (ganancias_web / total_ventas_web * 100) if total_ventas_web else 0
+    
+    # Métricas de Asignaciones
+    ganancias_asignacion = total_ventas_asignacion - costos_asignacion
+    porcentaje_costos_asignacion = (costos_asignacion / total_ventas_asignacion * 100) if total_ventas_asignacion else 0
+    margen_ganancia_asignacion = (ganancias_asignacion / total_ventas_asignacion * 100) if total_ventas_asignacion else 0
+    
+    porcentaje_cambio_asignaciones = ((total_ventas_asignacion - total_ventas_asignacion_anterior) / total_ventas_asignacion_anterior * 100)
+    
+    # Métricas de Distribuidores
+    total_distribuidores = CustomUser.objects.filter(rol='DISTRIBUIDOR').count()
+    distribuidores_activos = Asignacion.objects.filter(
+        fecha_asignacion__month=mes_actual
+    ).values('distribuidor').distinct().count()
+    
+    porcentaje_distribuidores_activos = (distribuidores_activos / total_distribuidores * 100) if total_distribuidores else 0
+    
     # Totales Combinados
     total_ventas = total_ventas_web + total_ventas_asignacion
     total_ventas_anterior = total_ventas_web_anterior + total_ventas_asignacion_anterior
     
     porcentaje_cambio_ventas = ((total_ventas - total_ventas_anterior) / total_ventas_anterior) * 100
     
-    # Costos y Ganancias
-    costos_web = ventas_web_mes.aggregate(
-        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
-    )['costos'] or 0
-    
-    costos_asignacion = asignaciones_mes.aggregate(
-        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
-    )['costos'] or 0
-    
     costos_totales = costos_web + costos_asignacion
     ganancias_netas = total_ventas - costos_totales
     
     porcentaje_costos = (costos_totales / total_ventas * 100) if total_ventas else 0
     margen_ganancia = (ganancias_netas / total_ventas * 100) if total_ventas else 0
+    
+    porcentaje_ventas_web = (total_ventas_web / total_ventas * 100) if total_ventas else 0
+    porcentaje_ventas_asignacion = (total_ventas_asignacion / total_ventas * 100) if total_ventas else 0
     
     # Métricas de Clientes
     total_clientes = ventas_web.values('email_comprador').distinct().count()
@@ -137,12 +151,31 @@ def asignar_view(request):
         'panel_title': panel_title,
         # Datos de ventas web
         'ventas': ventas_web.order_by('-fecha_venta'),
+        'total_ventas_web': total_ventas_web,
+        'costos_web': costos_web,
+        'ganancias_web': ganancias_web,
+        'porcentaje_costos_web': porcentaje_costos_web,
+        'margen_ganancia_web': margen_ganancia_web,
+        # Datos de asignaciones
+        'total_ventas_asignacion': total_ventas_asignacion,
+        'costos_asignacion': costos_asignacion,
+        'ganancias_asignacion': ganancias_asignacion,
+        'porcentaje_costos_asignacion': porcentaje_costos_asignacion,
+        'margen_ganancia_asignacion': margen_ganancia_asignacion,
+        'porcentaje_cambio_asignaciones': porcentaje_cambio_asignaciones,
+        'total_distribuidores': total_distribuidores,
+        'distribuidores_activos': distribuidores_activos,
+        'porcentaje_distribuidores_activos': porcentaje_distribuidores_activos,
+        # Totales combinados
         'total_ventas': total_ventas,
         'porcentaje_cambio_ventas': porcentaje_cambio_ventas,
         'costos_totales': costos_totales,
         'ganancias_netas': ganancias_netas,
         'porcentaje_costos': porcentaje_costos,
         'margen_ganancia': margen_ganancia,
+        'porcentaje_ventas_web': porcentaje_ventas_web,
+        'porcentaje_ventas_asignacion': porcentaje_ventas_asignacion,
+        # Datos de clientes
         'total_clientes': total_clientes,
         'porcentaje_clientes_registrados': porcentaje_clientes_registrados,
         'productos_top': productos_top,

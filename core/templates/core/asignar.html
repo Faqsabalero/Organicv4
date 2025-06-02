@@ -265,74 +265,207 @@
         <div id="finanzasTab" class="hidden">
             <div class="p-6">
                 <!-- Métricas de Ventas Web -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <!-- Total Ventas -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Ventas Web</p>
-                                <p class="text-2xl font-bold text-green-600">${{ total_ventas|floatformat:2 }} ARS</p>
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-green-700 mb-4">Métricas de Ventas Web</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <!-- Total Ventas Web -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Total Ventas Web</p>
+                                    <p class="text-2xl font-bold text-green-600">${{ total_ventas_web|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-green-100 rounded-full p-3">
+                                    <i class="fas fa-shopping-cart text-green-600 text-xl"></i>
+                                </div>
                             </div>
-                            <div class="bg-green-100 rounded-full p-3">
-                                <i class="fas fa-shopping-cart text-green-600 text-xl"></i>
-                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                {% if porcentaje_cambio_ventas > 0 %}
+                                    <span class="text-green-600">↑ {{ porcentaje_cambio_ventas|floatformat:1 }}%</span>
+                                {% else %}
+                                    <span class="text-red-600">↓ {{ porcentaje_cambio_ventas|abs_value|floatformat:1 }}%</span>
+                                {% endif %}
+                                vs mes anterior
+                            </p>
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">
-                            {% if porcentaje_cambio_ventas > 0 %}
-                                <span class="text-green-600">↑ {{ porcentaje_cambio_ventas|floatformat:1 }}%</span>
-                            {% else %}
-                                <span class="text-red-600">↓ {{ porcentaje_cambio_ventas|abs_value|floatformat:1 }}%</span>
-                            {% endif %}
-                            vs mes anterior
-                        </p>
-                    </div>
 
-                    <!-- Costos -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Costos</p>
-                                <p class="text-2xl font-bold text-red-600">${{ costos_totales|floatformat:2 }} ARS</p>
+                        <!-- Costos Web -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Costos Web</p>
+                                    <p class="text-2xl font-bold text-red-600">${{ costos_web|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-red-100 rounded-full p-3">
+                                    <i class="fas fa-tags text-red-600 text-xl"></i>
+                                </div>
                             </div>
-                            <div class="bg-red-100 rounded-full p-3">
-                                <i class="fas fa-tags text-red-600 text-xl"></i>
-                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                {{ porcentaje_costos_web|floatformat:1 }}% del total web
+                            </p>
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">
-                            {{ porcentaje_costos|floatformat:1 }}% del total de ventas
-                        </p>
-                    </div>
 
-                    <!-- Ganancias -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Ganancias</p>
-                                <p class="text-2xl font-bold text-blue-600">${{ ganancias_netas|floatformat:2 }} ARS</p>
+                        <!-- Ganancias Web -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Ganancias Web</p>
+                                    <p class="text-2xl font-bold text-blue-600">${{ ganancias_web|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-blue-100 rounded-full p-3">
+                                    <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                                </div>
                             </div>
-                            <div class="bg-blue-100 rounded-full p-3">
-                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
-                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                Margen: {{ margen_ganancia_web|floatformat:1 }}%
+                            </p>
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">
-                            Margen: {{ margen_ganancia|floatformat:1 }}%
-                        </p>
-                    </div>
 
-                    <!-- Clientes -->
-                    <div class="bg-white rounded-lg shadow-lg p-6">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm font-medium text-gray-500">Total Clientes</p>
-                                <p class="text-2xl font-bold text-purple-600">{{ total_clientes }}</p>
+                        <!-- Clientes Web -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Total Clientes Web</p>
+                                    <p class="text-2xl font-bold text-purple-600">{{ total_clientes }}</p>
+                                </div>
+                                <div class="bg-purple-100 rounded-full p-3">
+                                    <i class="fas fa-users text-purple-600 text-xl"></i>
+                                </div>
                             </div>
-                            <div class="bg-purple-100 rounded-full p-3">
-                                <i class="fas fa-users text-purple-600 text-xl"></i>
-                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                {{ porcentaje_clientes_registrados|floatformat:1 }}% registrados
+                            </p>
                         </div>
-                        <p class="mt-2 text-sm text-gray-500">
-                            {{ porcentaje_clientes_registrados|floatformat:1 }}% registrados
-                        </p>
+                    </div>
+                </div>
+
+                <!-- Métricas de Asignaciones -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-green-700 mb-4">Métricas de Asignaciones</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                        <!-- Total Asignaciones -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Total Asignaciones</p>
+                                    <p class="text-2xl font-bold text-green-600">${{ total_ventas_asignacion|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-green-100 rounded-full p-3">
+                                    <i class="fas fa-handshake text-green-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                {% if porcentaje_cambio_asignaciones > 0 %}
+                                    <span class="text-green-600">↑ {{ porcentaje_cambio_asignaciones|floatformat:1 }}%</span>
+                                {% else %}
+                                    <span class="text-red-600">↓ {{ porcentaje_cambio_asignaciones|abs_value|floatformat:1 }}%</span>
+                                {% endif %}
+                                vs mes anterior
+                            </p>
+                        </div>
+
+                        <!-- Costos Asignaciones -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Costos Asignaciones</p>
+                                    <p class="text-2xl font-bold text-red-600">${{ costos_asignacion|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-red-100 rounded-full p-3">
+                                    <i class="fas fa-tags text-red-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                {{ porcentaje_costos_asignacion|floatformat:1 }}% del total asignaciones
+                            </p>
+                        </div>
+
+                        <!-- Ganancias Asignaciones -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Ganancias Asignaciones</p>
+                                    <p class="text-2xl font-bold text-blue-600">${{ ganancias_asignacion|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-blue-100 rounded-full p-3">
+                                    <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                Margen: {{ margen_ganancia_asignacion|floatformat:1 }}%
+                            </p>
+                        </div>
+
+                        <!-- Distribuidores -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Total Distribuidores</p>
+                                    <p class="text-2xl font-bold text-purple-600">{{ total_distribuidores }}</p>
+                                </div>
+                                <div class="bg-purple-100 rounded-full p-3">
+                                    <i class="fas fa-user-tie text-purple-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                {{ porcentaje_distribuidores_activos|floatformat:1 }}% activos
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Totales Combinados -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-green-700 mb-4">Totales Combinados</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Total General -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Total General</p>
+                                    <p class="text-2xl font-bold text-green-600">${{ total_ventas|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-green-100 rounded-full p-3">
+                                    <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                Ventas Web: {{ porcentaje_ventas_web|floatformat:1 }}% | 
+                                Asignaciones: {{ porcentaje_ventas_asignacion|floatformat:1 }}%
+                            </p>
+                        </div>
+
+                        <!-- Costos Totales -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Costos Totales</p>
+                                    <p class="text-2xl font-bold text-red-600">${{ costos_totales|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-red-100 rounded-full p-3">
+                                    <i class="fas fa-file-invoice-dollar text-red-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                {{ porcentaje_costos|floatformat:1 }}% del total general
+                            </p>
+                        </div>
+
+                        <!-- Ganancias Totales -->
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500">Ganancias Totales</p>
+                                    <p class="text-2xl font-bold text-blue-600">${{ ganancias_netas|floatformat:2 }} ARS</p>
+                                </div>
+                                <div class="bg-blue-100 rounded-full p-3">
+                                    <i class="fas fa-chart-pie text-blue-600 text-xl"></i>
+                                </div>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                Margen: {{ margen_ganancia|floatformat:1 }}%
+                            </p>
+                        </div>
                     </div>
                 </div>
 
