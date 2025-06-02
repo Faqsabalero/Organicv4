@@ -4,98 +4,133 @@
 {% block title %}Panel de Administración - Organic Shops{% endblock %}
 
 {% block content %}
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <!-- Header -->
-        <div class="px-6 py-4 bg-green-700">
-            <h2 class="text-2xl font-bold text-white">{{ panel_title }}</h2>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-gray-50">
+    <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
+        <!-- Header con gradiente -->
+        <div class="px-6 py-6 bg-gradient-to-r from-green-600 to-green-700">
+            <h2 class="text-3xl font-bold text-white tracking-tight">{{ panel_title }}</h2>
         </div>
 
-        <!-- Tabs -->
-        <div class="border-b border-gray-200">
-            <nav class="flex -mb-px" aria-label="Tabs">
+        <!-- Tabs con diseño mejorado -->
+        <div class="border-b border-gray-200 bg-white">
+            <nav class="flex -mb-px px-4" aria-label="Tabs">
                 <button onclick="showTab('asignaciones')" 
-                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600">
-                    Asignaciones
+                        class="tab-button w-1/3 py-5 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600 transition-all duration-200 ease-in-out hover:bg-green-50">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-clipboard-list"></i>
+                        <span>Asignaciones</span>
+                    </div>
                 </button>
                 <button onclick="showTab('ventas')" 
-                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                    Ventas
+                        class="tab-button w-1/3 py-5 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 transition-all duration-200 ease-in-out hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Ventas</span>
+                    </div>
                 </button>
                 <button onclick="showTab('finanzas')" 
-                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
-                    Finanzas
+                        class="tab-button w-1/3 py-5 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 transition-all duration-200 ease-in-out hover:text-gray-700 hover:border-gray-300 hover:bg-gray-50">
+                    <div class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Finanzas</span>
+                    </div>
                 </button>
             </nav>
         </div>
 
         <!-- Tab Content: Asignaciones -->
         <div id="asignacionesTab">
-            <!-- Acciones Administrativas -->
-            <div class="p-6 bg-white border-b border-gray-200 flex justify-between items-center">
-                <div class="flex space-x-4">
-                    <button onclick="toggleAsignacionForm()" class="px-6 py-2 bg-green-700 text-white font-semibold rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition flex items-center space-x-2">
-                        <i class="fas fa-plus"></i>
-                        <span>Asignar Stock</span>
-                    </button>
-                    <a href="{% url 'core:register' %}" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition flex items-center space-x-2">
-                        <i class="fas fa-user-plus"></i>
-                        <span>Registrar Usuario</span>
-                    </a>
+            <!-- Acciones Administrativas con diseño mejorado -->
+            <div class="p-8 bg-white border-b border-gray-200">
+                <div class="flex justify-between items-center">
+                    <div class="flex space-x-4">
+                        <button onclick="toggleAsignacionForm()" 
+                                class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center space-x-3 shadow-lg">
+                            <i class="fas fa-plus-circle text-lg"></i>
+                            <span>Asignar Stock</span>
+                        </button>
+                        <a href="{% url 'core:register' %}" 
+                           class="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center space-x-3 shadow-lg">
+                            <i class="fas fa-user-plus text-lg"></i>
+                            <span>Registrar Usuario</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <!-- Formulario de Asignación -->
-            <div id="formAsignacion" class="p-6 bg-white border-b border-gray-200 hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-semibold text-green-700">Nueva Asignación</h3>
-                    <button onclick="toggleAsignacionForm()" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times"></i>
+            <!-- Formulario de Asignación con diseño mejorado -->
+            <div id="formAsignacion" class="p-8 bg-white border-b border-gray-200 hidden">
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-clipboard-check text-2xl text-green-600"></i>
+                        <h3 class="text-2xl font-bold text-gray-800">Nueva Asignación</h3>
+                    </div>
+                    <button onclick="toggleAsignacionForm()" class="text-gray-400 hover:text-gray-600 transition-colors duration-200">
+                        <i class="fas fa-times text-xl"></i>
                     </button>
                 </div>
-                <form method="post" class="space-y-6">
+                <form method="post" class="space-y-8">
                     {% csrf_token %}
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="{{ form.distribuidor.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                                Distribuidor
-                            </label>
-                            {{ form.distribuidor }}
-                            {% if form.distribuidor.errors %}
-                                <p class="text-red-600 text-sm mt-1">{{ form.distribuidor.errors.0 }}</p>
-                            {% endif %}
-                        </div>
-                        <div>
-                            <label for="{{ form.producto.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                                Producto
-                            </label>
-                            {{ form.producto }}
-                            {% if form.producto.errors %}
-                                <p class="text-red-600 text-sm mt-1">{{ form.producto.errors.0 }}</p>
-                            {% endif %}
-                        </div>
-                        <div>
-                            <label for="{{ form.cantidad.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                                Cantidad
-                            </label>
-                            {{ form.cantidad }}
-                            {% if form.cantidad.errors %}
-                                <p class="text-red-600 text-sm mt-1">{{ form.cantidad.errors.0 }}</p>
-                            {% endif %}
-                        </div>
-                        <div>
-                            <label for="{{ form.plan_pago.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
-                                Plan de Pago
-                            </label>
-                            {{ form.plan_pago }}
-                            {% if form.plan_pago.errors %}
-                                <p class="text-red-600 text-sm mt-1">{{ form.plan_pago.errors.0 }}</p>
-                            {% endif %}
+                    <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-2">
+                                <label for="{{ form.distribuidor.id_for_label }}" class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                                    <i class="fas fa-user-tie text-green-600"></i>
+                                    <span>Distribuidor</span>
+                                </label>
+                                {{ form.distribuidor|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {% if form.distribuidor.errors %}
+                                    <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <span>{{ form.distribuidor.errors.0 }}</span>
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="space-y-2">
+                                <label for="{{ form.producto.id_for_label }}" class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                                    <i class="fas fa-box text-green-600"></i>
+                                    <span>Producto</span>
+                                </label>
+                                {{ form.producto|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {% if form.producto.errors %}
+                                    <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <span>{{ form.producto.errors.0 }}</span>
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="space-y-2">
+                                <label for="{{ form.cantidad.id_for_label }}" class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                                    <i class="fas fa-hashtag text-green-600"></i>
+                                    <span>Cantidad</span>
+                                </label>
+                                {{ form.cantidad|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {% if form.cantidad.errors %}
+                                    <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <span>{{ form.cantidad.errors.0 }}</span>
+                                    </p>
+                                {% endif %}
+                            </div>
+                            <div class="space-y-2">
+                                <label for="{{ form.plan_pago.id_for_label }}" class="flex items-center space-x-2 text-sm font-medium text-gray-700">
+                                    <i class="fas fa-credit-card text-green-600"></i>
+                                    <span>Plan de Pago</span>
+                                </label>
+                                {{ form.plan_pago|addclass:"mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500 sm:text-sm transition duration-150 ease-in-out" }}
+                                {% if form.plan_pago.errors %}
+                                    <p class="flex items-center space-x-1 text-red-600 text-sm mt-1">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                        <span>{{ form.plan_pago.errors.0 }}</span>
+                                    </p>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                    <div class="flex justify-end mt-6">
-                        <button type="submit" class="px-6 py-2 bg-green-700 text-white font-semibold rounded-md hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition">
-                            Crear Asignación
+                    <div class="flex justify-end mt-8">
+                        <button type="submit" class="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105 shadow-lg flex items-center space-x-2">
+                            <i class="fas fa-save"></i>
+                            <span>Crear Asignación</span>
                         </button>
                     </div>
                 </form>
@@ -157,78 +192,134 @@
                     </div>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
+                <div class="overflow-x-auto rounded-lg shadow">
+                    <table class="min-w-full divide-y divide-gray-200 bg-white">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fecha
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-calendar text-green-600"></i>
+                                        <span>Fecha</span>
+                                    </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Creado por
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-user text-green-600"></i>
+                                        <span>Creado por</span>
+                                    </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Distribuidor
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-user-tie text-green-600"></i>
+                                        <span>Distribuidor</span>
+                                    </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Producto
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-box text-green-600"></i>
+                                        <span>Producto</span>
+                                    </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Cantidad
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-hashtag text-green-600"></i>
+                                        <span>Cantidad</span>
+                                    </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Plan de Pago
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-credit-card text-green-600"></i>
+                                        <span>Plan de Pago</span>
+                                    </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Estado
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-tag text-green-600"></i>
+                                        <span>Estado</span>
+                                    </div>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Acciones
+                                <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fas fa-cog text-green-600"></i>
+                                        <span>Acciones</span>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             {% for asignacion in asignaciones %}
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ asignacion.fecha_asignacion|date:"d/m/Y H:i" }}
-                                </td>
+                            <tr class="hover:bg-gray-50 transition-colors duration-150">
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">
-                                        {% if asignacion.admin.rol == 'ADMIN' %}
-                                            Administrador: {{ asignacion.admin.username }}
-                                        {% elif asignacion.admin.rol == 'SUPERUSUARIO' %}
-                                            Superusuario: {{ asignacion.admin.username }}
-                                        {% else %}
-                                            {{ asignacion.admin.get_rol_display }}: {{ asignacion.admin.username }}
-                                        {% endif %}
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-calendar-alt text-green-500 mr-2"></i>
+                                        {{ asignacion.fecha_asignacion|date:"d/m/Y H:i" }}
                                     </div>
-                                    <div class="text-sm text-gray-500">{{ asignacion.admin.email }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">{{ asignacion.distribuidor.username }}</div>
-                                    <div class="text-sm text-gray-500">{{ asignacion.distribuidor.email }}</div>
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-8 w-8 bg-green-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-user text-green-600"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {% if asignacion.admin.rol == 'ADMIN' %}
+                                                    Administrador: {{ asignacion.admin.username }}
+                                                {% elif asignacion.admin.rol == 'SUPERUSUARIO' %}
+                                                    Superusuario: {{ asignacion.admin.username }}
+                                                {% else %}
+                                                    {{ asignacion.admin.get_rol_display }}: {{ asignacion.admin.username }}
+                                                {% endif %}
+                                            </div>
+                                            <div class="text-sm text-gray-500">{{ asignacion.admin.email }}</div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900">{{ asignacion.producto.nombre }}</div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ asignacion.cantidad }}
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-user-tie text-blue-600"></i>
+                                        </div>
+                                        <div class="ml-3">
+                                            <div class="text-sm font-medium text-gray-900">{{ asignacion.distribuidor.username }}</div>
+                                            <div class="text-sm text-gray-500">{{ asignacion.distribuidor.email }}</div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                        {{ asignacion.get_plan_pago_display }}
+                                    <div class="flex items-center text-sm text-gray-900">
+                                        <i class="fas fa-box text-purple-500 mr-2"></i>
+                                        {{ asignacion.producto.nombre }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-hashtag text-gray-400 mr-2"></i>
+                                        {{ asignacion.cantidad }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-3 py-1 inline-flex items-center space-x-1 text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        <i class="fas fa-credit-card"></i>
+                                        <span>{{ asignacion.get_plan_pago_display }}</span>
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
-                                        {{ asignacion.get_estado_display }}
+                                    <span class="px-3 py-1 inline-flex items-center space-x-1 text-xs leading-5 font-semibold rounded-full 
+                                        {% if asignacion.estado == 'PAGADO' %}
+                                            bg-green-100 text-green-800
+                                        {% else %}
+                                            bg-yellow-100 text-yellow-800
+                                        {% endif %}">
+                                        <i class="fas {% if asignacion.estado == 'PAGADO' %}fa-check-circle{% else %}fa-clock{% endif %}"></i>
+                                        <span>{{ asignacion.get_estado_display }}</span>
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <form action="{% url 'core:cambiar_estado' asignacion.id %}" method="post" class="inline">
                                         {% csrf_token %}
-                                        <button type="submit" class="text-sm text-blue-600 hover:text-blue-900">
+                                        <button type="submit" 
+                                                class="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-150">
+                                            <i class="fas fa-exchange-alt mr-1"></i>
                                             Cambiar Estado
                                         </button>
                                     </form>
@@ -236,8 +327,11 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="8" class="px-6 py-4 text-center text-sm text-gray-500">
-                                    No hay asignaciones registradas.
+                                <td colspan="8" class="px-6 py-8 text-center">
+                                    <div class="flex flex-col items-center justify-center text-gray-500">
+                                        <i class="fas fa-inbox text-4xl mb-2"></i>
+                                        <p class="text-lg">No hay asignaciones registradas.</p>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}
