@@ -67,11 +67,11 @@ def asignar_view(request):
     asignaciones_mes_anterior = asignaciones_pagadas.filter(fecha_asignacion__month=mes_anterior)
     
     total_ventas_asignacion = asignaciones_mes.aggregate(
-        total=Sum(F('producto__precio') * F('cantidad'), default=0)
+        total=Sum(F('producto__precio_distribuidor') * F('cantidad'), default=0)
     )['total'] or 0
     
     total_ventas_asignacion_anterior = asignaciones_mes_anterior.aggregate(
-        total=Sum(F('producto__precio') * F('cantidad'), default=0)
+        total=Sum(F('producto__precio_distribuidor') * F('cantidad'), default=0)
     )['total'] or 1
     
     # Costos Web
@@ -143,7 +143,7 @@ def asignar_view(request):
     ).annotate(
         tipo=Value('Asignación', output_field=CharField()),
         unidades=Sum('cantidad'),
-        ingresos=Sum(F('producto__precio') * F('cantidad')),
+        ingresos=Sum(F('producto__precio_distribuidor') * F('cantidad')),
         costos=Sum(F('producto__costo') * F('cantidad')),
         ganancia=F('ingresos') - F('costos')
     )
