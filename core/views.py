@@ -74,6 +74,16 @@ def asignar_view(request):
         total=Sum(F('producto__precio') * F('cantidad'), default=0)
     )['total'] or 1
     
+    # Costos Web
+    costos_web = ventas_web_mes.aggregate(
+        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
+    )['costos'] or 0
+    
+    # Costos Asignaciones
+    costos_asignacion = asignaciones_mes.aggregate(
+        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
+    )['costos'] or 0
+    
     # Métricas de Ventas Web
     ganancias_web = total_ventas_web - costos_web
     porcentaje_costos_web = (costos_web / total_ventas_web * 100) if total_ventas_web else 0
