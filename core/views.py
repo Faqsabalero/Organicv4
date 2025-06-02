@@ -194,6 +194,16 @@ def asignar_view(request):
     return render(request, 'core/asignar.html', context)
 
 @login_required
+def gestionar_productos_view(request):
+    """Vista para gestionar productos"""
+    # Verificar que el usuario sea admin o superusuario
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return redirect('core:home')
+    
+    productos = Producto.objects.all().order_by('nombre')
+    return render(request, 'core/gestionar_productos.html', {'productos': productos})
+
+@login_required
 def editar_producto_view(request, producto_id):
     """Vista para editar un producto"""
     # Verificar que el usuario sea admin o superusuario

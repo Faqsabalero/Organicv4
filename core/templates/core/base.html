@@ -36,6 +36,7 @@
                 {% if user.is_authenticated %}
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
                         <a href="{% url 'core:asignar' %}" class="hover:text-green-300 transition">Mi Panel</a>
+                        <a href="{% url 'core:gestionar_productos' %}" class="hover:text-green-300 transition">Gestionar Productos</a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
                         <a href="{% url 'core:distribuidor' %}" class="hover:text-green-300 transition">Mi Panel</a>
                     {% elif user.rol == 'REVENDEDOR' %}
@@ -77,7 +78,7 @@
                 <i class="fas fa-bars fa-lg"></i>
             </button>
         </div>
-
+</p>
         <!-- Mobile menu -->
         <nav id="mobile-menu" class="md:hidden bg-white border-t border-gray-200 hidden">
             <a href="{% url 'core:home' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
@@ -109,6 +110,9 @@
                         </div>
                         <a href="{% url 'core:asignar' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
                             Panel Principal
+                        </a>
+                        <a href="{% url 'core:gestionar_productos' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
+                            Gestionar Productos
                         </a>
                         <a href="{% url 'core:ventas_web' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600">
                             Ventas WEB
