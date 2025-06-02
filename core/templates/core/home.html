@@ -151,8 +151,8 @@
 </section>
 
 <!-- Modales -->
-<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto" id="investigation-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-20 pb-20" id="investigation-modal" role="dialog">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300 max-h-[80vh] overflow-y-auto">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -179,8 +179,8 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto" id="phytobreeding-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-20 pb-20" id="phytobreeding-modal" role="dialog">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300 max-h-[80vh] overflow-y-auto">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -207,8 +207,8 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto" id="manufacturing-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[60] hidden opacity-0 transition-opacity duration-300 overflow-y-auto pt-20 pb-20" id="manufacturing-modal" role="dialog">
+            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300 max-h-[80vh] overflow-y-auto">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -614,26 +614,39 @@
             // Bloquear scroll del body
             document.body.style.overflow = 'hidden';
             
-            // Guardar la posición actual del scroll
-            modal.dataset.scrollY = window.scrollY;
-            
             // Show modal container with fade
             modal.classList.remove('hidden');
             
-            // Calcular la posición del modal basada en el botón que lo activó
-            const buttonRect = event.currentTarget.getBoundingClientRect();
-            const modalRect = modalContent.getBoundingClientRect();
-            
-            // Ajustar la posición del scroll para que el modal aparezca cerca del botón
-            const targetScrollTop = window.scrollY + buttonRect.top - 100; // 100px arriba del botón
-            window.scrollTo({
-                top: targetScrollTop,
-                behavior: 'smooth'
-            });
-            
+            // Necesitamos esperar a que el modal sea visible para obtener sus dimensiones reales
             setTimeout(() => {
                 modal.classList.add('opacity-100');
                 modalContent.classList.add('opacity-100', 'scale-100');
+                
+                // Calcular la posición óptima para el modal
+                const buttonRect = event.currentTarget.getBoundingClientRect();
+                const modalRect = modalContent.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                
+                // Calcular la posición ideal para que el modal sea visible
+                let targetScrollTop;
+                
+                if (modalRect.height < viewportHeight) {
+                    // Si el modal es más pequeño que la ventana, centrarlo en la vista
+                    targetScrollTop = window.scrollY + (buttonRect.top - (viewportHeight - modalRect.height) / 2);
+                } else {
+                    // Si el modal es más grande, alinearlo con la parte superior de la ventana
+                    targetScrollTop = window.scrollY + buttonRect.top - 20;
+                }
+                
+                // Asegurarnos de que el scroll no vaya más allá del contenido
+                const maxScroll = document.documentElement.scrollHeight - viewportHeight;
+                targetScrollTop = Math.min(targetScrollTop, maxScroll);
+                
+                // Aplicar el scroll suavemente
+                window.scrollTo({
+                    top: targetScrollTop,
+                    behavior: 'smooth'
+                });
             }, 10);
         }
     }
