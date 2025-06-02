@@ -5,13 +5,14 @@ from django.contrib.auth import logout, login
 from .models import CustomUser, Producto, Asignacion, CarritoItem, Venta
 from django.http import HttpResponseForbidden
 from django.contrib import messages
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Sum, F
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from .forms import CustomLoginForm, AsignacionForm, UserCreationFormWithRol, ProductoForm
-from .models import Producto, Asignacion, CarritoItem, Venta
 from decimal import Decimal
 from django.http import JsonResponse
+from django.utils import timezone
+from datetime import timedelta
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
@@ -48,10 +49,6 @@ def asignar_view(request):
     asignaciones = Asignacion.objects.all().order_by('-fecha_asignacion')
 
     # Obtener las ventas web para la pestaña "Ventas"
-    from django.db.models import Sum, Count, F
-    from django.utils import timezone
-    from datetime import timedelta
-    
     hoy = timezone.now()
     mes_actual = hoy.month
     mes_anterior = (hoy - timedelta(days=30)).month
@@ -98,6 +95,74 @@ def asignar_view(request):
     }
 
     return render(request, 'core/asignar.html', context)
+
+@login_required
+def ventas_web_view(request):
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
+    
+    hoy = timezone.now()
+    mes_actual = hoy.month
+    mes_anterior = (hoy - timedelta(days=30)).month
+    
+    # Obtener todas las ventas web
+    ventas_web = Venta.objects.all()
+    ventas_web_mes = ventas_web.filter(fecha_venta__month=mes_actual)
+    ventas_web_mes_anterior = ventas_web.filter(fecha_venta__month=mes_anterior)
+    
+    total_ventas = ventas_web_mes.aggregate(
+        total=Sum('total', default=0)
+    )['total'] or 0
+    
+    total_ventas_anterior = ventas_web_mes_anterior.aggregate(
+        total=Sum('total', default=0)
+    )['total'] or 1
+    
+    porcentaje_cambio_ventas = ((total_ventas - total_ventas_anterior) / total_ventas_anterior) * 100
+    
+    costos_totales = ventas_web_mes.aggregate(
+        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
+    )['costos'] or 0
+    
+    ganancias_netas = total_ventas - costos_totales
+    porcentaje_costos = (costos_totales / total_ventas * 100) if total_ventas else 0
+    margen_ganancia = (ganancias_netas / total_ventas * 100) if total_ventas else 0
+    
+    total_clientes = ventas_web.values('email_comprador').distinct().count()
+    clientes_registrados = ventas_web.filter(comprador__isnull=False).values('comprador').distinct().count()
+    porcentaje_clientes_registrados = (clientes_registrados / total_clientes * 100) if total_clientes else 0
+    
+    clientes_nuevos = ventas_web_mes.values('email_comprador').distinct().count()
+    porcentaje_clientes_nuevos = (clientes_nuevos / total_clientes * 100) if total_clientes else 0
+    
+    productos_top = ventas_web_mes.values(
+        'producto__nombre'
+    ).annotate(
+        nombre=F('producto__nombre'),
+        unidades=Sum('cantidad'),
+        ingresos=Sum('total')
+    ).order_by('-unidades')[:5]
+    
+    total_visitas = CarritoItem.objects.values('session_key').distinct().count() or 1
+    tasa_conversion = (ventas_web.count() / total_visitas) * 100
+    
+    context = {
+        'ventas': ventas_web.order_by('-fecha_venta'),
+        'total_ventas': total_ventas,
+        'porcentaje_cambio_ventas': porcentaje_cambio_ventas,
+        'costos_totales': costos_totales,
+        'ganancias_netas': ganancias_netas,
+        'porcentaje_costos': porcentaje_costos,
+        'margen_ganancia': margen_ganancia,
+        'total_clientes': total_clientes,
+        'porcentaje_clientes_registrados': porcentaje_clientes_registrados,
+        'clientes_nuevos': clientes_nuevos,
+        'porcentaje_clientes_nuevos': porcentaje_clientes_nuevos,
+        'productos_top': productos_top,
+        'tasa_conversion': tasa_conversion,
+    }
+    
+    return render(request, 'core/ventas_web.html', context)
 
 @login_required
 def distribuidor_view(request):
