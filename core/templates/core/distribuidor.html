@@ -129,7 +129,7 @@
                                     {{ asignacion.fecha_asignacion|date:"d/m/Y H:i" }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm font-medium text-gray-900">{{ asignacion.admin.username }}</div>
+                                    <div class="text-sm font-medium text-gray-900">{{ asignacion.admin.username|default:"" }}</div>
                                     <div class="text-sm text-gray-500">{{ asignacion.admin.email }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
