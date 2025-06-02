@@ -103,7 +103,60 @@
 
             <!-- Tabla de Asignaciones -->
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-green-700 mb-4">Lista de Asignaciones</h3>
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold text-green-700">Lista de Asignaciones</h3>
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-search text-gray-400"></i>
+                        <span class="text-sm text-gray-500">Buscar en campos:</span>
+                    </div>
+                </div>
+                
+                <!-- Filtros de búsqueda -->
+                <div class="mb-6 bg-gray-50 p-4 rounded-lg shadow-sm border border-gray-200">
+                    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                        <div class="relative">
+                            <label for="searchFecha" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
+                            <div class="relative">
+                                <input type="text" id="searchFecha" placeholder="Buscar por fecha..." 
+                                       class="pl-8 shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <i class="fas fa-calendar absolute left-2 top-2.5 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <label for="searchCreador" class="block text-sm font-medium text-gray-700 mb-1">Creado por</label>
+                            <div class="relative">
+                                <input type="text" id="searchCreador" placeholder="Buscar por creador..." 
+                                       class="pl-8 shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <i class="fas fa-user absolute left-2 top-2.5 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <label for="searchDistribuidor" class="block text-sm font-medium text-gray-700 mb-1">Distribuidor</label>
+                            <div class="relative">
+                                <input type="text" id="searchDistribuidor" placeholder="Buscar por distribuidor..." 
+                                       class="pl-8 shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <i class="fas fa-user-tie absolute left-2 top-2.5 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <label for="searchProducto" class="block text-sm font-medium text-gray-700 mb-1">Producto</label>
+                            <div class="relative">
+                                <input type="text" id="searchProducto" placeholder="Buscar por producto..." 
+                                       class="pl-8 shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <i class="fas fa-box absolute left-2 top-2.5 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <label for="searchEstado" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                            <div class="relative">
+                                <input type="text" id="searchEstado" placeholder="Buscar por estado..." 
+                                       class="pl-8 shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <i class="fas fa-tag absolute left-2 top-2.5 text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
@@ -564,6 +617,64 @@
         const form = document.getElementById('formAsignacion');
         form.classList.toggle('hidden');
     }
+
+    // Función para filtrar la tabla de asignaciones
+    function filterTable() {
+        // Obtener valores de búsqueda
+        const fecha = document.getElementById('searchFecha')?.value.toLowerCase() || '';
+        const creador = document.getElementById('searchCreador')?.value.toLowerCase() || '';
+        const distribuidor = document.getElementById('searchDistribuidor')?.value.toLowerCase() || '';
+        const producto = document.getElementById('searchProducto')?.value.toLowerCase() || '';
+        const estado = document.getElementById('searchEstado')?.value.toLowerCase() || '';
+        
+        const rows = document.querySelectorAll('table tbody tr');
+        
+        rows.forEach(row => {
+            // Verificar que sea una fila válida y tenga suficientes celdas
+            if (row.cells.length >= 7) {
+                const fechaCell = row.cells[0].textContent.toLowerCase();
+                const creadorCell = row.cells[1].textContent.toLowerCase();
+                const distribuidorCell = row.cells[2].textContent.toLowerCase();
+                const productoCell = row.cells[3].textContent.toLowerCase();
+                const estadoCell = row.cells[6].textContent.toLowerCase();
+                
+                // Realizar coincidencias
+                const matchFecha = fechaCell.includes(fecha);
+                const matchCreador = creadorCell.includes(creador);
+                const matchDistribuidor = distribuidorCell.includes(distribuidor);
+                const matchProducto = productoCell.includes(producto);
+                const matchEstado = estadoCell.includes(estado);
+                
+                // Mostrar/ocultar fila basado en todas las coincidencias
+                if (matchFecha && matchCreador && matchDistribuidor && matchProducto && matchEstado) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    // Agregar event listeners a los campos de búsqueda
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInputs = [
+            'searchFecha',
+            'searchCreador',
+            'searchDistribuidor',
+            'searchProducto',
+            'searchEstado'  // Agregado el campo de estado
+        ];
+        
+        // Agregar event listeners con manejo de errores
+        searchInputs.forEach(inputId => {
+            const inputElement = document.getElementById(inputId);
+            if (inputElement) {
+                inputElement.addEventListener('input', filterTable);
+            } else {
+                console.warn(`Elemento de búsqueda ${inputId} no encontrado`);
+            }
+        });
+    });
 
     function showTab(tabName) {
         // Update tab buttons
