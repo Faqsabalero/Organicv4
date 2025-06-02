@@ -98,110 +98,219 @@
                             Crear Asignación
                         </button>
                     </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
 
-        <!-- Tabla de Asignaciones -->
-        <div class="p-6">
-            <h3 class="text-xl font-semibold text-green-700 mb-4">Lista de Asignaciones</h3>
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Fecha
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Distribuidor
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Producto
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Cantidad
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Plan de Pago
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Estado
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Acciones
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        {% for asignacion in asignaciones %}
-                        <tr class="hover:bg-gray-50">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ asignacion.fecha_asignacion|date:"d/m/Y H:i" }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm font-medium text-gray-900">{{ asignacion.distribuidor.username }}</div>
-                                <div class="text-sm text-gray-500">{{ asignacion.distribuidor.email }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <div class="text-sm text-gray-900">{{ asignacion.producto.nombre }}</div>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {{ asignacion.cantidad }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
-                                    {{ asignacion.get_plan_pago_display }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
-                                    {{ asignacion.get_estado_display }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <form action="{% url 'core:cambiar_estado' asignacion.id %}" method="post" class="inline">
-                                    {% csrf_token %}
-                                    <button type="submit" class="text-sm text-blue-600 hover:text-blue-900">
-                                        Cambiar Estado
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">
-                                No hay asignaciones registradas.
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <!-- Tabla de Asignaciones -->
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-green-700 mb-4">Lista de Asignaciones</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Fecha
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Distribuidor
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Producto
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Cantidad
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Plan de Pago
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Estado
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for asignacion in asignaciones %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ asignacion.fecha_asignacion|date:"d/m/Y H:i" }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ asignacion.distribuidor.username }}</div>
+                                    <div class="text-sm text-gray-500">{{ asignacion.distribuidor.email }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-900">{{ asignacion.producto.nombre }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {{ asignacion.cantidad }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                        {{ asignacion.get_plan_pago_display }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                        {{ asignacion.get_estado_display }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form action="{% url 'core:cambiar_estado' asignacion.id %}" method="post" class="inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="text-sm text-blue-600 hover:text-blue-900">
+                                            Cambiar Estado
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500">
+                                    No hay asignaciones registradas.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <!-- Tab Content: Ventas -->
         <div id="ventasTab" class="hidden">
-            <div class="p-6 bg-white">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="p-6">
+                <!-- Métricas de Ventas Web -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                     <!-- Total Ventas -->
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Total Ventas</h3>
-                        <p class="text-3xl font-bold text-green-600">${{ total_ventas }}</p>
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Ventas Web</p>
+                                <p class="text-2xl font-bold text-green-600">${{ total_ventas|floatformat:2 }} ARS</p>
+                            </div>
+                            <div class="bg-green-100 rounded-full p-3">
+                                <i class="fas fa-shopping-cart text-green-600 text-xl"></i>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Cantidad Vendida -->
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Cantidad Vendida</h3>
-                        <p class="text-3xl font-bold text-blue-600">{{ cantidad_vendida }}</p>
+
+                    <!-- Costos -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Costos</p>
+                                <p class="text-2xl font-bold text-red-600">${{ costos_totales|floatformat:2 }} ARS</p>
+                            </div>
+                            <div class="bg-red-100 rounded-full p-3">
+                                <i class="fas fa-tags text-red-600 text-xl"></i>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Costo Total -->
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Costo Total</h3>
-                        <p class="text-3xl font-bold text-red-600">${{ costo_total }}</p>
+
+                    <!-- Ganancias -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Ganancias</p>
+                                <p class="text-2xl font-bold text-blue-600">${{ ganancias_netas|floatformat:2 }} ARS</p>
+                            </div>
+                            <div class="bg-blue-100 rounded-full p-3">
+                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Ganancia -->
-                    <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Ganancia</h3>
-                        <p class="text-3xl font-bold text-green-600">${{ ganancia }}</p>
+
+                    <!-- Clientes -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-500">Total Clientes</p>
+                                <p class="text-2xl font-bold text-purple-600">{{ total_clientes }}</p>
+                            </div>
+                            <div class="bg-purple-100 rounded-full p-3">
+                                <i class="fas fa-users text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de Ventas Web -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 bg-green-700">
+                        <h2 class="text-2xl font-bold text-white">Ventas Web</h2>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Fecha
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Cliente
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Producto
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Cantidad
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Total
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Estado
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    {% for venta in ventas %}
+                                    <tr class="hover:bg-gray-50">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ venta.fecha_venta|date:"d/m/Y H:i" }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {% if venta.comprador %}
+                                                    {{ venta.comprador.nombre }}
+                                                {% else %}
+                                                    {{ venta.nombre_comprador }}
+                                                {% endif %}
+                                            </div>
+                                            <div class="text-sm text-gray-500">{{ venta.email_comprador }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <div class="text-sm text-gray-900">{{ venta.producto.nombre }}</div>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ venta.cantidad }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            ${{ venta.total|floatformat:2 }} ARS
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                                {% if venta.estado_pago == 'PAGADO' %}bg-green-100 text-green-800
+                                                {% elif venta.estado_pago == 'PENDIENTE' %}bg-yellow-100 text-yellow-800
+                                                {% else %}bg-red-100 text-red-800{% endif %}">
+                                                {{ venta.estado_pago }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">
+                                            No hay ventas web registradas.
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
