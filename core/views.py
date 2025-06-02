@@ -48,32 +48,85 @@ def asignar_view(request):
     # Obtener las asignaciones para la pestaña "Asignaciones"
     asignaciones = Asignacion.objects.all().order_by('-fecha_asignacion')
 
-    # Obtener las ventas web para la pestaña "Ventas"
+    # Obtener métricas para la pestaña "Finanzas"
     hoy = timezone.now()
     mes_actual = hoy.month
     mes_anterior = (hoy - timedelta(days=30)).month
     
-    # Filtrar solo ventas web (todas las ventas son web)
+    # Ventas Web
     ventas_web = Venta.objects.all()
     ventas_web_mes = ventas_web.filter(fecha_venta__month=mes_actual)
     ventas_web_mes_anterior = ventas_web.filter(fecha_venta__month=mes_anterior)
     
     total_ventas_web = ventas_web_mes.aggregate(total=Sum('total', default=0))['total'] or 0
-    total_ventas_anterior = ventas_web_mes_anterior.aggregate(total=Sum('total', default=0))['total'] or 1
+    total_ventas_web_anterior = ventas_web_mes_anterior.aggregate(total=Sum('total', default=0))['total'] or 1
     
-    porcentaje_cambio_ventas = ((total_ventas_web - total_ventas_anterior) / total_ventas_anterior) * 100
+    # Ventas por Asignación
+    asignaciones_pagadas = Asignacion.objects.filter(estado='PAGADO')
+    asignaciones_mes = asignaciones_pagadas.filter(fecha_asignacion__month=mes_actual)
+    asignaciones_mes_anterior = asignaciones_pagadas.filter(fecha_asignacion__month=mes_anterior)
     
-    costos_totales_web = ventas_web_mes.aggregate(
+    total_ventas_asignacion = asignaciones_mes.aggregate(
+        total=Sum(F('producto__precio') * F('cantidad'), default=0)
+    )['total'] or 0
+    
+    total_ventas_asignacion_anterior = asignaciones_mes_anterior.aggregate(
+        total=Sum(F('producto__precio') * F('cantidad'), default=0)
+    )['total'] or 1
+    
+    # Totales Combinados
+    total_ventas = total_ventas_web + total_ventas_asignacion
+    total_ventas_anterior = total_ventas_web_anterior + total_ventas_asignacion_anterior
+    
+    porcentaje_cambio_ventas = ((total_ventas - total_ventas_anterior) / total_ventas_anterior) * 100
+    
+    # Costos y Ganancias
+    costos_web = ventas_web_mes.aggregate(
         costos=Sum(F('producto__costo') * F('cantidad'), default=0)
     )['costos'] or 0
     
-    ganancias_netas_web = total_ventas_web - costos_totales_web
-    porcentaje_costos = (costos_totales_web / total_ventas_web * 100) if total_ventas_web else 0
-    margen_ganancia = (ganancias_netas_web / total_ventas_web * 100) if total_ventas_web else 0
+    costos_asignacion = asignaciones_mes.aggregate(
+        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
+    )['costos'] or 0
     
+    costos_totales = costos_web + costos_asignacion
+    ganancias_netas = total_ventas - costos_totales
+    
+    porcentaje_costos = (costos_totales / total_ventas * 100) if total_ventas else 0
+    margen_ganancia = (ganancias_netas / total_ventas * 100) if total_ventas else 0
+    
+    # Métricas de Clientes
     total_clientes = ventas_web.values('email_comprador').distinct().count()
     clientes_registrados = ventas_web.filter(comprador__isnull=False).values('comprador').distinct().count()
     porcentaje_clientes_registrados = (clientes_registrados / total_clientes * 100) if total_clientes else 0
+    
+    # Productos Más Vendidos (combinando ventas web y asignaciones)
+    from django.db.models import Value, CharField
+    from django.db.models.functions import Concat
+    
+    productos_vendidos_web = ventas_web_mes.values(
+        'producto__nombre'
+    ).annotate(
+        tipo=Value('Web', output_field=CharField()),
+        unidades=Sum('cantidad'),
+        ingresos=Sum('total'),
+        costos=Sum(F('producto__costo') * F('cantidad')),
+        ganancia=Sum('total') - Sum(F('producto__costo') * F('cantidad'))
+    )
+    
+    productos_vendidos_asignacion = asignaciones_mes.values(
+        'producto__nombre'
+    ).annotate(
+        tipo=Value('Asignación', output_field=CharField()),
+        unidades=Sum('cantidad'),
+        ingresos=Sum(F('producto__precio') * F('cantidad')),
+        costos=Sum(F('producto__costo') * F('cantidad')),
+        ganancia=F('ingresos') - F('costos')
+    )
+    
+    productos_top = list(productos_vendidos_web) + list(productos_vendidos_asignacion)
+    productos_top.sort(key=lambda x: x['unidades'], reverse=True)
+    productos_top = productos_top[:5]
 
     # Set panel title based on user role
     panel_title = "Mi Panel" if request.user.rol == 'ADMIN' else "Panel de Administración"

@@ -9,3 +9,8 @@ def abs_value(value):
         return abs(value)
     except (TypeError, ValueError):
         return value
+
+@register.filter
+def split(value, delimiter=','):
+    """Split a string into a list using the specified delimiter"""
+    return [x.strip() for x in value.split(delimiter)]
