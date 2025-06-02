@@ -5,6 +5,7 @@ app_name = 'core'
 
 urlpatterns = [
     path('gestionar-productos/', views.gestionar_productos_view, name='gestionar_productos'),
+    path('crear-producto/', views.crear_producto_view, name='crear_producto'),
     path('editar-producto/<int:producto_id>/', views.editar_producto_view, name='editar_producto'),
     path('', views.home_view, name='home'),
     path('login/', views.CustomLoginView.as_view(), name='login'),

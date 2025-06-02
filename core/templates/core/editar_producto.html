@@ -7,7 +7,7 @@
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
         <div class="px-6 py-4 bg-green-700">
-            <h2 class="text-2xl font-bold text-white">Editar Producto</h2>
+            <h2 class="text-2xl font-bold text-white">{% if producto %}Editar{% else %}Crear{% endif %} Producto</h2>
         </div>
 
         <div class="p-6">
@@ -17,7 +17,7 @@
                     <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
                         Nombre
                     </label>
-                    <input type="text" name="nombre" id="nombre" value="{{ producto.nombre }}"
+                    <input type="text" name="nombre" id="nombre" value="{{ producto.nombre|default:'' }}"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                 </div>
 
@@ -26,7 +26,7 @@
                         Descripción
                     </label>
                     <textarea name="descripcion" id="descripcion" rows="3"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">{{ producto.descripcion }}</textarea>
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">{{ producto.descripcion|default:'' }}</textarea>
                 </div>
 
                 <div>
@@ -37,7 +37,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm">$</span>
                         </div>
-                        <input type="number" name="precio" id="precio" step="0.01" value="{{ producto.precio }}"
+                        <input type="number" name="precio" id="precio" step="0.01" value="{{ producto.precio|default:'' }}"
                             class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm">ARS</span>
@@ -54,7 +54,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm">$</span>
                         </div>
-                        <input type="number" name="costo" id="costo" step="0.01" value="{{ producto.costo }}"
+                        <input type="number" name="costo" id="costo" step="0.01" value="{{ producto.costo|default:'' }}"
                             class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                             <span class="text-gray-500 sm:text-sm">ARS</span>
@@ -67,7 +67,7 @@
                     <label for="imagen_url" class="block text-sm font-medium text-gray-700 mb-2">
                         URL de la Imagen
                     </label>
-                    <input type="url" name="imagen_url" id="imagen_url" value="{{ producto.imagen_url }}"
+                    <input type="url" name="imagen_url" id="imagen_url" value="{{ producto.imagen_url|default:'' }}"
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
                 </div>
 
