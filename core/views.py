@@ -365,7 +365,7 @@ def distribuidor_view(request):
         form = AsignacionForm(user=request.user)
     
     # Filtrar asignaciones propias y las que ha creado
-    asignaciones_propias = Asignacion.objects.filter(distribuidor=request.user).order_by('-fecha_asignacion')
+    asignaciones_propias = Asignacion.objects.filter(distribuidor=request.user).select_related('admin').order_by('-fecha_asignacion')
     asignaciones_creadas = Asignacion.objects.filter(admin=request.user).order_by('-fecha_asignacion')
     
     productos_distintos = Asignacion.objects.filter(distribuidor=request.user).aggregate(
