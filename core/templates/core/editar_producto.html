@@ -1,6 +1,7 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
 
-{% block title %}Editar Producto - Organic Shops{% endblock %}
+{% block title %}{% if producto %}Editar{% else %}Crear{% endif %} Producto - Organic Shops{% endblock %}
 
 {% block content %}
 <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
