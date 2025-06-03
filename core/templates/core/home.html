@@ -609,21 +609,21 @@
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
         const modalContent = modal.querySelector('.bg-white');
-        const trigger = document.querySelector(`[onclick*="${modalId}"]`);
+        const banner = document.querySelector('.bg-gradient-to-r.from-green-600.to-green-700');
         
-        if (modal && trigger) {
+        if (modal && banner) {
             // Bloquear scroll del body
             document.body.style.overflow = 'hidden';
             
             // Show modal container with fade
             modal.classList.remove('hidden');
             
-            // Obtener la posición del botón
-            const rect = trigger.getBoundingClientRect();
+            // Obtener la posición del banner
+            const bannerRect = banner.getBoundingClientRect();
             const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            // Posicionar el modal alineado con el botón
-            modalContent.style.marginTop = `${rect.top + scrollTop}px`;
+            // Posicionar el modal justo encima del banner
+            modalContent.style.marginTop = `${bannerRect.top - 20}px`;
             
             setTimeout(() => {
                 modal.classList.add('opacity-100');
