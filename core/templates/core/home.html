@@ -151,7 +151,7 @@
 </section>
 
 <!-- Modales -->
-<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[9999] hidden opacity-0 transition-opacity duration-300" id="investigation-modal" role="dialog">
+<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[9999] hidden opacity-0 transition-opacity duration-300 pt-32" id="investigation-modal" role="dialog">
             <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
                     <i class="fas fa-times"></i>
@@ -179,7 +179,7 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[9999] hidden opacity-0 transition-opacity duration-300" id="phytobreeding-modal" role="dialog">
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[9999] hidden opacity-0 transition-opacity duration-300 pt-32" id="phytobreeding-modal" role="dialog">
             <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
                     <i class="fas fa-times"></i>
@@ -207,7 +207,7 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[9999] hidden opacity-0 transition-opacity duration-300" id="manufacturing-modal" role="dialog">
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-start justify-center z-[9999] hidden opacity-0 transition-opacity duration-300 pt-32" id="manufacturing-modal" role="dialog">
             <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
                     <i class="fas fa-times"></i>
@@ -609,21 +609,13 @@
     function openModal(modalId) {
         const modal = document.getElementById(modalId);
         const modalContent = modal.querySelector('.bg-white');
-        const trigger = document.querySelector(`[aria-controls="${modalId}"]`);
         
-        if (modal && trigger) {
+        if (modal) {
             // Bloquear scroll del body
             document.body.style.overflow = 'hidden';
             
             // Show modal container with fade
             modal.classList.remove('hidden');
-            
-            // Obtener la posición del botón que activó el modal
-            const triggerRect = trigger.getBoundingClientRect();
-            const triggerTop = window.scrollY + triggerRect.top;
-            
-            // Posicionar el modal justo debajo del botón
-            modalContent.style.marginTop = `${triggerTop + 20}px`;
             
             setTimeout(() => {
                 modal.classList.add('opacity-100');
