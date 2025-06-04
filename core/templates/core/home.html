@@ -78,9 +78,10 @@
         </p>
     </div>
     <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div tabindex="0" 
+<div tabindex="0" 
              class="group bg-white rounded-xl p-8 shadow-lg flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2 border border-gray-100" 
              role="button" 
+             data-modal="investigation-modal"
              aria-haspopup="dialog" 
              aria-controls="investigation-modal" 
              aria-expanded="false">
@@ -101,9 +102,10 @@
                 <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
             </span>
         </div>
-        <div tabindex="0" 
+<div tabindex="0" 
              class="group bg-white rounded-xl p-8 shadow-lg flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2 border border-gray-100" 
              role="button" 
+             data-modal="phytobreeding-modal"
              aria-haspopup="dialog" 
              aria-controls="phytobreeding-modal" 
              aria-expanded="false">
@@ -124,9 +126,10 @@
                 <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
             </span>
         </div>
-        <div tabindex="0" 
+<div tabindex="0" 
              class="group bg-white rounded-xl p-8 shadow-lg flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2 border border-gray-100" 
              role="button" 
+             data-modal="manufacturing-modal"
              aria-haspopup="dialog" 
              aria-controls="manufacturing-modal" 
              aria-expanded="false">
@@ -151,8 +154,8 @@
 </section>
 
 <!-- Modales -->
-<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center z-[100] hidden opacity-0 transition-opacity duration-300" id="investigation-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100] hidden" id="investigation-modal" role="dialog">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl transform scale-95 mx-auto my-auto transition-all duration-300">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -179,8 +182,8 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center z-[100] hidden opacity-0 transition-opacity duration-300" id="phytobreeding-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100] hidden" id="phytobreeding-modal" role="dialog">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl transform scale-95 mx-auto my-auto transition-all duration-300">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -207,8 +210,8 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex justify-center z-[100] hidden opacity-0 transition-opacity duration-300" id="manufacturing-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-2xl w-full p-8 relative shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100] hidden" id="manufacturing-modal" role="dialog">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl transform scale-95 mx-auto my-auto transition-all duration-300">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -574,124 +577,125 @@
 </section>
 
 <script>
-    // Carousel logic
-    const items = document.querySelectorAll('[data-carousel-item]');
-    const totalItems = items.length;
-    let currentIndex = 0;
-
-    const showItem = (index) => {
-        items.forEach((item, i) => {
-            item.style.opacity = i === index ? '1' : '0';
-            item.style.zIndex = i === index ? '10' : '0';
-        });
-    };
-
-    document.getElementById('prevBtn').addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-        showItem(currentIndex);
-    });
-
-    document.getElementById('nextBtn').addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % totalItems;
-        showItem(currentIndex);
-    });
-
-    // Auto slide every 5 seconds
-    let autoSlideInterval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalItems;
-        showItem(currentIndex);
-    }, 5000);
-
-    showItem(currentIndex);
-
-    // Modal logic with animations
-    document.addEventListener('DOMContentLoaded', function() {
+    // Modal functions (defined globally)
     function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        const modalContent = modal.querySelector('.bg-white');
-        const banner = document.querySelector('.bg-gradient-to-r.from-green-600.to-green-700');
+        console.log('Opening modal with ID:', modalId);
+        const modal = document.querySelector(`#${modalId}`);
+        console.log('Found modal:', modal);
         
-        if (modal && banner) {
-            // Bloquear scroll del body
-            document.body.style.overflow = 'hidden';
-            
-            // Show modal container with fade
-            modal.classList.remove('hidden');
-            
-            // Obtener la posición del banner
-            const bannerRect = banner.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            
-            // Posicionar el modal justo encima del banner
-            modalContent.style.marginTop = `${bannerRect.top - 20}px`;
-            
-            setTimeout(() => {
-                modal.classList.add('opacity-100');
-                modalContent.classList.add('opacity-100', 'scale-100');
-            }, 10);
+        if (!modal) {
+            console.error('Modal not found:', modalId);
+            return;
         }
+        
+        // Bloquear scroll del body
+        document.body.style.overflow = 'hidden';
+        
+        // Show modal container
+        modal.classList.remove('hidden');
+        
+        // Add animation classes after a brief delay
+        requestAnimationFrame(() => {
+            modal.classList.add('opacity-100');
+        });
     }
     
     function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        const modalContent = modal.querySelector('.bg-white');
+        console.log('Closing modal with ID:', modalId);
+        const modal = document.querySelector(`#${modalId}`);
         
-        if (modal) {
-            // Hide modal with fade
-            modal.classList.remove('opacity-100');
-            modalContent.classList.remove('opacity-100', 'scale-100');
-            
-            // Restaurar scroll del body
-            document.body.style.overflow = '';
-            
-            // Restaurar la posición del scroll
-            if (modal.dataset.scrollY) {
-                window.scrollTo(0, parseInt(modal.dataset.scrollY));
-            }
-            
-            // Wait for animation to complete before hiding
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
+        if (!modal) {
+            console.error('Modal not found:', modalId);
+            return;
         }
-    }
         
-        // Asignar eventos a las tarjetas
-        const modalTriggers = document.querySelectorAll('[aria-controls]');
-        modalTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function() {
-                const modalId = trigger.getAttribute('aria-controls');
-                openModal(modalId);
+        // Remove animation classes
+        modal.classList.remove('opacity-100');
+        
+        // Restaurar scroll del body
+        document.body.style.overflow = '';
+        
+        // Wait for animation to complete before hiding
+        setTimeout(() => {
+            modal.classList.add('hidden');
+        }, 300);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carousel logic
+        const items = document.querySelectorAll('[data-carousel-item]');
+        const totalItems = items.length;
+        let currentIndex = 0;
+
+        const showItem = (index) => {
+            items.forEach((item, i) => {
+                item.style.opacity = i === index ? '1' : '0';
+                item.style.zIndex = i === index ? '10' : '0';
+            });
+        };
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                showItem(currentIndex);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                showItem(currentIndex);
+            });
+
+            // Auto slide every 5 seconds
+            let autoSlideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                showItem(currentIndex);
+            }, 5000);
+
+            showItem(currentIndex);
+        }
+
+        // Configurar eventos de los modales
+        // Eventos para las tarjetas
+        const cards = document.querySelectorAll('[data-modal]');
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                const modalId = card.getAttribute('data-modal');
+                console.log('Opening modal:', modalId);
+                if (modalId) {
+                    openModal(modalId);
+                }
             });
         });
-        
-        // Asignar eventos a los botones de cierre
+
+        // Eventos para los botones de cierre
         const closeButtons = document.querySelectorAll('button[id$="-close"]');
         closeButtons.forEach(button => {
-            button.addEventListener('click', function() {
+            button.addEventListener('click', () => {
                 const modalId = button.id.replace('-close', '');
                 closeModal(modalId);
             });
         });
-        
-        // Cerrar modal al hacer clic fuera o presionar ESC
-        document.addEventListener('click', function(event) {
-            const modals = document.querySelectorAll('[aria-modal="true"]');
-            modals.forEach(modal => {
-                if (event.target === modal && !modal.classList.contains('hidden')) {
-                    const modalId = modal.id;
-                    closeModal(modalId);
+
+        // Cerrar modal al hacer clic fuera
+        const modals = document.querySelectorAll('[aria-modal="true"]');
+        modals.forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal.id);
                 }
             });
         });
-        
-        document.addEventListener('keydown', function(event) {
+
+        // Manejar la tecla Escape para cerrar modales
+        document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
-                document.querySelectorAll('[aria-modal="true"]').forEach(modal => {
-                    if (!modal.classList.contains('hidden')) {
-                        closeModal(modal.id);
-                    }
-                });
+                const visibleModal = document.querySelector('[aria-modal="true"]:not(.hidden)');
+                if (visibleModal) {
+                    closeModal(visibleModal.id);
+                }
             }
         });
     });
