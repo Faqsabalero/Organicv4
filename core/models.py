@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
     rol = models.CharField(max_length=20, choices=ROL_CHOICES, default='CLIENTE')
     nombre = models.CharField(max_length=100, blank=True, null=True)
     dni = models.CharField(max_length=20, blank=True, null=True)
-    domicilio = models.TextField(blank=True, null=True)
+    ciudad = models.TextField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         # Si el usuario es un superusuario, asignar el rol SUPERUSUARIO
@@ -32,6 +32,7 @@ class Producto(models.Model):
     precio_revendedor = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     costo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     imagen_url = models.URLField()
+    es_exclusivo = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nombre

@@ -23,14 +23,14 @@ class CustomLogoutView(LogoutView):
     next_page = 'core:home'
 
 def home_view(request):
-    productos = Producto.objects.all()
+    productos = Producto.objects.filter(es_exclusivo=False)
     print(f"Cantidad de productos en DB: {productos.count()}")
     return render(request, 'core/home.html', {'productos': productos})
 
 @login_required
 def tienda_oculta_view(request):
     """Vista para la tienda oculta, solo accesible para usuarios registrados"""
-    productos_exclusivos = Producto.objects.all()  # Aquí podrías filtrar productos exclusivos si es necesario
+    productos_exclusivos = Producto.objects.filter(es_exclusivo=True)
     return render(request, 'core/tienda_oculta.html', {'productos_exclusivos': productos_exclusivos})
 
 @login_required
@@ -247,6 +247,7 @@ def editar_producto_view(request, producto_id):
         producto.precio_distribuidor = request.POST.get('precio_distribuidor')
         producto.precio_revendedor = request.POST.get('precio_revendedor')
         producto.imagen_url = request.POST.get('imagen_url')
+        producto.es_exclusivo = request.POST.get('es_exclusivo') == 'on'
         
         # Solo actualizar el costo si el usuario es admin o superusuario
         if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
@@ -273,6 +274,7 @@ def crear_producto_view(request):
             precio_distribuidor=request.POST.get('precio_distribuidor'),
             precio_revendedor=request.POST.get('precio_revendedor'),
             imagen_url=request.POST.get('imagen_url'),
+            es_exclusivo=request.POST.get('es_exclusivo') == 'on',
         )
         
         # Solo establecer el costo si el usuario es admin o superusuario
@@ -393,6 +395,14 @@ def carrito_view(request, producto_id=None):
             cantidad = int(request.POST.get('cantidad', 1))
             if not request.session.session_key:
                 request.session.create()
+            
+            # Verificar si hay productos en el carrito y si son del mismo tipo (exclusivo/no exclusivo)
+            current_items = CarritoItem.objects.filter(session_key=request.session.session_key)
+            if current_items.exists():
+                current_cart_exclusivo = current_items.first().producto.es_exclusivo
+                if current_cart_exclusivo != producto.es_exclusivo:
+                    messages.error(request, "No se pueden mezclar productos de tiendas diferentes en el mismo carrito. Por favor, finalice la compra actual o limpie el carrito.")
+                    return redirect('core:carrito')
             
             CarritoItem.objects.create(
                 producto=producto,
@@ -549,7 +559,7 @@ def registro_rapido(request):
         nombre = request.POST.get('nombre')
         email = request.POST.get('email')
         dni = request.POST.get('dni')
-        domicilio = request.POST.get('domicilio')
+        ciudad = request.POST.get('ciudad')
         
         try:
             # Crear usuario con rol CLIENTE por defecto
@@ -559,7 +569,7 @@ def registro_rapido(request):
                 email=email,
                 nombre=nombre,
                 dni=dni,
-                domicilio=domicilio,
+                ciudad=ciudad,
                 rol='CLIENTE'
             )
             
@@ -616,10 +626,10 @@ def procesar_pago(request):
         nombre = request.POST.get('nombre', '').strip()
         email = request.POST.get('email', '').strip()
         dni = request.POST.get('dni', '').strip()
-        domicilio = request.POST.get('domicilio', '').strip()
+        ciudad = request.POST.get('ciudad', '').strip()
         
         # Validar campos obligatorios
-        if not all([nombre, email, dni, domicilio]):
+        if not all([nombre, email, dni, ciudad]):
             messages.error(request, 'Todos los campos son obligatorios.')
             return redirect('core:checkout')
         
@@ -635,7 +645,7 @@ def procesar_pago(request):
             user.nombre = nombre
             user.email = email
             user.dni = dni
-            user.domicilio = domicilio
+            user.ciudad = ciudad
             user.save()
             comprador = user
         

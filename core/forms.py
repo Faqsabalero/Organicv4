@@ -49,13 +49,14 @@ class UserCreationFormWithRol(UserCreationForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = ['nombre', 'descripcion', 'precio', 'costo', 'imagen_url']
+        fields = ['nombre', 'descripcion', 'precio', 'costo', 'imagen_url', 'es_exclusivo']
         widgets = {
             'nombre': forms.TextInput(attrs={'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600'}),
             'descripcion': forms.Textarea(attrs={'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600', 'rows': 4}),
             'precio': forms.NumberInput(attrs={'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600', 'min': '0', 'step': '0.01'}),
             'costo': forms.NumberInput(attrs={'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600', 'min': '0', 'step': '0.01'}),
             'imagen_url': forms.URLInput(attrs={'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600'}),
+            'es_exclusivo': forms.CheckboxInput(attrs={'class': 'h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500'}),
         }
 
 class AsignacionForm(forms.ModelForm):

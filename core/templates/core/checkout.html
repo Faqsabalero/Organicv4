@@ -83,17 +83,18 @@
                            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
                 </div>
 
-                <!-- Domicilio -->
+                <!-- Ciudad -->
                 <div>
-                    <label for="domicilio" class="block text-sm font-medium text-gray-700 mb-2">
-                        Domicilio *
+                    <label for="ciudad" class="block text-sm font-medium text-gray-700 mb-2">
+                        Ciudad *
                     </label>
-                    <textarea id="domicilio" 
-                              name="domicilio" 
-                              required
-                              rows="3"
-                              placeholder="Calle, número, ciudad, provincia"
-                              class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">{{ user.domicilio|default:'' }}</textarea>
+                    <input type="text" 
+                           id="ciudad" 
+                           name="ciudad" 
+                           required
+                           placeholder="Ingresa tu ciudad"
+                           value="{{ user.ciudad|default:'' }}"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
                 </div>
 
                 <!-- Botones de acción -->
@@ -168,9 +169,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const nombre = document.getElementById('nombre').value.trim();
         const email = document.getElementById('email').value.trim();
         const dni = document.getElementById('dni').value.trim();
-        const domicilio = document.getElementById('domicilio').value.trim();
+        const ciudad = document.getElementById('ciudad').value.trim();
         
-        if (!nombre || !email || !dni || !domicilio) {
+        if (!nombre || !email || !dni || !ciudad) {
             alert('Por favor, completa todos los campos obligatorios.');
             return false;
         }
@@ -194,7 +195,7 @@ function redirigirARegistro() {
         nombre: formData.get('nombre'),
         email: formData.get('email'),
         dni: formData.get('dni'),
-        domicilio: formData.get('domicilio')
+        ciudad: formData.get('ciudad')
     }).toString();
 }
 
