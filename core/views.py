@@ -617,11 +617,18 @@ def pago_transferencia_view(request):
     if not items:
         return redirect('core:carrito')
     
+    # Obtener el ID de la última venta creada para esta sesión
+    ultima_venta = Venta.objects.filter(
+        session_key=request.session.session_key
+    ).order_by('-id').first()
+    
+    venta_id = ultima_venta.id if ultima_venta else None
     total = sum(item.producto.precio * item.cantidad for item in items)
     
     return render(request, 'core/pago_transferencia.html', {
         'items': items,
-        'total': total
+        'total': total,
+        'venta_id': venta_id
     })
 
 def procesar_pago(request):
@@ -680,7 +687,8 @@ def procesar_pago(request):
                 email_comprador=email,
                 nombre_comprador=nombre,
                 comprador=comprador,
-                estado_pago='PENDIENTE'  # Cambiado a PENDIENTE ya que el pago será por transferencia
+                estado_pago='PENDIENTE',  # Cambiado a PENDIENTE ya que el pago será por transferencia
+                session_key=request.session.session_key
             )
             ventas.append(venta.id)
         

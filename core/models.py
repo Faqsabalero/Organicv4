@@ -84,6 +84,7 @@ class Venta(models.Model):
     nombre_comprador = models.CharField(max_length=100, null=True, blank=True)
     comprador = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='compras')
     estado_pago = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='PENDIENTE')
+    session_key = models.CharField(max_length=40, null=True, blank=True)
     
     def __str__(self):
         return f'Venta {self.id} - {self.producto.nombre}'
