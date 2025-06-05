@@ -28,6 +28,12 @@ def home_view(request):
     return render(request, 'core/home.html', {'productos': productos})
 
 @login_required
+def tienda_oculta_view(request):
+    """Vista para la tienda oculta, solo accesible para usuarios registrados"""
+    productos_exclusivos = Producto.objects.all()  # Aquí podrías filtrar productos exclusivos si es necesario
+    return render(request, 'core/tienda_oculta.html', {'productos_exclusivos': productos_exclusivos})
+
+@login_required
 def asignar_view(request):
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
