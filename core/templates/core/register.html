@@ -26,6 +26,17 @@
                     {% endif %}
                 </div>
 
+                <!-- Nombre -->
+                <div>
+                    <label for="{{ form.nombre.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nombre Completo
+                    </label>
+                    {{ form.nombre }}
+                    {% if form.nombre.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ form.nombre.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
                 <!-- Email -->
                 <div>
                     <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
@@ -34,6 +45,28 @@
                     {{ form.email }}
                     {% if form.email.errors %}
                         <p class="text-red-600 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- DNI -->
+                <div>
+                    <label for="{{ form.dni.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        DNI
+                    </label>
+                    {{ form.dni }}
+                    {% if form.dni.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ form.dni.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Ciudad -->
+                <div>
+                    <label for="{{ form.ciudad.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
+                        Ciudad
+                    </label>
+                    {{ form.ciudad }}
+                    {% if form.ciudad.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ form.ciudad.errors.0 }}</p>
                     {% endif %}
                 </div>
 

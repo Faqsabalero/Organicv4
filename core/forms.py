@@ -23,7 +23,7 @@ class CustomLoginForm(AuthenticationForm):
 class UserCreationFormWithRol(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'rol', 'password1', 'password2')
+        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad')
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
