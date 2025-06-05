@@ -155,7 +155,7 @@
 
 <!-- Modales -->
 <div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="investigation-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
-            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto my-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 5rem;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 25rem;">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -183,7 +183,7 @@
         </div>
 
 <div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="phytobreeding-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
-            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto my-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 5rem;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 25rem;">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -211,7 +211,7 @@
         </div>
 
 <div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="manufacturing-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
-            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto my-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 5rem;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 25rem;">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -579,52 +579,20 @@
 <script>
     // Modal functions (defined globally)
     function openModal(modalId) {
-        console.log('Opening modal with ID:', modalId);
         const modal = document.querySelector(`#${modalId}`);
-        console.log('Found modal:', modal);
+        if (!modal) return;
         
-        if (!modal) {
-            console.error('Modal not found:', modalId);
-            return;
-        }
-        
-        // Show modal container and set initial styles
         modal.style.display = 'flex';
-        modal.style.opacity = '0';
-        
-        // Force a reflow to ensure the transition works
-        modal.offsetHeight;
-        
-        // Add animation styles
-        modal.style.opacity = '1';
-        
         const modalContent = modal.querySelector('.bg-white');
         if (modalContent) {
-            modalContent.style.transform = 'scale(1)';
+            modalContent.style.marginTop = '25rem';
         }
     }
     
     function closeModal(modalId) {
-        console.log('Closing modal with ID:', modalId);
         const modal = document.querySelector(`#${modalId}`);
-        
-        if (!modal) {
-            console.error('Modal not found:', modalId);
-            return;
-        }
-        
-        // Remove animation styles
-        modal.style.opacity = '0';
-        
-        const modalContent = modal.querySelector('.bg-white');
-        if (modalContent) {
-            modalContent.style.transform = 'scale(0.95)';
-        }
-        
-        // Wait for animation to complete before hiding
-        setTimeout(() => {
-            modal.style.display = 'none';
-        }, 300);
+        if (!modal) return;
+        modal.style.display = 'none';
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -635,8 +603,19 @@
 
         const showItem = (index) => {
             items.forEach((item, i) => {
-                item.style.opacity = i === index ? '1' : '0';
-                item.style.zIndex = i === index ? '10' : '0';
+                if (i === index) {
+                    item.style.display = 'block';
+                    item.style.opacity = '1';
+                    item.style.zIndex = '10';
+                } else {
+                    item.style.opacity = '0';
+                    item.style.zIndex = '0';
+                    setTimeout(() => {
+                        if (i !== currentIndex) {
+                            item.style.display = 'none';
+                        }
+                    }, 700);
+                }
             });
         };
 
@@ -665,41 +644,25 @@
 
         // Configurar eventos de los modales
         function setupModalEvents() {
-            // Eventos para las tarjetas
-            const cards = document.querySelectorAll('[data-modal]');
-            cards.forEach(card => {
+            // Setup card click events
+            document.querySelectorAll('[data-modal]').forEach(card => {
                 card.addEventListener('click', () => {
                     const modalId = card.getAttribute('data-modal');
-                    console.log('Opening modal:', modalId);
-                    if (modalId) {
-                        openModal(modalId);
-                    }
+                    if (modalId) openModal(modalId);
                 });
             });
 
-            // Eventos para los botones de cierre
-            const closeButtons = document.querySelectorAll('button[id$="-close"]');
-            closeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const modalId = button.id.replace('-close', '');
-                    closeModal(modalId);
-                });
+            // Setup close button events
+            document.querySelectorAll('button[id$="-close"]').forEach(button => {
+                button.addEventListener('click', () => closeModal(button.id.replace('-close', '')));
             });
 
-            // Cerrar modal al hacer clic fuera
-            const modals = document.querySelectorAll('[aria-modal="true"]');
-            modals.forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal(modal.id);
-                    }
-                });
-            });
-
-            // Inicializar estilos de los modales
-            modals.forEach(modal => {
+            // Setup modal background click and initial state
+            document.querySelectorAll('[aria-modal="true"]').forEach(modal => {
                 modal.style.display = 'none';
-                modal.style.opacity = '0';
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal(modal.id);
+                });
             });
         }
 
@@ -709,11 +672,8 @@
         // Manejar la tecla Escape para cerrar modales
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
-                const modals = document.querySelectorAll('[aria-modal="true"]');
-                modals.forEach(modal => {
-                    if (modal.style.display !== 'none') {
-                        closeModal(modal.id);
-                    }
+                document.querySelectorAll('[aria-modal="true"]').forEach(modal => {
+                    if (modal.style.display === 'flex') closeModal(modal.id);
                 });
             }
         });
