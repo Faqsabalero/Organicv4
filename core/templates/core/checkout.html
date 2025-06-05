@@ -86,7 +86,11 @@
                 <!-- Ciudad -->
                 <div>
                     <label for="ciudad" class="block text-sm font-medium text-gray-700 mb-2">
-                        Ciudad *
+                        {% if items.0.producto.es_exclusivo %}
+                            Selecciona Ciudad *
+                        {% else %}
+                            Ciudad *
+                        {% endif %}
                     </label>
                     <select id="ciudad" 
                             name="ciudad" 

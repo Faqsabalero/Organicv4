@@ -188,14 +188,18 @@
                                 ${{ venta.total }} ARS
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {% if venta.estado_pago == 'PENDIENTE' %}
-                                        bg-yellow-100 text-yellow-800
-                                    {% else %}
-                                        bg-green-100 text-green-800
-                                    {% endif %}">
-                                    {{ venta.estado_pago }}
-                                </span>
+                                <form method="POST" action="{% url 'core:cambiar_estado_venta' venta.id %}" class="inline">
+                                    {% csrf_token %}
+                                    <button type="submit" 
+                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full cursor-pointer
+                                            {% if venta.estado_pago == 'PENDIENTE' %}
+                                                bg-yellow-100 text-yellow-800 hover:bg-yellow-200
+                                            {% else %}
+                                                bg-green-100 text-green-800 hover:bg-green-200
+                                            {% endif %}">
+                                        {{ venta.estado_pago }}
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         {% empty %}

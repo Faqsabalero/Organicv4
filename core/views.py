@@ -287,6 +287,18 @@ def crear_producto_view(request):
     return render(request, 'core/editar_producto.html', {'producto': None})
 
 @login_required
+def cambiar_estado_venta(request, venta_id):
+    """Vista para cambiar el estado de una venta web"""
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return HttpResponseForbidden("No tiene permiso para cambiar el estado.")
+    
+    venta = get_object_or_404(Venta, id=venta_id)
+    venta.estado_pago = 'PAGADO' if venta.estado_pago == 'PENDIENTE' else 'PENDIENTE'
+    venta.save()
+    
+    messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
+    return redirect('core:ventas_web')
+
 def ventas_web_view(request):
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
@@ -617,10 +629,11 @@ def pago_transferencia_view(request):
     if not items:
         return redirect('core:carrito')
     
-    # Obtener el ID de la última venta creada para esta sesión
+    # Obtener el ID de la última venta creada para este email
+    email = request.session.get('email_comprador')
     ultima_venta = Venta.objects.filter(
-        session_key=request.session.session_key
-    ).order_by('-id').first()
+        email_comprador=email
+    ).order_by('-id').first() if email else None
     
     venta_id = ultima_venta.id if ultima_venta else None
     total = sum(item.producto.precio * item.cantidad for item in items)

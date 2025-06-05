@@ -4,6 +4,20 @@
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Botones de Acción -->
+    <div class="mb-8 flex flex-col sm:flex-row gap-4">
+        <a href="{% url 'core:register' %}" 
+           class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            <i class="fas fa-user-plus mr-2"></i>
+            Crear Usuario
+        </a>
+        <a href="{% url 'core:asignar' %}" 
+           class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <i class="fas fa-box mr-2"></i>
+            Asignar Stock
+        </a>
+    </div>
+
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
         <div class="px-6 py-4 bg-green-700">
