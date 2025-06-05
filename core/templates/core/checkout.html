@@ -88,13 +88,17 @@
                     <label for="ciudad" class="block text-sm font-medium text-gray-700 mb-2">
                         Ciudad *
                     </label>
-                    <input type="text" 
-                           id="ciudad" 
-                           name="ciudad" 
-                           required
-                           placeholder="Ingresa tu ciudad"
-                           value="{{ user.ciudad|default:'' }}"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+                    <select id="ciudad" 
+                            name="ciudad" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+                        <option value="">Seleccione una ciudad</option>
+                        <option value="santa fe" {% if user.ciudad == 'santa fe' %}selected{% endif %}>Santa Fe</option>
+                        <option value="cordoba" {% if user.ciudad == 'cordoba' %}selected{% endif %}>Córdoba</option>
+                        <option value="rosario" {% if user.ciudad == 'rosario' %}selected{% endif %}>Rosario</option>
+                        <option value="esperanza" {% if user.ciudad == 'esperanza' %}selected{% endif %}>Esperanza</option>
+                        <option value="rafaela" {% if user.ciudad == 'rafaela' %}selected{% endif %}>Rafaela</option>
+                    </select>
                 </div>
 
                 <!-- Botones de acción -->

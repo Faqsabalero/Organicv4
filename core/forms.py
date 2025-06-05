@@ -21,14 +21,22 @@ class CustomLoginForm(AuthenticationForm):
     )
 
 class UserCreationFormWithRol(UserCreationForm):
-    ciudad = forms.CharField(
-        widget=forms.TextInput(
+    CIUDADES_CHOICES = [
+        ('', 'Seleccione una ciudad'),
+        ('santa fe', 'Santa Fe'),
+        ('cordoba', 'Córdoba'),
+        ('rosario', 'Rosario'),
+        ('esperanza', 'Esperanza'),
+        ('rafaela', 'Rafaela'),
+    ]
+
+    ciudad = forms.ChoiceField(
+        choices=CIUDADES_CHOICES,
+        widget=forms.Select(
             attrs={
                 'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600',
-                'placeholder': 'Ingrese su ciudad'
             }
         ),
-        max_length=100
     )
 
     class Meta:
