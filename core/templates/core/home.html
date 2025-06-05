@@ -154,8 +154,8 @@
 </section>
 
 <!-- Modales -->
-<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="relative bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100] hidden overflow-auto" id="investigation-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl transform scale-95 mx-auto my-auto transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="investigation-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto my-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out;">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -182,8 +182,8 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="relative bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100] hidden overflow-auto" id="phytobreeding-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl transform scale-95 mx-auto my-auto transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="phytobreeding-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto my-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out;">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -210,8 +210,8 @@
             </div>
         </div>
 
-<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="relative bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100] hidden overflow-auto" id="manufacturing-modal" role="dialog">
-            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl transform scale-95 mx-auto my-auto transition-all duration-300">
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="manufacturing-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto my-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out;">
                 <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
                     <i class="fas fa-times"></i>
                 </button>
@@ -588,16 +588,20 @@
             return;
         }
         
-        // Bloquear scroll del body
-        document.body.style.overflow = 'hidden';
+        // Show modal container and set initial styles
+        modal.style.display = 'flex';
+        modal.style.opacity = '0';
         
-        // Show modal container
-        modal.classList.remove('hidden');
+        // Force a reflow to ensure the transition works
+        modal.offsetHeight;
         
-        // Add animation classes after a brief delay
-        requestAnimationFrame(() => {
-            modal.classList.add('opacity-100');
-        });
+        // Add animation styles
+        modal.style.opacity = '1';
+        
+        const modalContent = modal.querySelector('.bg-white');
+        if (modalContent) {
+            modalContent.style.transform = 'scale(1)';
+        }
     }
     
     function closeModal(modalId) {
@@ -609,15 +613,17 @@
             return;
         }
         
-        // Remove animation classes
-        modal.classList.remove('opacity-100');
+        // Remove animation styles
+        modal.style.opacity = '0';
         
-        // Restaurar scroll del body
-        document.body.style.overflow = '';
+        const modalContent = modal.querySelector('.bg-white');
+        if (modalContent) {
+            modalContent.style.transform = 'scale(0.95)';
+        }
         
         // Wait for animation to complete before hiding
         setTimeout(() => {
-            modal.classList.add('hidden');
+            modal.style.display = 'none';
         }, 300);
     }
 
@@ -658,44 +664,57 @@
         }
 
         // Configurar eventos de los modales
-        // Eventos para las tarjetas
-        const cards = document.querySelectorAll('[data-modal]');
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                const modalId = card.getAttribute('data-modal');
-                console.log('Opening modal:', modalId);
-                if (modalId) {
-                    openModal(modalId);
-                }
+        function setupModalEvents() {
+            // Eventos para las tarjetas
+            const cards = document.querySelectorAll('[data-modal]');
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const modalId = card.getAttribute('data-modal');
+                    console.log('Opening modal:', modalId);
+                    if (modalId) {
+                        openModal(modalId);
+                    }
+                });
             });
-        });
 
-        // Eventos para los botones de cierre
-        const closeButtons = document.querySelectorAll('button[id$="-close"]');
-        closeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const modalId = button.id.replace('-close', '');
-                closeModal(modalId);
+            // Eventos para los botones de cierre
+            const closeButtons = document.querySelectorAll('button[id$="-close"]');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalId = button.id.replace('-close', '');
+                    closeModal(modalId);
+                });
             });
-        });
 
-        // Cerrar modal al hacer clic fuera
-        const modals = document.querySelectorAll('[aria-modal="true"]');
-        modals.forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal(modal.id);
-                }
+            // Cerrar modal al hacer clic fuera
+            const modals = document.querySelectorAll('[aria-modal="true"]');
+            modals.forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal.id);
+                    }
+                });
             });
-        });
+
+            // Inicializar estilos de los modales
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+                modal.style.opacity = '0';
+            });
+        }
+
+        // Llamar a la función de configuración después de que el DOM esté listo
+        setupModalEvents();
 
         // Manejar la tecla Escape para cerrar modales
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape') {
-                const visibleModal = document.querySelector('[aria-modal="true"]:not(.hidden)');
-                if (visibleModal) {
-                    closeModal(visibleModal.id);
-                }
+                const modals = document.querySelectorAll('[aria-modal="true"]');
+                modals.forEach(modal => {
+                    if (modal.style.display !== 'none') {
+                        closeModal(modal.id);
+                    }
+                });
             }
         });
     });
