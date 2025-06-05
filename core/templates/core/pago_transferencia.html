@@ -1,0 +1,88 @@
+{% extends "core/base.html" %}
+
+{% block title %}Datos de Transferencia - Organic Shops{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- Header -->
+        <div class="px-6 py-4 bg-green-700">
+            <h2 class="text-2xl font-bold text-white">Datos para Transferencia Bancaria</h2>
+        </div>
+
+        <div class="p-6">
+            <!-- Resumen del pedido -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Resumen de tu Compra</h3>
+                <div class="bg-green-50 rounded-lg p-4">
+                    <div class="space-y-3">
+                        {% for item in items %}
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-700">{{ item.producto.nombre }} x {{ item.cantidad }}</span>
+                            <span class="text-green-700 font-semibold">${{ item.producto.precio|floatformat:2 }} ARS</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <hr class="my-4 border-green-200">
+                    <div class="flex justify-between items-center">
+                        <span class="text-xl font-semibold text-gray-700">Total a Transferir:</span>
+                        <span class="text-2xl font-bold text-green-700">${{ total }} ARS</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Datos Bancarios -->
+            <div class="space-y-6">
+                <h3 class="text-xl font-semibold text-gray-900">Datos Bancarios</h3>
+                
+                <div class="bg-gray-50 rounded-lg p-6 space-y-4">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Banco</p>
+                        <p class="mt-1 text-lg font-semibold text-gray-900">Banco Santander</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">Titular</p>
+                        <p class="mt-1 text-lg font-semibold text-gray-900">ORGANIC SHOPS S.A.</p>
+                    </div>
+                    
+                    <div>
+                        <p class="text-sm font-medium text-gray-500">CBU</p>
+                        <div class="mt-1 flex items-center space-x-2">
+                            <p class="text-lg font-mono font-semibold text-gray-900">0720000720000000123456</p>
+                            <button onclick="copiarCBU()" class="p-2 text-green-600 hover:text-green-800">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 p-4 bg-yellow-50 rounded-lg">
+                        <p class="text-sm text-yellow-800">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Una vez realizada la transferencia, envíanos el comprobante por WhatsApp para gestionar tu envío.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Botón de WhatsApp -->
+                <a href="https://wa.me/+5491112345678?text=Hola!%20Realicé%20una%20compra%20en%20Organic%20Shops%20por%20${{ total }}%20ARS.%20Adjunto%20comprobante%20de%20transferencia." 
+                   target="_blank"
+                   class="mt-8 w-full bg-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
+                    <i class="fab fa-whatsapp text-2xl"></i>
+                    <span>Gestionar mi Envío por WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function copiarCBU() {
+    navigator.clipboard.writeText('0720000720000000123456').then(function() {
+        alert('CBU copiado al portapapeles');
+    }).catch(function() {
+        alert('Error al copiar el CBU');
+    });
+}
+</script>
+{% endblock %}

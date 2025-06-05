@@ -608,6 +608,22 @@ def checkout_view(request):
         'total': total
     })
 
+def pago_transferencia_view(request):
+    """Vista para mostrar los datos de transferencia bancaria"""
+    if not request.session.session_key:
+        return redirect('core:carrito')
+    
+    items = CarritoItem.objects.filter(session_key=request.session.session_key)
+    if not items:
+        return redirect('core:carrito')
+    
+    total = sum(item.producto.precio * item.cantidad for item in items)
+    
+    return render(request, 'core/pago_transferencia.html', {
+        'items': items,
+        'total': total
+    })
+
 def procesar_pago(request):
     if request.method != 'POST':
         return redirect('core:checkout')
@@ -664,16 +680,15 @@ def procesar_pago(request):
                 email_comprador=email,
                 nombre_comprador=nombre,
                 comprador=comprador,
-                estado_pago='PAGADO'  # Asumimos que el pago es exitoso
+                estado_pago='PENDIENTE'  # Cambiado a PENDIENTE ya que el pago será por transferencia
             )
             ventas.append(venta.id)
         
-        # Limpiar el carrito
-        items.delete()
+        # No limpiamos el carrito aquí, lo haremos después de confirmar la transferencia
         
-        messages.success(request, f'¡Compra procesada correctamente! Total: ${total_venta} ARS. IDs de venta: {", ".join(map(str, ventas))}')
-        return redirect('core:home')
+        # Redirigir a la página de datos de transferencia
+        return redirect('core:pago_transferencia')
         
     except Exception as e:
-        messages.error(request, f'Error al procesar el pago: {str(e)}')
+        messages.error(request, f'Error al procesar la compra: {str(e)}')
         return redirect('core:checkout')
