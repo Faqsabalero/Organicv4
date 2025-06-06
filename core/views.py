@@ -705,7 +705,13 @@ def procesar_pago(request):
             )
             ventas.append(venta.id)
         
-        # No limpiamos el carrito aquí, lo haremos después de confirmar la transferencia
+        # Limpiar el carrito después de crear las ventas
+        items.delete()
+        
+        # Guardar el ID de la última venta para mostrarlo
+        request.session['ultima_venta_id'] = ventas[-1]
+        
+        messages.success(request, f'¡Compra exitosa! Tu número de pedido es #{ventas[-1]}')
         
         # Redirigir a la página de datos de transferencia
         return redirect('core:pago_transferencia')

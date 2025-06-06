@@ -3,6 +3,27 @@
 {% block title %}Datos de Transferencia - Organic Shops{% endblock %}
 
 {% block content %}
+{% if messages %}
+<div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+        <div class="text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                <i class="fas fa-check text-green-600 text-xl"></i>
+            </div>
+            {% for message in messages %}
+                <h3 class="text-lg font-medium text-gray-900 mb-4">{{ message }}</h3>
+            {% endfor %}
+            <div class="mt-5">
+                <button onclick="document.getElementById('successModal').style.display='none'" 
+                        class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
@@ -11,6 +32,16 @@
         </div>
 
         <div class="p-6">
+            <!-- Número de Pedido -->
+            <div class="mb-6">
+                <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-medium text-gray-700">Número de Pedido:</span>
+                        <span class="text-xl font-bold text-green-700">#{{ venta_id }}</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Resumen del pedido -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">Resumen de tu Compra</h3>
