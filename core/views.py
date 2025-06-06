@@ -35,7 +35,7 @@ def tienda_oculta_view(request):
 
 @login_required
 def asignar_view(request):
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO', 'DISTRIBUIDOR']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
     if request.method == 'POST':
@@ -43,6 +43,12 @@ def asignar_view(request):
         if form.is_valid():
             asignacion = form.save(commit=False)
             asignacion.admin = request.user
+            
+            # Verificar que el distribuidor solo pueda asignar a revendedores
+            if request.user.rol == 'DISTRIBUIDOR' and form.cleaned_data['distribuidor'].rol != 'REVENDEDOR':
+                messages.error(request, 'Como distribuidor, solo puede asignar stock a revendedores.')
+                return redirect('core:asignar')
+            
             asignacion.save()
             messages.success(request, 'Asignación creada correctamente.')
             return redirect('core:asignar')

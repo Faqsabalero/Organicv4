@@ -109,9 +109,12 @@ class AsignacionForm(forms.ModelForm):
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
         # Filtrar distribuidores según el rol del usuario
-        if user and user.rol == 'DISTRIBUIDOR':
-            # Si es distribuidor, solo mostrar revendedores
-            self.fields['distribuidor'].queryset = CustomUser.objects.filter(rol='REVENDEDOR')
-        else:
-            # Si es admin o superusuario, mostrar distribuidores
-            self.fields['distribuidor'].queryset = CustomUser.objects.filter(rol='DISTRIBUIDOR')
+        if user:
+            if user.rol == 'DISTRIBUIDOR':
+                # Si es distribuidor, solo mostrar revendedores
+                self.fields['distribuidor'].queryset = CustomUser.objects.filter(rol='REVENDEDOR')
+            elif user.rol in ['ADMIN', 'SUPERUSUARIO']:
+                # Si es admin o superusuario, mostrar distribuidores y revendedores
+                self.fields['distribuidor'].queryset = CustomUser.objects.filter(
+                    rol__in=['DISTRIBUIDOR', 'REVENDEDOR']
+                )

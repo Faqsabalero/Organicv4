@@ -4,6 +4,48 @@
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Resumen y Estadísticas -->
+    <div class="mb-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Total Asignaciones -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Total Asignaciones</p>
+                    <p class="text-2xl font-bold text-green-600">{{ asignaciones_propias.count }}</p>
+                </div>
+                <div class="bg-green-100 rounded-full p-3">
+                    <i class="fas fa-box text-green-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Productos Distintos -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Productos Distintos</p>
+                    <p class="text-2xl font-bold text-blue-600">{{ productos_distintos }}</p>
+                </div>
+                <div class="bg-blue-100 rounded-full p-3">
+                    <i class="fas fa-cubes text-blue-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Revendedores -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500">Mis Revendedores</p>
+                    <p class="text-2xl font-bold text-purple-600">{{ asignaciones_creadas.count }}</p>
+                </div>
+                <div class="bg-purple-100 rounded-full p-3">
+                    <i class="fas fa-users text-purple-600 text-xl"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Botones de Acción -->
     <div class="mb-8 flex flex-col sm:flex-row gap-4">
         <a href="{% url 'core:register' %}" 
