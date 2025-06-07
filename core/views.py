@@ -305,8 +305,9 @@ def cambiar_estado_venta(request, venta_id):
     messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
     return redirect('core:ventas_web')
 
+@login_required
 def ventas_web_view(request):
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+    if not request.user.is_authenticated or request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
     hoy = timezone.now()
