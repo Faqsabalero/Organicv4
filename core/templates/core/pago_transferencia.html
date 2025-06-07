@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
 
 {% block title %}Datos de Transferencia - Organic Shops{% endblock %}
 
@@ -50,7 +51,7 @@
                         {% for item in items %}
                         <div class="flex justify-between items-center">
                             <span class="text-gray-700">{{ item.producto.nombre }} x {{ item.cantidad }}</span>
-                            <span class="text-green-700 font-semibold">${{ item.producto.precio|floatformat:2 }} ARS</span>
+                            <span class="text-green-700 font-semibold">${{ item.producto.precio|multiply:item.cantidad|floatformat:2 }} ARS</span>
                         </div>
                         {% endfor %}
                     </div>

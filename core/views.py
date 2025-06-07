@@ -709,18 +709,32 @@ def pago_transferencia_view(request):
     if not request.session.session_key:
         return redirect('core:carrito')
     
-    items = CarritoItem.objects.filter(session_key=request.session.session_key)
-    if not items:
-        return redirect('core:carrito')
-    
     # Obtener el ID de la última venta creada para este email
     email = request.session.get('email_comprador')
-    ultima_venta = Venta.objects.filter(
-        email_comprador=email
-    ).order_by('-id').first() if email else None
+    if not email:
+        return redirect('core:carrito')
     
-    venta_id = ultima_venta.id if ultima_venta else None
-    total = sum(item.producto.precio * item.cantidad for item in items)
+    # Obtener las ventas recientes del usuario
+    ventas = Venta.objects.filter(
+        email_comprador=email,
+        session_key=request.session.session_key
+    ).order_by('-fecha_venta')
+    
+    if not ventas:
+        messages.error(request, 'No se encontraron ventas asociadas.')
+        return redirect('core:carrito')
+    
+    # Obtener los items de las ventas
+    items = []
+    for venta in ventas:
+        items.append({
+            'producto': venta.producto,
+            'cantidad': venta.cantidad
+        })
+    
+    # Calcular el total
+    total = sum(venta.total for venta in ventas)
+    venta_id = ventas.first().id if ventas else None
     
     return render(request, 'core/pago_transferencia.html', {
         'items': items,
