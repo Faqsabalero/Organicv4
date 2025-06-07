@@ -835,3 +835,16 @@ def contact_view(request):
         return redirect('core:home')
     
     return redirect('core:home')
+
+@login_required
+def cambiar_estado_venta(request, venta_id):
+    """Vista para cambiar el estado de una venta web"""
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return HttpResponseForbidden("No tiene permiso para cambiar el estado.")
+    
+    venta = get_object_or_404(Venta, id=venta_id)
+    venta.estado_pago = 'PAGADO' if venta.estado_pago == 'PENDIENTE' else 'PENDIENTE'
+    venta.save()
+    
+    messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
+    return redirect('core:ventas_web')
