@@ -1,4 +1,5 @@
 {% extends "core/base.html" %}
+{% load custom_filters %}
 
 {% block title %}Ventas WEB - Organic Shops{% endblock %}
 
@@ -207,22 +208,14 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <form method="POST" action="{% url 'core:cambiar_estado_venta' venta.id %}" class="inline">
-                                    {% csrf_token %}
-                                    <button type="submit" 
-                                            class="px-3 py-1 text-xs font-medium rounded border
-                                            {% if venta.estado_pago == 'PENDIENTE' %}
-                                                border-green-600 text-green-600 hover:bg-green-50
-                                            {% else %}
-                                                border-yellow-600 text-yellow-600 hover:bg-yellow-50
-                                            {% endif %}">
-                                        {% if venta.estado_pago == 'PENDIENTE' %}
-                                            Marcar como Pagado
-                                        {% else %}
-                                            Marcar como Pendiente
-                                        {% endif %}
-                                    </button>
-                                </form>
+                                {% if user|has_role:"ADMIN,SUPERUSUARIO" %}
+                                    <form method="POST" action="{% url 'core:cambiar_estado_venta' venta.id %}" class="inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="inline-flex items-center px-3 py-1 text-xs font-medium rounded border-2 {% if venta.estado_pago == 'PAGADO' %}border-yellow-500 text-yellow-700{% else %}border-green-500 text-green-700{% endif %}">
+                                            {{ venta.estado_pago|yesno:"Marcar como Pendiente,Marcar como Pagado" }}
+                                        </button>
+                                    </form>
+                                {% endif %}
                             </td>
                         </tr>
                         {% empty %}

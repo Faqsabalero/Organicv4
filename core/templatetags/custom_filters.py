@@ -9,3 +9,11 @@ def multiply(value, arg):
         return float(value) * float(arg)
     except (ValueError, TypeError):
         return ''
+
+@register.filter
+def has_role(user, roles):
+    """Check if user has any of the specified roles"""
+    if not user or not hasattr(user, 'rol'):
+        return False
+    role_list = [r.strip() for r in roles.split(',')]
+    return user.rol in role_list
