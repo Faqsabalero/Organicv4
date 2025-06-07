@@ -17,3 +17,16 @@ def has_role(user, roles):
         return False
     role_list = [r.strip() for r in roles.split(',')]
     return user.rol in role_list
+
+@register.filter
+def abs_value(value):
+    """Returns the absolute value"""
+    try:
+        return abs(float(value))
+    except (ValueError, TypeError):
+        return value
+
+@register.filter
+def split(value, arg):
+    """Split a string into a list using the specified delimiter"""
+    return value.split(arg)
