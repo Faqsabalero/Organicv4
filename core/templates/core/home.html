@@ -69,87 +69,68 @@
 
 <!-- About Section -->
 <section class="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-gradient-to-br from-white to-green-50" id="about">
-    <div class="text-center max-w-3xl mx-auto animate-fadeIn">
+    <div class="text-center max-w-3xl mx-auto mb-16 animate-fadeIn">
         <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Nuestra Misión</span>
         <h2 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6">
             Comprometidos con tu <span class="text-green-600">bienestar natural</span>
         </h2>
-        <p class="text-gray-700 text-lg leading-relaxed">
-            Somos una empresa dedicada a la investigación, producción y distribución de productos medicinales a base de cannabis. Nuestro compromiso es ofrecer soluciones naturales y seguras para el bienestar de nuestros clientes, promoviendo la salud integral y el conocimiento responsable.
-        </p>
     </div>
     <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-<div tabindex="0" 
-             class="group bg-white rounded-xl p-8 shadow-lg flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2 border border-gray-100" 
+        <div tabindex="0" 
+             class="group bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" 
              role="button" 
              data-modal="investigation-modal"
              aria-haspopup="dialog" 
              aria-controls="investigation-modal" 
              aria-expanded="false">
-            <div class="relative mb-6">
-                <div class="w-24 h-24 rounded-full bg-green-100 absolute -inset-1 animate-pulse group-hover:bg-green-200 transition-colors duration-300"></div>
+            <div class="relative h-80">
                 <img src="https://storage.googleapis.com/a1aa/image/6f794ea5-295d-4b25-95e2-803fcd013ce8.jpg" 
                      alt="Investigación con ONGs" 
-                     class="w-24 h-24 rounded-full object-cover relative z-10 ring-4 ring-white" />
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-xl font-bold mb-2">Investigación con ONGs</h3>
+                    <p class="text-sm text-white/80">Desarrollo de productos efectivos y seguros</p>
+                </div>
             </div>
-            <h3 class="text-xl font-bold text-green-800 mb-3 group-hover:text-green-600 transition-colors duration-300">
-                Investigación con ONGs
-            </h3>
-            <p class="text-gray-600 leading-relaxed">
-                Contamos con un equipo de expertos que estudian las propiedades terapéuticas del cannabis para desarrollar productos efectivos y seguros.
-            </p>
-            <span class="mt-6 inline-flex items-center text-green-600 font-semibold group-hover:text-green-700">
-                <span>Leer más</span>
-                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
-            </span>
         </div>
-<div tabindex="0" 
-             class="group bg-white rounded-xl p-8 shadow-lg flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2 border border-gray-100" 
+
+        <div tabindex="0" 
+             class="group bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" 
              role="button" 
              data-modal="phytobreeding-modal"
              aria-haspopup="dialog" 
              aria-controls="phytobreeding-modal" 
              aria-expanded="false">
-            <div class="relative mb-6">
-                <div class="w-24 h-24 rounded-full bg-green-100 absolute -inset-1 animate-pulse group-hover:bg-green-200 transition-colors duration-300"></div>
+            <div class="relative h-80">
                 <img src="https://storage.googleapis.com/a1aa/image/5152ec04-f547-41c3-db6b-0775ee77a5f0.jpg" 
                      alt="Fitomejoramiento" 
-                     class="w-24 h-24 rounded-full object-cover relative z-10 ring-4 ring-white" />
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-xl font-bold mb-2">Fitomejoramiento</h3>
+                    <p class="text-sm text-white/80">Cultivos de alta calidad y pureza</p>
+                </div>
             </div>
-            <h3 class="text-xl font-bold text-green-800 mb-3 group-hover:text-green-600 transition-colors duration-300">
-                Fitomejoramiento
-            </h3>
-            <p class="text-gray-600 leading-relaxed">
-                Nuestros cultivos se realizan bajo estrictos controles de calidad para garantizar la pureza y potencia de cada planta.
-            </p>
-            <span class="mt-6 inline-flex items-center text-green-600 font-semibold group-hover:text-green-700">
-                <span>Leer más</span>
-                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
-            </span>
         </div>
-<div tabindex="0" 
-             class="group bg-white rounded-xl p-8 shadow-lg flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:shadow-2xl transform hover:-translate-y-2 border border-gray-100" 
+
+        <div tabindex="0" 
+             class="group bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" 
              role="button" 
              data-modal="manufacturing-modal"
              aria-haspopup="dialog" 
              aria-controls="manufacturing-modal" 
              aria-expanded="false">
-            <div class="relative mb-6">
-                <div class="w-24 h-24 rounded-full bg-green-100 absolute -inset-1 animate-pulse group-hover:bg-green-200 transition-colors duration-300"></div>
+            <div class="relative h-80">
                 <img src="https://storage.googleapis.com/a1aa/image/24f506c8-9915-487b-fdbc-a7bc2bfefd10.jpg" 
                      alt="Manufacturación en lab" 
-                     class="w-24 h-24 rounded-full object-cover relative z-10 ring-4 ring-white" />
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-xl font-bold mb-2">Manufacturación en lab</h3>
+                    <p class="text-sm text-white/80">Distribución responsable y legal</p>
+                </div>
             </div>
-            <h3 class="text-xl font-bold text-green-800 mb-3 group-hover:text-green-600 transition-colors duration-300">
-                Manufacturación en lab
-            </h3>
-            <p class="text-gray-600 leading-relaxed">
-                Entregamos nuestros productos a farmacias y centros de salud, asegurando un acceso responsable y legal.
-            </p>
-            <span class="mt-6 inline-flex items-center text-green-600 font-semibold group-hover:text-green-700">
-                <span>Leer más</span>
-                <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
-            </span>
         </div>
     </div>
 </section>
