@@ -633,9 +633,71 @@ def checkout_view(request):
     
     total = sum(item.producto.precio * item.cantidad for item in items)
     
-    return render(request, 'core/checkout.html', {
-        'items': items,
-        'total': total
+    # Verificar si hay productos exclusivos en el carrito
+    tiene_productos_exclusivos = any(item.producto.es_exclusivo for item in items)
+    
+    if tiene_productos_exclusivos:
+        # Buscar distribuidores exclusivos en la misma ciudad que el usuario
+        ciudad_usuario = request.user.ciudad if request.user.is_authenticated else None
+        if ciudad_usuario:
+            distribuidor = CustomUser.objects.filter(
+                rol='DISTRIBUIDOR',
+                es_distribuidor_exclusivo=True,
+                ciudad=ciudad_usuario
+            ).first()
+        else:
+            distribuidor = None
+        
+        return render(request, 'core/checkout_exclusivo.html', {
+            'items': items,
+            'total': total,
+            'distribuidor': distribuidor
+        })
+    else:
+        # Checkout normal para productos convencionales
+        return render(request, 'core/checkout.html', {
+            'items': items,
+            'total': total
+        })
+
+def checkout_exclusivo_view(request):
+    """Vista para mostrar los datos del distribuidor exclusivo"""
+    if not request.session.session_key:
+        return redirect('core:carrito')
+    
+    # Obtener el ID de la última venta creada para este email
+    email = request.session.get('email_comprador')
+    if not email:
+        return redirect('core:carrito')
+    
+    # Buscar las últimas ventas del usuario
+    ventas = Venta.objects.filter(
+        email_comprador=email,
+        session_key=request.session.session_key
+    ).order_by('-fecha_venta')
+    
+    if not ventas:
+        messages.error(request, 'No se encontraron ventas asociadas.')
+        return redirect('core:carrito')
+    
+    # Calcular el total de las ventas
+    total = sum(venta.total for venta in ventas)
+    
+    # Buscar un distribuidor exclusivo en la misma ciudad
+    ciudad_usuario = request.user.ciudad if request.user.is_authenticated else None
+    if ciudad_usuario:
+        distribuidor = CustomUser.objects.filter(
+            rol='DISTRIBUIDOR',
+            es_distribuidor_exclusivo=True,
+            ciudad=ciudad_usuario
+        ).first()
+    else:
+        distribuidor = None
+    
+    return render(request, 'core/checkout_exclusivo.html', {
+        'ventas': ventas,
+        'total': total,
+        'distribuidor': distribuidor
     })
 
 def pago_transferencia_view(request):
@@ -706,6 +768,9 @@ def procesar_pago(request):
         total_venta = Decimal('0')
         ventas = []
 
+        # Verificar si hay productos exclusivos
+        tiene_productos_exclusivos = any(item.producto.es_exclusivo for item in items)
+
         # Crear las ventas
         for item in items:
             subtotal = item.producto.precio * item.cantidad
@@ -718,7 +783,7 @@ def procesar_pago(request):
                 email_comprador=email,
                 nombre_comprador=nombre,
                 comprador=comprador,
-                estado_pago='PENDIENTE',  # Cambiado a PENDIENTE ya que el pago será por transferencia
+                estado_pago='PENDIENTE',
                 session_key=request.session.session_key
             )
             ventas.append(venta.id)
@@ -728,11 +793,15 @@ def procesar_pago(request):
         
         # Guardar el ID de la última venta para mostrarlo
         request.session['ultima_venta_id'] = ventas[-1]
+        request.session['email_comprador'] = email
         
         messages.success(request, f'¡Compra exitosa! Tu número de pedido es #{ventas[-1]}')
         
-        # Redirigir a la página de datos de transferencia
-        return redirect('core:pago_transferencia')
+        # Redirigir según el tipo de productos
+        if tiene_productos_exclusivos:
+            return redirect('core:checkout_exclusivo')
+        else:
+            return redirect('core:pago_transferencia')
         
     except Exception as e:
         messages.error(request, f'Error al procesar la compra: {str(e)}')
