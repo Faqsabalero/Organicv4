@@ -35,7 +35,7 @@ def tienda_oculta_view(request):
 
 @login_required
 def asignar_view(request):
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO', 'DISTRIBUIDOR']:
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
     if request.method == 'POST':
@@ -377,19 +377,6 @@ def distribuidor_view(request):
     if request.user.rol != 'DISTRIBUIDOR':
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
-    if request.method == 'POST':
-        form = AsignacionForm(request.POST, user=request.user)
-        if form.is_valid():
-            asignacion = form.save(commit=False)
-            asignacion.admin = request.user
-            asignacion.save()
-            messages.success(request, 'Asignación creada correctamente.')
-            return redirect('core:distribuidor')
-        else:
-            messages.error(request, 'Por favor corrija los errores en el formulario.')
-    else:
-        form = AsignacionForm(user=request.user)
-    
     # Filtrar asignaciones propias y las que ha creado
     asignaciones_propias = Asignacion.objects.filter(distribuidor=request.user).select_related('admin').order_by('-fecha_asignacion')
     asignaciones_creadas = Asignacion.objects.filter(admin=request.user).order_by('-fecha_asignacion')
@@ -399,11 +386,36 @@ def distribuidor_view(request):
     )['total']
     
     return render(request, 'core/distribuidor.html', {
-        'form': form,
         'asignaciones_propias': asignaciones_propias,
         'asignaciones_creadas': asignaciones_creadas,
         'productos_distintos': productos_distintos
     })
+
+@login_required
+def asignar_distribuidor_view(request):
+    if request.user.rol != 'DISTRIBUIDOR':
+        return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
+    
+    if request.method == 'POST':
+        form = AsignacionForm(request.POST, user=request.user)
+        if form.is_valid():
+            asignacion = form.save(commit=False)
+            asignacion.admin = request.user
+            
+            # Verificar que solo pueda asignar a revendedores
+            if form.cleaned_data['distribuidor'].rol != 'REVENDEDOR':
+                messages.error(request, 'Como distribuidor, solo puede asignar stock a revendedores.')
+                return redirect('core:asignar_distribuidor')
+            
+            asignacion.save()
+            messages.success(request, 'Asignación creada correctamente.')
+            return redirect('core:distribuidor')
+        else:
+            messages.error(request, 'Por favor corrija los errores en el formulario.')
+    else:
+        form = AsignacionForm(user=request.user)
+    
+    return render(request, 'core/asignar_distribuidor.html', {'form': form})
 
 def carrito_view(request, producto_id=None):
     if producto_id:
