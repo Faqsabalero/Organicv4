@@ -574,7 +574,11 @@ def register_user(request):
     if request.method == 'POST':
         form = UserCreationFormWithRol(request.POST, user=request.user)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+            # Si el rol es DISTRIBUIDOR, establecer es_distribuidor_exclusivo
+            if user.rol == 'DISTRIBUIDOR':
+                user.es_distribuidor_exclusivo = form.cleaned_data.get('es_distribuidor_exclusivo', False)
+            user.save()
             messages.success(request, 'Usuario creado exitosamente.')
             return redirect('core:asignar')
     else:

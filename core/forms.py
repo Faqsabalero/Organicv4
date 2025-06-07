@@ -39,9 +39,18 @@ class UserCreationFormWithRol(UserCreationForm):
         ),
     )
 
+    es_distribuidor_exclusivo = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(
+            attrs={
+                'class': 'h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded',
+            }
+        )
+    )
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad')
+        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad', 'es_distribuidor_exclusivo')
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)

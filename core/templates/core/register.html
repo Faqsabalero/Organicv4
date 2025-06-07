@@ -81,6 +81,28 @@
                     {% endif %}
                 </div>
 
+                <!-- Distribuidor Exclusivo -->
+                <div id="distribuidor-exclusivo" class="hidden">
+                    <div class="flex items-center">
+                        <input type="checkbox" name="es_distribuidor_exclusivo" id="es_distribuidor_exclusivo" class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+                        <label for="es_distribuidor_exclusivo" class="ml-2 block text-sm text-gray-700">
+                            Distribuidor Exclusivo
+                        </label>
+                    </div>
+                </div>
+
+                <script>
+                    document.getElementById('{{ form.rol.id_for_label }}').addEventListener('change', function() {
+                        const distribuidorExclusivoDiv = document.getElementById('distribuidor-exclusivo');
+                        if (this.value === 'DISTRIBUIDOR') {
+                            distribuidorExclusivoDiv.classList.remove('hidden');
+                        } else {
+                            distribuidorExclusivoDiv.classList.add('hidden');
+                            document.getElementById('es_distribuidor_exclusivo').checked = false;
+                        }
+                    });
+                </script>
+
                 <!-- Password -->
                 <div>
                     <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-2">
