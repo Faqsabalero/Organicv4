@@ -806,3 +806,32 @@ def procesar_pago(request):
     except Exception as e:
         messages.error(request, f'Error al procesar la compra: {str(e)}')
         return redirect('core:checkout')
+
+def contact_view(request):
+    """Vista para procesar el formulario de contacto"""
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        # Validar campos
+        if not all([name, email, message]):
+            messages.error(request, 'Por favor complete todos los campos.')
+            return redirect('core:home')
+        
+        # Enviar email
+        try:
+            send_mail(
+                f'Nuevo mensaje de contacto de {name}',
+                f'Nombre: {name}\nEmail: {email}\nMensaje: {message}',
+                email,  # From email
+                [settings.DEFAULT_FROM_EMAIL],  # To email
+                fail_silently=False,
+            )
+            messages.success(request, 'Mensaje enviado correctamente. Nos pondremos en contacto pronto.')
+        except Exception as e:
+            messages.error(request, 'Hubo un error al enviar el mensaje. Por favor intente nuevamente.')
+        
+        return redirect('core:home')
+    
+    return redirect('core:home')
