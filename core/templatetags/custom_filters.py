@@ -30,3 +30,11 @@ def abs_value(value):
 def split(value, arg):
     """Split a string into a list using the specified delimiter"""
     return value.split(arg)
+
+@register.filter
+def subtract(value, arg):
+    """Subtracts the argument from the value"""
+    try:
+        return float(value) - float(arg)
+    except (ValueError, TypeError):
+        return value
