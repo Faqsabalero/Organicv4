@@ -113,7 +113,7 @@
                             {% if porcentaje_cambio_ventas > 0 %}
                             <span class="text-green-500">↑ {{ porcentaje_cambio_ventas|floatformat:1 }}%</span>
                             {% else %}
-                            <span class="text-red-500">↓ {{ porcentaje_cambio_ventas|abs|floatformat:1 }}%</span>
+                            <span class="text-red-500">↓ {{ porcentaje_cambio_ventas|abs_value|floatformat:1 }}%</span>
                             {% endif %}
                             vs mes anterior
                         </p>
