@@ -490,7 +490,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <form method="POST" action="{% url 'core:cambiar_estado_venta' venta.id %}" class="inline">
                                                 {% csrf_token %}
-                                                <button type="submit" class="inline-flex items-center px-3 py-1 text-xs font-medium rounded border-2 {% if venta.estado_pago == 'PAGADO' %}border-yellow-500 text-yellow-700{% else %}border-green-500 text-green-700{% endif %}">
+                                                <button type="submit" class="inline-flex items-center px-3 py-1 text-xs font-medium rounded bg-green-600 text-white hover:bg-green-700 transition-colors duration-200">
                                                     Cambiar Estado
                                                 </button>
                                             </form>
