@@ -33,27 +33,162 @@
 
         <!-- Tab Content: Asignaciones -->
         <div id="asignacionesTab">
-            <!-- [Previous Asignaciones tab content remains unchanged] -->
-            {{ asignaciones_content|safe }}
+            <div class="p-6">
+                <!-- Formulario de Asignación -->
+                <div class="mb-8">
+                    <button onclick="toggleAsignacionForm()" 
+                            class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center space-x-3 shadow-lg">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Nueva Asignación</span>
+                    </button>
+                </div>
+
+                <div id="formAsignacion" class="hidden mb-8 bg-white rounded-lg shadow-lg p-6 border border-gray-200">
+                    <form method="post" class="space-y-6">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="flex justify-end">
+                            <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                                Crear Asignación
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Tabla de Asignaciones -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Admin</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Distribuidor</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for asignacion in asignaciones %}
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ asignacion.fecha_asignacion }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ asignacion.admin }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ asignacion.distribuidor }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ asignacion.producto }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ asignacion.cantidad }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs rounded-full 
+                                        {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800
+                                        {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                        {{ asignacion.estado }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <form method="POST" action="{% url 'core:cambiar_estado_asignacion' asignacion.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="text-sm text-blue-600 hover:text-blue-900">
+                                            Cambiar Estado
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <!-- Tab Content: Finanzas -->
         <div id="finanzasTab" class="hidden">
             <div class="p-6">
-                <!-- [Previous Finanzas content remains unchanged] -->
-                {{ finanzas_content|safe }}
-
-                <!-- Tabla de Ventas Web (Merged from ventasTab) -->
-                <div class="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg overflow-hidden mt-8 animate-fadeIn border border-gray-100" style="animation-delay: 0.8s;">
-                    <div class="px-6 py-4 bg-gradient-to-r from-green-600 to-green-700">
-                        <h2 class="text-2xl font-bold text-white flex items-center space-x-3">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Registro de Ventas Web</span>
-                        </h2>
+                <!-- Métricas Financieras -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Total Ventas -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Total Ventas</h3>
+                        <p class="text-3xl font-bold text-green-600">${{ total_ventas|floatformat:2 }}</p>
+                        <p class="text-sm text-gray-500 mt-2">
+                            {% if porcentaje_cambio_ventas > 0 %}
+                            <span class="text-green-500">↑ {{ porcentaje_cambio_ventas|floatformat:1 }}%</span>
+                            {% else %}
+                            <span class="text-red-500">↓ {{ porcentaje_cambio_ventas|abs|floatformat:1 }}%</span>
+                            {% endif %}
+                            vs mes anterior
+                        </p>
                     </div>
-                    <div class="p-6">
-                        <!-- [Previous Ventas Web content remains unchanged] -->
-                        {{ ventas_web_content|safe }}
+
+                    <!-- Ganancias Netas -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Ganancias Netas</h3>
+                        <p class="text-3xl font-bold text-blue-600">${{ ganancias_netas|floatformat:2 }}</p>
+                        <p class="text-sm text-gray-500 mt-2">Margen: {{ margen_ganancia|floatformat:1 }}%</p>
+                    </div>
+
+                    <!-- Costos -->
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Costos Totales</h3>
+                        <p class="text-3xl font-bold text-red-600">${{ costos_totales|floatformat:2 }}</p>
+                        <p class="text-sm text-gray-500 mt-2">{{ porcentaje_costos|floatformat:1 }}% del total</p>
+                    </div>
+                </div>
+
+                <!-- Tabla de Ventas -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">Registro de Ventas</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fecha</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cliente</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
+                                    {% if user|has_role:"ADMIN,SUPERUSUARIO" %}
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                {% for venta in ventas %}
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ venta.fecha_venta|date:"d/m/Y H:i" }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        {% if venta.comprador %}
+                                            {{ venta.comprador.nombre }}
+                                        {% else %}
+                                            {{ venta.nombre_comprador }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ venta.producto.nombre }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">{{ venta.cantidad }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">${{ venta.total|floatformat:2 }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs rounded-full 
+                                            {% if venta.estado_pago == 'PAGADO' %}bg-green-100 text-green-800
+                                            {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                            {{ venta.estado_pago }}
+                                        </span>
+                                    </td>
+                                    {% if user|has_role:"ADMIN,SUPERUSUARIO" %}
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <form method="POST" action="{% url 'core:cambiar_estado_venta' venta.id %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="text-sm text-blue-600 hover:text-blue-900">
+                                                Cambiar Estado
+                                            </button>
+                                        </form>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -69,104 +204,6 @@
         form.classList.toggle('hidden');
     }
 
-    // Función para filtrar la tabla de asignaciones
-    function filterTable() {
-        const fecha = document.getElementById('searchFecha')?.value.toLowerCase() || '';
-        const creador = document.getElementById('searchCreador')?.value.toLowerCase() || '';
-        const distribuidor = document.getElementById('searchDistribuidor')?.value.toLowerCase() || '';
-        const producto = document.getElementById('searchProducto')?.value.toLowerCase() || '';
-        const estado = document.getElementById('searchEstado')?.value.toLowerCase() || '';
-        
-        const rows = document.querySelectorAll('#asignacionesTab table tbody tr');
-        
-        rows.forEach(row => {
-            if (row.cells.length >= 7) {
-                const fechaCell = row.cells[0].textContent.toLowerCase();
-                const creadorCell = row.cells[1].textContent.toLowerCase();
-                const distribuidorCell = row.cells[2].textContent.toLowerCase();
-                const productoCell = row.cells[3].textContent.toLowerCase();
-                const estadoCell = row.cells[6].textContent.toLowerCase();
-                
-                const matchFecha = fechaCell.includes(fecha);
-                const matchCreador = creadorCell.includes(creador);
-                const matchDistribuidor = distribuidorCell.includes(distribuidor);
-                const matchProducto = productoCell.includes(producto);
-                const matchEstado = estadoCell.includes(estado);
-                
-                if (matchFecha && matchCreador && matchDistribuidor && matchProducto && matchEstado) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            }
-        });
-    }
-
-    // Función para filtrar la tabla de ventas
-    function filterVentas() {
-        const fecha = document.getElementById('searchFechaVenta')?.value.toLowerCase() || '';
-        const cliente = document.getElementById('searchCliente')?.value.toLowerCase() || '';
-        const estado = document.getElementById('searchEstadoVenta')?.value.toLowerCase() || '';
-        
-        const rows = document.querySelectorAll('#finanzasTab .overflow-x-auto table tbody tr');
-        
-        rows.forEach(row => {
-            if (!row.querySelector('td')) return;
-            
-            const fechaCell = row.cells[0].textContent.toLowerCase();
-            const clienteCell = row.cells[1].textContent.toLowerCase();
-            const estadoCell = row.cells[5].textContent.toLowerCase();
-            
-            const matchFecha = fechaCell.includes(fecha);
-            const matchCliente = clienteCell.includes(cliente);
-            const matchEstado = estadoCell.includes(estado);
-            
-            if (matchFecha && matchCliente && matchEstado) {
-                row.style.display = '';
-                row.classList.add('animate-fadeIn');
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    // Add event listeners when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add transition styles
-        const tabs = ['asignacionesTab', 'finanzasTab'];
-        tabs.forEach(tab => {
-            const element = document.getElementById(tab);
-            if (element) {
-                element.style.transition = 'opacity 0.3s ease-in-out';
-            }
-        });
-
-        // Add event listeners for asignaciones filters
-        const searchInputs = [
-            'searchFecha',
-            'searchCreador',
-            'searchDistribuidor',
-            'searchProducto',
-            'searchEstado'
-        ];
-        
-        searchInputs.forEach(inputId => {
-            const inputElement = document.getElementById(inputId);
-            if (inputElement) {
-                inputElement.addEventListener('input', filterTable);
-            }
-        });
-
-        // Add event listeners for ventas filters
-        const ventasFilters = ['searchFechaVenta', 'searchCliente', 'searchEstadoVenta'];
-        ventasFilters.forEach(filterId => {
-            const input = document.getElementById(filterId);
-            if (input) {
-                input.addEventListener('input', filterVentas);
-            }
-        });
-    });
-
     function showTab(tabName) {
         // Update tab buttons
         document.querySelectorAll('.tab-button').forEach(button => {
@@ -180,28 +217,14 @@
             }
         });
 
-        // Fade out current content
-        const tabs = ['asignacionesTab', 'finanzasTab'];
-        tabs.forEach(tab => {
-            const element = document.getElementById(tab);
-            if (element && !element.classList.contains('hidden') && tab !== `${tabName}Tab`) {
-                element.style.opacity = '0';
-                element.addEventListener('transitionend', function handler() {
-                    element.classList.add('hidden');
-                    element.removeEventListener('transitionend', handler);
-                });
+        // Show/hide content
+        document.querySelectorAll('#asignacionesTab, #finanzasTab').forEach(tab => {
+            if (tab.id === `${tabName}Tab`) {
+                tab.classList.remove('hidden');
+            } else {
+                tab.classList.add('hidden');
             }
         });
-
-        // Show and fade in new content
-        const activeTab = document.getElementById(`${tabName}Tab`);
-        if (activeTab && activeTab.classList.contains('hidden')) {
-            activeTab.classList.remove('hidden');
-            activeTab.style.opacity = '0';
-            requestAnimationFrame(() => {
-                activeTab.style.opacity = '1';
-            });
-        }
     }
 </script>
 {% endblock %}
