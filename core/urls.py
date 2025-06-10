@@ -4,7 +4,6 @@ from . import views
 app_name = 'core'
 
 urlpatterns = [
-    path('ventas-web/', views.ventas_web_view, name='ventas_web'),
     path('gestionar-productos/', views.gestionar_productos_view, name='gestionar_productos'),
     path('crear-producto/', views.crear_producto_view, name='crear_producto'),
     path('editar-producto/<int:producto_id>/', views.editar_producto_view, name='editar_producto'),
@@ -25,7 +24,7 @@ urlpatterns = [
     path('registro-rapido/', views.registro_rapido, name='registro_rapido'),
     path('procesar-compra-carrito/', views.procesar_compra_carrito, name='procesar_compra_carrito'),
     path('register/', views.register_user, name='register'),
-    path('cambiar-estado/<int:asignacion_id>/', views.cambiar_estado_asignacion, name='cambiar_estado'),
+    path('cambiar-estado/<int:asignacion_id>/', views.cambiar_estado_asignacion, name='cambiar_estado_asignacion'),
     path('tienda-oculta/', views.tienda_oculta_view, name='tienda_oculta'),
     path('contact/', views.contact_view, name='contact'),
 ]

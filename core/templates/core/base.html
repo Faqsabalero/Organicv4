@@ -44,7 +44,6 @@
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
                         <a href="{% url 'core:asignar' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
                         <a href="{% url 'core:gestionar_productos' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Gestionar Productos</a>
-                        <a href="{% url 'core:ventas_web' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Ventas Web</a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
                         <a href="{% url 'core:distribuidor' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
                     {% elif user.rol == 'REVENDEDOR' %}
