@@ -323,7 +323,8 @@
         const mobileMenu = document.getElementById('mobile-menu');
         let isMenuOpen = false;
 
-        mobileMenuButton.addEventListener('click', () => {
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             
             // Update button icon
@@ -350,6 +351,8 @@
         // Enhanced user menu toggle with animation
         function toggleUserMenu() {
             const menu = document.getElementById('userMenu');
+            if (!menu) return;
+            
             const isHidden = menu.classList.contains('hidden');
             
             if (isHidden) {
@@ -370,6 +373,8 @@
         // Enhanced click outside handling
         document.addEventListener('click', function(event) {
             const menu = document.getElementById('userMenu');
+            if (!menu) return;
+            
             const button = event.target.closest('button');
             
             if (!button && !menu.classList.contains('hidden')) {

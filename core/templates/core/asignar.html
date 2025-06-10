@@ -834,6 +834,12 @@
 
 {% block extra_scripts %}
 <script>
+    // Set initial active tab
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show Asignaciones tab by default
+        showTab('asignaciones');
+    });
+
     function toggleAsignacionForm() {
         const form = document.getElementById('formAsignacion');
         form.classList.toggle('hidden');
@@ -910,39 +916,60 @@
             }
         });
 
-        // Fade out current content
+        // Get all tab content elements
         const tabs = ['asignacionesTab', 'ventasTab', 'finanzasTab'];
+        const activeTab = document.getElementById(`${tabName}Tab`);
+
+        // First, set transition styles for smooth fade effect
         tabs.forEach(tab => {
             const element = document.getElementById(tab);
-            if (!element.classList.contains('hidden') && tab !== `${tabName}Tab`) {
-                element.style.opacity = '0';
-                element.addEventListener('transitionend', function handler() {
-                    element.classList.add('hidden');
-                    element.removeEventListener('transitionend', handler);
-                });
+            if (element) {
+                element.style.transition = 'opacity 0.3s ease-in-out';
             }
         });
 
-        // Show and fade in new content
-        const activeTab = document.getElementById(`${tabName}Tab`);
-        if (activeTab.classList.contains('hidden')) {
+        // Hide all tabs first
+        tabs.forEach(tab => {
+            const element = document.getElementById(tab);
+            if (element && tab !== `${tabName}Tab`) {
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.classList.add('hidden');
+                }, 300); // Match this with the transition duration
+            }
+        });
+
+        // Show and fade in the selected tab
+        if (activeTab) {
             activeTab.classList.remove('hidden');
-            activeTab.style.opacity = '0';
-            requestAnimationFrame(() => {
+            // Use setTimeout to ensure the removal of 'hidden' class is processed
+            setTimeout(() => {
                 activeTab.style.opacity = '1';
-            });
+            }, 50);
         }
+
+        // Save the active tab in session storage
+        sessionStorage.setItem('activeTab', tabName);
     }
 
-    // Add transition styles when DOM is loaded
+    // Restore active tab on page load
     document.addEventListener('DOMContentLoaded', function() {
+        const savedTab = sessionStorage.getItem('activeTab') || 'asignaciones';
+        showTab(savedTab);
+    });
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set up transitions for all tabs
         const tabs = ['asignacionesTab', 'ventasTab', 'finanzasTab'];
         tabs.forEach(tab => {
             const element = document.getElementById(tab);
-            element.style.transition = 'opacity 0.3s ease-in-out';
+            if (element) {
+                element.style.transition = 'opacity 0.3s ease-in-out';
+            }
         });
 
-        // Añadir event listeners para los filtros de ventas
+        // Set up event listeners for ventas filters
         const ventasFilters = ['searchFechaVenta', 'searchCliente', 'searchEstadoVenta'];
         ventasFilters.forEach(filterId => {
             const input = document.getElementById(filterId);
@@ -950,6 +977,10 @@
                 input.addEventListener('input', filterVentas);
             }
         });
+
+        // Restore active tab from session storage or default to 'asignaciones'
+        const savedTab = sessionStorage.getItem('activeTab') || 'asignaciones';
+        showTab(savedTab);
     });
 
     // Función para filtrar la tabla de ventas
