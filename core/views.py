@@ -64,7 +64,8 @@ def editar_producto_view(request, producto_id):
 
 def home_view(request):
     """Vista de la página principal."""
-    productos = Producto.objects.all()
+    # Mostrar solo productos no exclusivos en la tienda normal
+    productos = Producto.objects.filter(es_exclusivo=False)
     return render(request, 'core/home.html', {'productos': productos})
 
 class CustomLoginView(LoginView):
@@ -200,7 +201,9 @@ def cambiar_estado_asignacion(request, asignacion_id):
 @login_required
 def tienda_oculta_view(request):
     """Vista de la tienda oculta."""
-    return render(request, 'core/tienda_oculta.html')
+    # Mostrar solo productos exclusivos en la tienda oculta
+    productos = Producto.objects.filter(es_exclusivo=True)
+    return render(request, 'core/tienda_oculta.html', {'productos': productos})
 
 def contact_view(request):
     """Vista de contacto."""

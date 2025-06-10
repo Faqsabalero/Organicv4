@@ -24,7 +24,7 @@
 <!-- Products Grid -->
 <section class="max-w-7xl mx-auto px-6 py-16">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {% for producto in productos_exclusivos %}
+        {% for producto in productos %}
         <div class="group bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
             <div class="relative overflow-hidden">
                 <img src="{{ producto.imagen_url }}" 
