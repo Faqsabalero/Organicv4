@@ -199,6 +199,12 @@
 
 {% block extra_scripts %}
 <script>
+    // Set initial active tab
+    document.addEventListener('DOMContentLoaded', function() {
+        // Show Asignaciones tab by default
+        showTab('asignaciones');
+    });
+
     function toggleAsignacionForm() {
         const form = document.getElementById('formAsignacion');
         form.classList.toggle('hidden');
@@ -217,10 +223,102 @@
             }
         });
 
+<<<<<<< HEAD
         // Show/hide content
         document.querySelectorAll('#asignacionesTab, #finanzasTab').forEach(tab => {
             if (tab.id === `${tabName}Tab`) {
                 tab.classList.remove('hidden');
+=======
+        // Get all tab content elements
+        const tabs = ['asignacionesTab', 'ventasTab', 'finanzasTab'];
+        const activeTab = document.getElementById(`${tabName}Tab`);
+
+        // First, set transition styles for smooth fade effect
+        tabs.forEach(tab => {
+            const element = document.getElementById(tab);
+            if (element) {
+                element.style.transition = 'opacity 0.3s ease-in-out';
+            }
+        });
+
+        // Hide all tabs first
+        tabs.forEach(tab => {
+            const element = document.getElementById(tab);
+            if (element && tab !== `${tabName}Tab`) {
+                element.style.opacity = '0';
+                setTimeout(() => {
+                    element.classList.add('hidden');
+                }, 300); // Match this with the transition duration
+            }
+        });
+
+        // Show and fade in the selected tab
+        if (activeTab) {
+            activeTab.classList.remove('hidden');
+            // Use setTimeout to ensure the removal of 'hidden' class is processed
+            setTimeout(() => {
+                activeTab.style.opacity = '1';
+            }, 50);
+        }
+
+        // Save the active tab in session storage
+        sessionStorage.setItem('activeTab', tabName);
+    }
+
+    // Restore active tab on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedTab = sessionStorage.getItem('activeTab') || 'asignaciones';
+        showTab(savedTab);
+    });
+
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Set up transitions for all tabs
+        const tabs = ['asignacionesTab', 'ventasTab', 'finanzasTab'];
+        tabs.forEach(tab => {
+            const element = document.getElementById(tab);
+            if (element) {
+                element.style.transition = 'opacity 0.3s ease-in-out';
+            }
+        });
+
+        // Set up event listeners for ventas filters
+        const ventasFilters = ['searchFechaVenta', 'searchCliente', 'searchEstadoVenta'];
+        ventasFilters.forEach(filterId => {
+            const input = document.getElementById(filterId);
+            if (input) {
+                input.addEventListener('input', filterVentas);
+            }
+        });
+
+        // Restore active tab from session storage or default to 'asignaciones'
+        const savedTab = sessionStorage.getItem('activeTab') || 'asignaciones';
+        showTab(savedTab);
+    });
+
+    // Función para filtrar la tabla de ventas
+    function filterVentas() {
+        const fecha = document.getElementById('searchFechaVenta')?.value.toLowerCase() || '';
+        const cliente = document.getElementById('searchCliente')?.value.toLowerCase() || '';
+        const estado = document.getElementById('searchEstadoVenta')?.value.toLowerCase() || '';
+        
+        const rows = document.querySelectorAll('#ventasTab tbody tr');
+        
+        rows.forEach(row => {
+            if (!row.querySelector('td')) return; // Ignorar filas sin celdas (como mensajes vacíos)
+            
+            const fechaCell = row.cells[0].textContent.toLowerCase();
+            const clienteCell = row.cells[1].textContent.toLowerCase();
+            const estadoCell = row.cells[5].textContent.toLowerCase();
+            
+            const matchFecha = fechaCell.includes(fecha);
+            const matchCliente = clienteCell.includes(cliente);
+            const matchEstado = estadoCell.includes(estado);
+            
+            if (matchFecha && matchCliente && matchEstado) {
+                row.style.display = '';
+                row.classList.add('animate-fadeIn');
+>>>>>>> organic-shops
             } else {
                 tab.classList.add('hidden');
             }

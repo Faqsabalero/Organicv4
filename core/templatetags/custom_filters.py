@@ -3,6 +3,21 @@ from django import template
 register = template.Library()
 
 @register.filter
+def abs_value(value):
+    """Returns the absolute value of a number"""
+    try:
+        return abs(float(value))
+    except (ValueError, TypeError):
+        return value
+
+@register.filter
+def split(value, delimiter=','):
+    """Split a string into a list using the specified delimiter"""
+    if value:
+        return [x.strip() for x in value.split(delimiter)]
+    return []
+
+@register.filter
 def multiply(value, arg):
     """Multiplies the value by the argument"""
     try:
