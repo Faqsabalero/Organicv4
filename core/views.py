@@ -34,6 +34,72 @@ def tienda_oculta_view(request):
     return render(request, 'core/tienda_oculta.html', {'productos_exclusivos': productos_exclusivos})
 
 @login_required
+def gestionar_productos_view(request):
+    """Vista para gestionar productos"""
+    # Verificar que el usuario sea admin o superusuario
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return redirect('core:home')
+    
+    productos = Producto.objects.all().order_by('nombre')
+    return render(request, 'core/gestionar_productos.html', {'productos': productos})
+
+@login_required
+def editar_producto_view(request, producto_id):
+    """Vista para editar un producto"""
+    # Verificar que el usuario sea admin o superusuario
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return redirect('core:home')
+    
+    producto = get_object_or_404(Producto, id=producto_id)
+    
+    if request.method == 'POST':
+        # Actualizar los campos básicos
+        producto.nombre = request.POST.get('nombre')
+        producto.descripcion = request.POST.get('descripcion')
+        producto.precio = request.POST.get('precio')
+        producto.precio_distribuidor = request.POST.get('precio_distribuidor')
+        producto.precio_revendedor = request.POST.get('precio_revendedor')
+        producto.imagen_url = request.POST.get('imagen_url')
+        producto.es_exclusivo = request.POST.get('es_exclusivo') == 'on'
+        
+        # Solo actualizar el costo si el usuario es admin o superusuario
+        if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
+            producto.costo = request.POST.get('costo')
+        
+        producto.save()
+        return redirect('core:home')
+    
+    return render(request, 'core/editar_producto.html', {'producto': producto})
+
+@login_required
+def crear_producto_view(request):
+    """Vista para crear un nuevo producto"""
+    # Verificar que el usuario sea admin o superusuario
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return redirect('core:home')
+    
+    if request.method == 'POST':
+        # Crear el producto con los datos del formulario
+        producto = Producto(
+            nombre=request.POST.get('nombre'),
+            descripcion=request.POST.get('descripcion'),
+            precio=request.POST.get('precio'),
+            precio_distribuidor=request.POST.get('precio_distribuidor'),
+            precio_revendedor=request.POST.get('precio_revendedor'),
+            imagen_url=request.POST.get('imagen_url'),
+            es_exclusivo=request.POST.get('es_exclusivo') == 'on',
+        )
+        
+        # Solo establecer el costo si el usuario es admin o superusuario
+        if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
+            producto.costo = request.POST.get('costo')
+        
+        producto.save()
+        return redirect('core:gestionar_productos')
+    
+    return render(request, 'core/editar_producto.html', {'producto': None})
+
+@login_required
 def asignar_view(request):
     if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
@@ -225,86 +291,6 @@ def asignar_view(request):
     }
 
     return render(request, 'core/asignar.html', context)
-
-@login_required
-def gestionar_productos_view(request):
-    """Vista para gestionar productos"""
-    # Verificar que el usuario sea admin o superusuario
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
-        return redirect('core:home')
-    
-    productos = Producto.objects.all().order_by('nombre')
-    return render(request, 'core/gestionar_productos.html', {'productos': productos})
-
-@login_required
-def editar_producto_view(request, producto_id):
-    """Vista para editar un producto"""
-    # Verificar que el usuario sea admin o superusuario
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
-        return redirect('core:home')
-    
-    producto = get_object_or_404(Producto, id=producto_id)
-    
-    if request.method == 'POST':
-        # Actualizar los campos básicos
-        producto.nombre = request.POST.get('nombre')
-        producto.descripcion = request.POST.get('descripcion')
-        producto.precio = request.POST.get('precio')
-        producto.precio_distribuidor = request.POST.get('precio_distribuidor')
-        producto.precio_revendedor = request.POST.get('precio_revendedor')
-        producto.imagen_url = request.POST.get('imagen_url')
-        producto.es_exclusivo = request.POST.get('es_exclusivo') == 'on'
-        
-        # Solo actualizar el costo si el usuario es admin o superusuario
-        if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
-            producto.costo = request.POST.get('costo')
-        
-        producto.save()
-        return redirect('core:home')
-    
-    return render(request, 'core/editar_producto.html', {'producto': producto})
-
-@login_required
-def crear_producto_view(request):
-    """Vista para crear un nuevo producto"""
-    # Verificar que el usuario sea admin o superusuario
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
-        return redirect('core:home')
-    
-    if request.method == 'POST':
-        # Crear el producto con los datos del formulario
-        producto = Producto(
-            nombre=request.POST.get('nombre'),
-            descripcion=request.POST.get('descripcion'),
-            precio=request.POST.get('precio'),
-            precio_distribuidor=request.POST.get('precio_distribuidor'),
-            precio_revendedor=request.POST.get('precio_revendedor'),
-            imagen_url=request.POST.get('imagen_url'),
-            es_exclusivo=request.POST.get('es_exclusivo') == 'on',
-        )
-        
-        # Solo establecer el costo si el usuario es admin o superusuario
-        if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
-            producto.costo = request.POST.get('costo')
-        
-        producto.save()
-        return redirect('core:gestionar_productos')
-    
-    return render(request, 'core/editar_producto.html', {'producto': None})
-
-@login_required
-def cambiar_estado_venta(request, venta_id):
-    """Vista para cambiar el estado de una venta web"""
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
-        return HttpResponseForbidden("No tiene permiso para cambiar el estado.")
-    
-    venta = get_object_or_404(Venta, id=venta_id)
-    venta.estado_pago = 'PAGADO' if venta.estado_pago == 'PENDIENTE' else 'PENDIENTE'
-    venta.save()
-    
-    messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
-    return redirect('core:asignar')
-
 
 @login_required
 def distribuidor_view(request):
@@ -754,39 +740,10 @@ def procesar_pago(request):
             return redirect('core:checkout_exclusivo')
         else:
             return redirect('core:pago_transferencia')
-        
+            
     except Exception as e:
         messages.error(request, f'Error al procesar la compra: {str(e)}')
         return redirect('core:checkout')
-
-def contact_view(request):
-    """Vista para procesar el formulario de contacto"""
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        
-        # Validar campos
-        if not all([name, email, message]):
-            messages.error(request, 'Por favor complete todos los campos.')
-            return redirect('core:home')
-        
-        # Enviar email
-        try:
-            send_mail(
-                f'Nuevo mensaje de contacto de {name}',
-                f'Nombre: {name}\nEmail: {email}\nMensaje: {message}',
-                email,  # From email
-                [settings.DEFAULT_FROM_EMAIL],  # To email
-                fail_silently=False,
-            )
-            messages.success(request, 'Mensaje enviado correctamente. Nos pondremos en contacto pronto.')
-        except Exception as e:
-            messages.error(request, 'Hubo un error al enviar el mensaje. Por favor intente nuevamente.')
-        
-        return redirect('core:home')
-    
-    return redirect('core:home')
 
 @login_required
 def cambiar_estado_venta(request, venta_id):
@@ -799,4 +756,4 @@ def cambiar_estado_venta(request, venta_id):
     venta.save()
     
     messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
-    return redirect('core:ventas_web')
+    return redirect('core:asignar')
