@@ -757,3 +757,20 @@ def cambiar_estado_venta(request, venta_id):
     
     messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
     return redirect('core:asignar')
+
+def contact_view(request):
+    """Vista para la página de contacto"""
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        
+        if not all([name, email, message]):
+            messages.error(request, 'Por favor complete todos los campos.')
+            return redirect('core:home')
+        
+        # Aquí se podría agregar el código para enviar el email
+        messages.success(request, 'Mensaje enviado correctamente. Nos pondremos en contacto pronto.')
+        return redirect('core:home')
+    
+    return render(request, 'core/contact.html')

@@ -35,7 +35,7 @@
                 <a href="{% url 'core:home' %}#about" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Nosotros</a>
                 <a href="{% url 'core:home' %}#products" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Productos</a>
                 <a href="{% url 'core:home' %}#news" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Noticias</a>
-                <a href="{% url 'core:home' %}#contact" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Contacto</a>
+                <a href="{% url 'core:contact' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Contacto</a>
                 <a href="{% url 'core:carrito' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale flex items-center space-x-2">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Carrito</span>
@@ -110,7 +110,7 @@
                     <span>Noticias</span>
                 </div>
             </a>
-            <a href="#contact" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+            <a href="{% url 'core:contact' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-envelope"></i>
                     <span>Contacto</span>
@@ -319,28 +319,29 @@
 
         if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
-            isMenuOpen = !isMenuOpen;
-            
-            // Update button icon
-            const icon = mobileMenuButton.querySelector('i');
-            icon.classList.remove(isMenuOpen ? 'fa-bars' : 'fa-times');
-            icon.classList.add(isMenuOpen ? 'fa-times' : 'fa-bars');
-            
-            // Toggle menu with animation
-            if (isMenuOpen) {
-                mobileMenu.classList.remove('hidden');
-                requestAnimationFrame(() => {
-                    mobileMenu.classList.add('animate-fadeIn');
-                });
-            } else {
-                mobileMenu.style.opacity = '0';
-                mobileMenu.addEventListener('transitionend', function handler() {
-                    mobileMenu.classList.add('hidden');
-                    mobileMenu.style.opacity = '1';
-                    mobileMenu.removeEventListener('transitionend', handler);
-                });
-            }
-        });
+                isMenuOpen = !isMenuOpen;
+                
+                // Update button icon
+                const icon = mobileMenuButton.querySelector('i');
+                icon.classList.remove(isMenuOpen ? 'fa-bars' : 'fa-times');
+                icon.classList.add(isMenuOpen ? 'fa-times' : 'fa-bars');
+                
+                // Toggle menu with animation
+                if (isMenuOpen) {
+                    mobileMenu.classList.remove('hidden');
+                    requestAnimationFrame(() => {
+                        mobileMenu.classList.add('animate-fadeIn');
+                    });
+                } else {
+                    mobileMenu.style.opacity = '0';
+                    mobileMenu.addEventListener('transitionend', function handler() {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.style.opacity = '1';
+                        mobileMenu.removeEventListener('transitionend', handler);
+                    });
+                }
+            });
+        }
 
         // Enhanced user menu toggle with animation
         function toggleUserMenu() {
