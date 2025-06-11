@@ -22,7 +22,6 @@ urlpatterns = [
     path('procesar-pago/', views.procesar_pago, name='procesar_pago'),
     path('pago-transferencia/', views.pago_transferencia_view, name='pago_transferencia'),
     path('registro-rapido/', views.registro_rapido, name='registro_rapido'),
-    path('ventas-web/', views.ventas_web_view, name='ventas_web'),
     path('procesar-compra-carrito/', views.procesar_compra_carrito, name='procesar_compra_carrito'),
     path('register/', views.register_user, name='register'),
     path('cambiar-estado/<int:asignacion_id>/', views.cambiar_estado_asignacion, name='cambiar_estado'),

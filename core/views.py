@@ -303,75 +303,8 @@ def cambiar_estado_venta(request, venta_id):
     venta.save()
     
     messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
-    return redirect('core:ventas_web')
+    return redirect('core:asignar')
 
-@login_required
-def ventas_web_view(request):
-    if not request.user.is_authenticated or request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
-        return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
-    
-    hoy = timezone.now()
-    mes_actual = hoy.month
-    mes_anterior = (hoy - timedelta(days=30)).month
-    
-    # Obtener todas las ventas web
-    ventas_web = Venta.objects.all()
-    ventas_web_mes = ventas_web.filter(fecha_venta__month=mes_actual)
-    ventas_web_mes_anterior = ventas_web.filter(fecha_venta__month=mes_anterior)
-    
-    total_ventas = ventas_web_mes.aggregate(
-        total=Sum('total', default=0)
-    )['total'] or 0
-    
-    total_ventas_anterior = ventas_web_mes_anterior.aggregate(
-        total=Sum('total', default=0)
-    )['total'] or 1
-    
-    porcentaje_cambio_ventas = ((total_ventas - total_ventas_anterior) / total_ventas_anterior) * 100
-    
-    costos_totales = ventas_web_mes.aggregate(
-        costos=Sum(F('producto__costo') * F('cantidad'), default=0)
-    )['costos'] or 0
-    
-    ganancias_netas = total_ventas - costos_totales
-    porcentaje_costos = (costos_totales / total_ventas * 100) if total_ventas else 0
-    margen_ganancia = (ganancias_netas / total_ventas * 100) if total_ventas else 0
-    
-    total_clientes = ventas_web.values('email_comprador').distinct().count()
-    clientes_registrados = ventas_web.filter(comprador__isnull=False).values('comprador').distinct().count()
-    porcentaje_clientes_registrados = (clientes_registrados / total_clientes * 100) if total_clientes else 0
-    
-    clientes_nuevos = ventas_web_mes.values('email_comprador').distinct().count()
-    porcentaje_clientes_nuevos = (clientes_nuevos / total_clientes * 100) if total_clientes else 0
-    
-    productos_top = ventas_web_mes.values(
-        'producto__nombre'
-    ).annotate(
-        nombre=F('producto__nombre'),
-        unidades=Sum('cantidad'),
-        ingresos=Sum('total')
-    ).order_by('-unidades')[:5]
-    
-    total_visitas = CarritoItem.objects.values('session_key').distinct().count() or 1
-    tasa_conversion = (ventas_web.count() / total_visitas) * 100
-    
-    context = {
-        'ventas': ventas_web.order_by('-fecha_venta'),
-        'total_ventas': total_ventas,
-        'porcentaje_cambio_ventas': porcentaje_cambio_ventas,
-        'costos_totales': costos_totales,
-        'ganancias_netas': ganancias_netas,
-        'porcentaje_costos': porcentaje_costos,
-        'margen_ganancia': margen_ganancia,
-        'total_clientes': total_clientes,
-        'porcentaje_clientes_registrados': porcentaje_clientes_registrados,
-        'clientes_nuevos': clientes_nuevos,
-        'porcentaje_clientes_nuevos': porcentaje_clientes_nuevos,
-        'productos_top': productos_top,
-        'tasa_conversion': tasa_conversion,
-    }
-    
-    return render(request, 'core/ventas_web.html', context)
 
 @login_required
 def distribuidor_view(request):
