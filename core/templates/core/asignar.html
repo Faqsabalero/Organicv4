@@ -177,7 +177,7 @@
                                     </td>
                                     {% if user|has_role:"ADMIN,SUPERUSUARIO" %}
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        <form method="POST" action="{% url 'core:cambiar_estado' venta.id %}">
+                                        <form method="POST" action="{% url 'core:cambiar_estado_venta' venta.id %}">
                                             {% csrf_token %}
                                             <button type="submit" class="text-sm text-blue-600 hover:text-blue-900">
                                                 Cambiar Estado
