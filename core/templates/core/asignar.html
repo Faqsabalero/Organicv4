@@ -281,7 +281,7 @@
                                     <div class="flex items-center">
                                         <div class="flex-1 bg-gray-200 rounded-full h-2">
                                             {% with max_unidades=productos_top.0.unidades %}
-                                            <div class="bg-green-600 h-2 rounded-full" style="width: {{ producto.unidades|div:max_unidades|mul:100 }}%"></div>
+                                            <div class="bg-green-600 h-2 rounded-full" style="width: {% widthratio producto.unidades max_unidades 100 %}%"></div>
                                             {% endwith %}
                                         </div>
                                     </div>
