@@ -430,6 +430,9 @@ def procesar_compra_carrito(request):
 
 @login_required
 def cambiar_estado_asignacion(request, asignacion_id):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+        
     asignacion = get_object_or_404(Asignacion, id=asignacion_id)
     
     # Verificar permisos
@@ -443,18 +446,20 @@ def cambiar_estado_asignacion(request, asignacion_id):
         puede_cambiar = False
     
     if not puede_cambiar:
-        return HttpResponseForbidden("No tiene permiso para cambiar el estado.")
+        return JsonResponse({'error': 'No tiene permiso para cambiar el estado.'}, status=403)
     
-    asignacion.estado = 'PAGADO' if asignacion.estado == 'PENDIENTE' else 'PENDIENTE'
-    asignacion.save()
-    
-    messages.success(request, f'Estado actualizado a {asignacion.get_estado_display()}')
-    
-    # Redirigir según el rol
-    if request.user.rol in ['ADMIN', 'SUPERUSUARIO']:
-        return redirect('core:asignar')
-    else:
-        return redirect('core:distribuidor')
+    try:
+        asignacion.estado = 'PAGADO' if asignacion.estado == 'PENDIENTE' else 'PENDIENTE'
+        asignacion.save()
+        
+        return JsonResponse({
+            'success': True,
+            'mensaje': f'Estado actualizado a {asignacion.get_estado_display()}',
+            'nuevo_estado': asignacion.estado,
+            'estado_display': asignacion.get_estado_display()
+        })
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 @login_required
 def editar_producto(request, producto_id):

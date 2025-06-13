@@ -1,0 +1,93 @@
+{% extends "core/base.html" %}
+{% load custom_filters %}
+
+{% block title %}Panel de Administración - Organic Shops{% endblock %}
+
+{% block content %}
+<!-- El contenido del bloque content permanece igual hasta la sección del botón -->
+{{ content }}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    function cambiarEstadoAsignacion(asignacionId, button) {
+        const csrftoken = getCookie('csrftoken');
+        const row = button.closest('tr');
+        const estadoCell = row.querySelector('td:nth-last-child(2)').querySelector('span');
+
+        fetch(`/cambiar-estado-asignacion/${asignacionId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrftoken,
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                estadoCell.textContent = data.estado_display;
+                estadoCell.className = `px-2 py-1 text-xs rounded-full ${
+                    data.nuevo_estado === 'PAGADO' 
+                        ? 'bg-green-100 text-green-800' 
+                        : 'bg-yellow-100 text-yellow-800'
+                }`;
+            } else {
+                alert('Error al cambiar el estado: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al procesar la solicitud');
+        });
+    }
+
+    function toggleAsignacionForm() {
+        const form = document.getElementById('formAsignacion');
+        form.classList.toggle('hidden');
+    }
+
+    function showTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.tab-button').forEach(button => {
+            const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '');
+            if (buttonText === tabName.toLowerCase()) {
+                button.classList.remove('text-gray-500', 'border-transparent');
+                button.classList.add('border-green-500', 'text-green-600', 'bg-green-50');
+            } else {
+                button.classList.remove('border-green-500', 'text-green-600', 'bg-green-50');
+                button.classList.add('text-gray-500', 'border-transparent');
+            }
+        });
+
+        // Show/hide content
+        document.querySelectorAll('#asignacionesTab, #finanzasTab').forEach(tab => {
+            if (tab.id === `${tabName}Tab`) {
+                tab.classList.remove('hidden');
+            } else {
+                tab.classList.add('hidden');
+            }
+        });
+    }
+
+    // Set initial active tab
+    document.addEventListener('DOMContentLoaded', function() {
+        showTab('asignaciones');
+    });
+</script>
+{% endblock %}
