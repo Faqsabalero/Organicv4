@@ -34,19 +34,6 @@ def has_role(user, roles):
     return user.rol in role_list
 
 @register.filter
-def abs_value(value):
-    """Returns the absolute value"""
-    try:
-        return abs(float(value))
-    except (ValueError, TypeError):
-        return value
-
-@register.filter
-def split(value, arg):
-    """Split a string into a list using the specified delimiter"""
-    return value.split(arg)
-
-@register.filter
 def subtract(value, arg):
     """Subtracts the argument from the value"""
     try:
