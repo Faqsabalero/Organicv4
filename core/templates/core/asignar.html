@@ -117,6 +117,24 @@
                 <div class="bg-white rounded-lg shadow-lg overflow-hidden">
                     <div class="px-6 py-4 border-b border-gray-200">
                         <h3 class="text-lg font-semibold text-gray-900">Ventas Web</h3>
+                        <!-- Search Fields -->
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <input type="text" id="searchCliente" placeholder="Buscar por cliente..." 
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                            <div>
+                                <select id="searchEstado" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="">Todos los estados</option>
+                                    <option value="PENDIENTE">Pendiente</option>
+                                    <option value="PAGADO">Pagado</option>
+                                </select>
+                            </div>
+                            <div>
+                                <input type="date" id="searchFecha" 
+                                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            </div>
+                        </div>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200">
@@ -461,9 +479,35 @@
         });
     }
 
-    // Set initial active tab
+    // Search functionality for ventas web
+    function filterVentas() {
+        const cliente = document.getElementById('searchCliente').value.toLowerCase();
+        const estado = document.getElementById('searchEstado').value;
+        const fecha = document.getElementById('searchFecha').value;
+        
+        const rows = document.querySelectorAll('#ventasTab tbody tr');
+        
+        rows.forEach(row => {
+            const clienteCell = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            const estadoCell = row.querySelector('td:nth-child(6)').textContent.trim();
+            const fechaCell = row.querySelector('td:nth-child(1)').textContent.split(' ')[0];
+            
+            const matchCliente = clienteCell.includes(cliente);
+            const matchEstado = !estado || estadoCell === estado;
+            const matchFecha = !fecha || fechaCell === fecha;
+            
+            row.style.display = (matchCliente && matchEstado && matchFecha) ? '' : 'none';
+        });
+    }
+
+    // Add event listeners for search fields
     document.addEventListener('DOMContentLoaded', function() {
         showTab('asignaciones');
+        
+        // Add search event listeners
+        document.getElementById('searchCliente').addEventListener('input', filterVentas);
+        document.getElementById('searchEstado').addEventListener('change', filterVentas);
+        document.getElementById('searchFecha').addEventListener('input', filterVentas);
     });
 </script>
 {% endblock %}

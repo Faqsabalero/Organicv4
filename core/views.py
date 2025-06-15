@@ -131,10 +131,11 @@ def asignar_view(request):
     mes_actual = hoy.month
     mes_anterior = (hoy - timedelta(days=30)).month
     
-    # Ventas Web (solo las pagadas)
-    ventas_web = Venta.objects.filter(estado_pago='PAGADO')
-    ventas_web_mes = ventas_web.filter(fecha_venta__month=mes_actual)
-    ventas_web_mes_anterior = ventas_web.filter(fecha_venta__month=mes_anterior)
+    # Ventas Web (todas las ventas para mostrar, pero solo pagadas para finanzas)
+    ventas_web = Venta.objects.all()  # Todas las ventas para mostrar
+    ventas_web_pagadas = ventas_web.filter(estado_pago='PAGADO')  # Solo pagadas para finanzas
+    ventas_web_mes = ventas_web_pagadas.filter(fecha_venta__month=mes_actual)
+    ventas_web_mes_anterior = ventas_web_pagadas.filter(fecha_venta__month=mes_anterior)
     
     total_ventas_web = ventas_web_mes.aggregate(total=Sum('total', default=0))['total'] or 0
     total_ventas_web_anterior = ventas_web_mes_anterior.aggregate(total=Sum('total', default=0))['total'] or 1
