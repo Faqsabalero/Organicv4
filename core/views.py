@@ -781,6 +781,29 @@ def perfil_view(request):
     }
     return render(request, 'core/perfil.html', context)
 
+@login_required
+def editar_perfil_view(request):
+    """Vista para editar el perfil del usuario"""
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        user = request.user
+        user.nombre = request.POST.get('nombre')
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.dni = request.POST.get('dni')
+        user.domicilio = request.POST.get('domicilio')
+        user.telefono = request.POST.get('telefono')
+        
+        try:
+            user.save()
+            messages.success(request, 'Perfil actualizado correctamente.')
+            return redirect('core:perfil')
+        except Exception as e:
+            messages.error(request, f'Error al actualizar el perfil: {str(e)}')
+            return redirect('core:editar_perfil')
+    
+    return render(request, 'core/editar_perfil.html')
+
 def contact_view(request):
     """Vista para procesar el formulario de contacto"""
     if request.method == 'POST':
