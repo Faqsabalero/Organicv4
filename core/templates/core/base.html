@@ -16,8 +16,48 @@
     {% block extra_head %}{% endblock %}
 </head>
 <body class="bg-gray-50 text-gray-900">
+    <style>
+        /* Glassmorphism effect */
+        .navbar-glass {
+            background: rgba(22, 163, 74, 0.85);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        /* Active link indicator */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Enhanced hover effect */
+        .nav-link:hover {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* Smooth transitions */
+        .nav-transition {
+            transition: all 0.3s ease;
+        }
+    </style>
+
     <!-- Header -->
-    <header class="bg-gradient-to-r from-green-600 to-green-700 shadow-lg sticky top-0 z-[40] shadow-enhanced">
+    <header class="navbar-glass sticky top-0 z-[40] shadow-lg transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
             <a href="{% url 'core:home' %}" class="flex items-center space-x-3 group">
                 <div class="relative h-12 w-12 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
@@ -30,13 +70,28 @@
                 </div>
             </a>
             
-            <nav class="hidden md:flex space-x-8 font-semibold text-white">
-                <a href="{% url 'core:home' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Inicio</a>
-                <a href="{% url 'core:home' %}#about" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Nosotros</a>
-                <a href="{% url 'core:home' %}#products" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Productos</a>
-                <a href="{% url 'core:home' %}#news" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Noticias</a>
-                <a href="{% url 'core:contact' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Contacto</a>
-                <a href="{% url 'core:carrito' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale flex items-center space-x-2">
+            <nav class="hidden md:flex items-center space-x-8 font-semibold text-white">
+                <a href="{% url 'core:home' %}" class="nav-link nav-transition flex items-center space-x-2 {% if request.path == '/' %}active{% endif %}">
+                    <i class="fas fa-home"></i>
+                    <span>Inicio</span>
+                </a>
+                <a href="{% url 'core:home' %}#about" class="nav-link nav-transition flex items-center space-x-2">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Nosotros</span>
+                </a>
+                <a href="{% url 'core:home' %}#products" class="nav-link nav-transition flex items-center space-x-2">
+                    <i class="fas fa-box"></i>
+                    <span>Productos</span>
+                </a>
+                <a href="{% url 'core:home' %}#news" class="nav-link nav-transition flex items-center space-x-2">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Noticias</span>
+                </a>
+                <a href="{% url 'core:contact' %}" class="nav-link nav-transition flex items-center space-x-2 {% if request.path == '/contact/' %}active{% endif %}">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contacto</span>
+                </a>
+                <a href="{% url 'core:carrito' %}" class="nav-link nav-transition flex items-center space-x-2 {% if request.path == '/carrito/' %}active{% endif %}">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Carrito</span>
                 </a>
@@ -50,11 +105,14 @@
                         <a href="{% url 'core:revendedor' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
                     {% endif %}
                     <div class="relative inline-block">
-                        <button class="flex items-center space-x-1 hover:text-green-300 transition-all duration-200 ease-in-out hover-scale" onclick="toggleUserMenu()">
+                        <button class="nav-link nav-transition flex items-center space-x-2 group" onclick="toggleUserMenu()">
+                            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                                <i class="fas fa-user text-white group-hover:scale-110 transition-transform duration-200"></i>
+                            </div>
                             <span>{{ user.username }}</span>
-                            <i class="fas fa-user"></i>
+                            <i class="fas fa-chevron-down text-sm transition-transform duration-200" id="userMenuArrow"></i>
                         </button>
-                        <div id="userMenu" class="absolute right-0 w-48 bg-white rounded-md shadow-enhanced py-1 mt-2 z-50 hidden animate-fadeIn">
+                        <div id="userMenu" class="absolute right-0 w-64 bg-white/95 backdrop-blur-md rounded-xl shadow-enhanced py-1 mt-2 z-50 hidden transform transition-all duration-300 origin-top-right">
                             <div class="px-4 py-2 border-b border-gray-200 hover:bg-gray-50 transition-all duration-200">
                                 <p class="text-sm text-gray-700">Conectado como:</p>
                                 <p class="text-sm font-medium text-gray-900">{{ user.email }}</p>
@@ -86,45 +144,49 @@
             </nav>
 
             <!-- Mobile menu button -->
-            <button id="mobile-menu-button" class="md:hidden text-white p-2 rounded-lg hover:bg-green-700 transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2">
-                <i class="fas fa-bars fa-lg"></i>
+            <button id="mobile-menu-button" class="md:hidden w-10 h-10 flex items-center justify-center text-white rounded-full bg-white/10 backdrop-blur-md hover:bg-white/20 transition-all duration-300 focus:outline-none">
+                <i class="fas fa-bars fa-lg transform transition-transform duration-300"></i>
             </button>
         </div>
 
         <!-- Mobile menu -->
-        <nav id="mobile-menu" class="md:hidden bg-white border-t border-gray-200 hidden animate-fadeIn">
-            <a href="{% url 'core:home' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+        <nav id="mobile-menu" class="md:hidden bg-white/95 backdrop-blur-md border-t border-white/20 hidden transform transition-all duration-300 overflow-hidden">
+            <div class="divide-y divide-gray-100/20">
+            <a href="{% url 'core:home' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                    <i class="fas fa-home text-green-600"></i>
+                </div>
                 Inicio
             </a>
-            <a href="#about" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-info-circle"></i>
-                    <span>Nosotros</span>
+            <a href="#about" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                    <i class="fas fa-info-circle text-green-600"></i>
                 </div>
+                <span>Nosotros</span>
             </a>
-            <a href="#products" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-box"></i>
-                    <span>Productos</span>
+            <a href="#products" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                    <i class="fas fa-box text-green-600"></i>
                 </div>
+                <span>Productos</span>
             </a>
-            <a href="#news" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-newspaper"></i>
-                    <span>Noticias</span>
+            <a href="#news" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                    <i class="fas fa-newspaper text-green-600"></i>
                 </div>
+                <span>Noticias</span>
             </a>
-            <a href="{% url 'core:contact' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contacto</span>
+            <a href="{% url 'core:contact' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                    <i class="fas fa-envelope text-green-600"></i>
                 </div>
+                <span>Contacto</span>
             </a>
-            <a href="{% url 'core:carrito' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Carrito</span>
+            <a href="{% url 'core:carrito' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
+                    <i class="fas fa-shopping-cart text-green-600"></i>
                 </div>
+                <span>Carrito</span>
             </a>
             {% if user.is_authenticated %}
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
@@ -316,6 +378,30 @@
 
     <!-- Scripts -->
     <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 0) {
+                header.classList.add('shadow-xl');
+                header.style.background = 'rgba(22, 163, 74, 0.95)';
+            } else {
+                header.classList.remove('shadow-xl');
+                header.style.background = 'rgba(22, 163, 74, 0.85)';
+            }
+        });
+
+        // Active link highlighting
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
         // Mobile menu toggle with animation
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -325,23 +411,32 @@
             mobileMenuButton.addEventListener('click', () => {
                 isMenuOpen = !isMenuOpen;
                 
-                // Update button icon
-                const icon = mobileMenuButton.querySelector('i');
-                icon.classList.remove(isMenuOpen ? 'fa-bars' : 'fa-times');
-                icon.classList.add(isMenuOpen ? 'fa-times' : 'fa-bars');
-                
                 // Toggle menu with animation
+                const icon = mobileMenuButton.querySelector('i');
+                
                 if (isMenuOpen) {
+                    // Abrir menú
                     mobileMenu.classList.remove('hidden');
+                    mobileMenu.style.height = '0';
+                    
                     requestAnimationFrame(() => {
-                        mobileMenu.classList.add('animate-fadeIn');
+                        mobileMenu.style.height = mobileMenu.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
                     });
                 } else {
-                    mobileMenu.style.opacity = '0';
+                    // Cerrar menú
+                    mobileMenu.style.height = '0';
+                    icon.style.transform = 'rotate(0deg)';
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    
                     mobileMenu.addEventListener('transitionend', function handler() {
-                        mobileMenu.classList.add('hidden');
-                        mobileMenu.style.opacity = '1';
-                        mobileMenu.removeEventListener('transitionend', handler);
+                        if (mobileMenu.style.height === '0px') {
+                            mobileMenu.classList.add('hidden');
+                            mobileMenu.removeEventListener('transitionend', handler);
+                        }
                     });
                 }
             });
@@ -350,20 +445,30 @@
         // Enhanced user menu toggle with animation
         function toggleUserMenu() {
             const menu = document.getElementById('userMenu');
-            if (!menu) return;
+            const arrow = document.getElementById('userMenuArrow');
+            if (!menu || !arrow) return;
             
             const isHidden = menu.classList.contains('hidden');
             
             if (isHidden) {
+                // Mostrar menú
                 menu.classList.remove('hidden');
+                menu.style.opacity = '0';
+                menu.style.transform = 'scale(0.95)';
+                
                 requestAnimationFrame(() => {
-                    menu.classList.add('animate-fadeIn');
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'scale(1)';
+                    arrow.style.transform = 'rotate(180deg)';
                 });
             } else {
+                // Ocultar menú
                 menu.style.opacity = '0';
+                menu.style.transform = 'scale(0.95)';
+                arrow.style.transform = 'rotate(0deg)';
+                
                 menu.addEventListener('transitionend', function handler() {
                     menu.classList.add('hidden');
-                    menu.style.opacity = '1';
                     menu.removeEventListener('transitionend', handler);
                 });
             }
