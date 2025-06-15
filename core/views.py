@@ -131,8 +131,8 @@ def asignar_view(request):
     mes_actual = hoy.month
     mes_anterior = (hoy - timedelta(days=30)).month
     
-    # Ventas Web
-    ventas_web = Venta.objects.all()
+    # Ventas Web (solo las pagadas)
+    ventas_web = Venta.objects.filter(estado_pago='PAGADO')
     ventas_web_mes = ventas_web.filter(fecha_venta__month=mes_actual)
     ventas_web_mes_anterior = ventas_web.filter(fecha_venta__month=mes_anterior)
     
@@ -167,7 +167,7 @@ def asignar_view(request):
         )
     )['total'] or 1
     
-    # Costos Web
+    # Costos Web (solo de ventas pagadas)
     costos_web = ventas_web_mes.aggregate(
         costos=Sum(F('producto__costo') * F('cantidad'), default=0)
     )['costos'] or 0
@@ -221,7 +221,7 @@ def asignar_view(request):
     from django.db.models import Value, CharField
     from django.db.models.functions import Concat
     
-    productos_vendidos_web = ventas_web_mes.values(
+    productos_vendidos_web = ventas_web_mes.filter(estado_pago='PAGADO').values(
         'producto__nombre'
     ).annotate(
         tipo=Value('Web', output_field=CharField()),
