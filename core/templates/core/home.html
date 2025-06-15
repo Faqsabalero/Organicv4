@@ -553,7 +553,120 @@
 
 <!-- Modales -->
 <div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="investigation-modal" role="dialog" style="display: none;">
-    <!-- [Rest of the modals content remains the same] -->
+    <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
+        <button type="button" id="investigation-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+        <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-leaf text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4" id="investigation-modal-title">
+                Ingredientes Naturales
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                Nuestros productos están formulados con ingredientes naturales cuidadosamente seleccionados. Trabajamos con proveedores certificados que comparten nuestro compromiso con la calidad y la sostenibilidad. Cada ingrediente es evaluado por su eficacia y seguridad para garantizar los mejores resultados en el cuidado de tu piel y cabello.
+            </p>
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 text-left">
+                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Ingredientes Orgánicos</h4>
+                        <p class="text-sm text-gray-500">Certificados y de origen sostenible</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 text-left">
+                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-heart text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Sin Químicos Dañinos</h4>
+                        <p class="text-sm text-gray-500">Libres de parabenos y sulfatos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="phytobreeding-modal" role="dialog" style="display: none;">
+    <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
+        <button type="button" id="phytobreeding-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+        <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-recycle text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4" id="phytobreeding-modal-title">
+                Producción Sostenible
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                Nuestro compromiso con el medio ambiente se refleja en cada aspecto de nuestra producción. Utilizamos energía renovable, minimizamos el desperdicio y empleamos empaques eco-amigables para reducir nuestra huella de carbono.
+            </p>
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 text-left">
+                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-box text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Empaques Reciclables</h4>
+                        <p class="text-sm text-gray-500">Diseñados pensando en el planeta</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 text-left">
+                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-sun text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Energía Limpia</h4>
+                        <p class="text-sm text-gray-500">Producción con energía renovable</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="manufacturing-modal" role="dialog" style="display: none;">
+    <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
+        <button type="button" id="manufacturing-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+        <div class="text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-flask text-green-600 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900 mb-4" id="manufacturing-modal-title">
+                Control de Calidad
+            </h3>
+            <p class="text-gray-600 leading-relaxed mb-6">
+                Cada producto pasa por exhaustivas pruebas dermatológicas y controles de calidad antes de llegar a tus manos. Nuestro laboratorio certificado garantiza la seguridad y eficacia de cada fórmula.
+            </p>
+            <div class="space-y-4">
+                <div class="flex items-center space-x-3 text-left">
+                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-microscope text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Pruebas Dermatológicas</h4>
+                        <p class="text-sm text-gray-500">Testado por expertos</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3 text-left">
+                    <div class="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-certificate text-green-600"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-gray-900">Certificaciones</h4>
+                        <p class="text-sm text-gray-500">Estándares internacionales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
