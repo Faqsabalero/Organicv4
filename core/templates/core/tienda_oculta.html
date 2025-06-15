@@ -56,7 +56,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for producto in productos %}
             <div class="group relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-enhanced overflow-hidden transform transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl border border-gray-800 animate-fadeIn"
-                 style="animation-delay: {{ forloop.counter|multiply:0.1 }}s">
+                 style="--delay: {{ forloop.counter }}; animation-delay: calc(var(--delay) * 0.1s)">
                 <!-- Product image -->
                 <div class="relative overflow-hidden aspect-w-16 aspect-h-12">
                     <img src="{{ producto.imagen_url }}" 
