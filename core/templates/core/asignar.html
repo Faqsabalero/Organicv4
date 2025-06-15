@@ -158,8 +158,10 @@
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <form method="POST" action="{% url 'core:cambiar_estado_venta' venta.id %}">
                                             {% csrf_token %}
-                                            <button type="submit" class="text-sm text-blue-600 hover:text-blue-900">
-                                                Cambiar Estado
+                                            <button type="submit" 
+                                                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-sm">
+                                                <i class="fas fa-exchange-alt mr-2"></i>
+                                                <span>Cambiar Estado</span>
                                             </button>
                                         </form>
                                     </td>
