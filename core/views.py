@@ -451,17 +451,15 @@ def cambiar_estado_asignacion(request, asignacion_id):
         return JsonResponse({'error': 'No tiene permiso para cambiar el estado.'}, status=403)
     
     try:
-        asignacion.estado = 'PAGADO' if asignacion.estado == 'PENDIENTE' else 'PENDIENTE'
+        nuevo_estado = 'PAGADO' if asignacion.estado == 'PENDIENTE' else 'PENDIENTE'
+        asignacion.estado = nuevo_estado
         asignacion.save()
         
-        return JsonResponse({
-            'success': True,
-            'mensaje': f'Estado actualizado a {asignacion.get_estado_display()}',
-            'nuevo_estado': asignacion.estado,
-            'estado_display': asignacion.get_estado_display()
-        })
+        messages.success(request, f'Estado de asignacion actualizado a {nuevo_estado}')
+        return redirect('core:asignar')
     except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+        messages.error(request, f'Error al cambiar el estado: {str(e)}')
+        return redirect('core:asignar')
 
 @login_required
 def editar_producto(request, producto_id):
