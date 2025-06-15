@@ -48,9 +48,18 @@ class UserCreationFormWithRol(UserCreationForm):
         )
     )
 
+    domicilio = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600',
+                'placeholder': 'Ingresa tu dirección completa'
+            }
+        )
+    )
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad', 'es_distribuidor_exclusivo')
+        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad', 'domicilio', 'es_distribuidor_exclusivo')
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)

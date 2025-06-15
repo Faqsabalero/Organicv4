@@ -529,6 +529,7 @@ def registro_rapido(request):
                 nombre=nombre,
                 dni=dni,
                 ciudad=ciudad,
+                domicilio=request.POST.get('domicilio', ''),
                 rol='CLIENTE'
             )
             

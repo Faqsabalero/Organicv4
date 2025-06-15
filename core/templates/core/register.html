@@ -131,6 +131,25 @@
                             {% endif %}
                         </div>
 
+                        <!-- Domicilio -->
+                        <div class="space-y-2">
+                            <label for="{{ form.domicilio.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                                Domicilio
+                            </label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-home text-gray-400"></i>
+                                </div>
+                                {{ form.domicilio }}
+                            </div>
+                            {% if form.domicilio.errors %}
+                            <p class="text-red-600 text-sm mt-1 flex items-center">
+                                <i class="fas fa-exclamation-triangle mr-1"></i>
+                                {{ form.domicilio.errors.0 }}
+                            </p>
+                            {% endif %}
+                        </div>
+
                         <!-- Rol -->
                         <div class="space-y-2">
                             <label for="{{ form.rol.id_for_label }}" class="block text-sm font-medium text-gray-700">
