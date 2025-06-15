@@ -83,40 +83,63 @@
         </div>
     </div>
     <div class="md:w-1/2 flex justify-center relative" style="animation-delay: 0.3s;">
-        <div class="w-full max-w-3xl relative overflow-hidden rounded-2xl shadow-enhanced select-none transform hover:scale-[1.02] transition-transform duration-300" id="carousel-container">
-            <div class="relative w-full h-72 sm:h-[500px]" id="carousel">
-                <!-- Carousel items -->
-                <div class="carousel-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100" data-carousel-item="">
-                    <img src="https://storage.googleapis.com/a1aa/image/924b4e0b-cd3a-406c-4a54-84888bc92068.jpg" alt="Investigación con ONG" class="w-full h-full object-cover" loading="lazy" />
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                        <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
-                            Investigación con ONG
-                        </h2>
-                    </div>
-                </div>
-                <div class="carousel-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0" data-carousel-item="">
-                    <img src="https://storage.googleapis.com/a1aa/image/52ec146e-18fa-4fc2-4b22-bde76267f003.jpg" alt="Fitomejoramiento" class="w-full h-full object-cover" loading="lazy" />
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                        <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
-                            Fitomejoramiento
-                        </h2>
-                    </div>
-                </div>
-                <div class="carousel-item absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0" data-carousel-item="">
-                    <img src="https://storage.googleapis.com/a1aa/image/bbfdf398-ba34-4073-d181-ad22223184cc.jpg" alt="Manufacturado en Laboratorios" class="w-full h-full object-cover" loading="lazy" />
-                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                        <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
-                            Manufacturado en Laboratorios
-                        </h2>
-                    </div>
-                </div>
+<div class="w-full max-w-3xl relative overflow-hidden rounded-2xl shadow-enhanced select-none transform hover:scale-[1.02] transition-transform duration-300" id="carousel-container">
+    <div class="relative w-full h-72 sm:h-[500px]" id="carousel" role="region" aria-label="Carrusel de imágenes destacadas">
+        <!-- Carousel items -->
+        <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-100 transform translate-x-0" data-carousel-item="">
+            <img src="https://storage.googleapis.com/a1aa/image/924b4e0b-cd3a-406c-4a54-84888bc92068.jpg" 
+                 alt="Investigación con ONG" 
+                 class="w-full h-full object-cover" 
+                 loading="lazy"
+                 onerror="this.src='https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';" />
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                    Investigación con ONG
+                </h2>
             </div>
-            <button aria-label="Anterior" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" id="prevBtn">
-                <i class="fas fa-chevron-left text-lg"></i>
-            </button>
-            <button aria-label="Siguiente" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" id="nextBtn">
-                <i class="fas fa-chevron-right text-lg"></i>
-            </button>
+        </div>
+        <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
+            <img src="https://storage.googleapis.com/a1aa/image/52ec146e-18fa-4fc2-4b22-bde76267f003.jpg" 
+                 alt="Fitomejoramiento" 
+                 class="w-full h-full object-cover" 
+                 loading="lazy"
+                 onerror="this.src='https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';" />
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                    Fitomejoramiento
+                </h2>
+            </div>
+        </div>
+        <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
+            <img src="https://storage.googleapis.com/a1aa/image/bbfdf398-ba34-4073-d181-ad22223184cc.jpg" 
+                 alt="Manufacturado en Laboratorios" 
+                 class="w-full h-full object-cover" 
+                 loading="lazy"
+                 onerror="this.src='https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';" />
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                    Manufacturado en Laboratorios
+                </h2>
+            </div>
+        </div>
+        <!-- Botones de navegación mejorados -->
+    <button aria-label="Anterior" 
+            class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-3 sm:p-4 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 hover:scale-110" 
+            id="prevBtn">
+        <i class="fas fa-chevron-left text-lg sm:text-xl"></i>
+    </button>
+    <button aria-label="Siguiente" 
+            class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-3 sm:p-4 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 hover:scale-110" 
+            id="nextBtn">
+        <i class="fas fa-chevron-right text-lg sm:text-xl"></i>
+    </button>
+
+    <!-- Indicadores de puntos -->
+    <div id="carousel-dots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <button aria-label="Ir a la diapositiva 1" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="0"></button>
+        <button aria-label="Ir a la diapositiva 2" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="1"></button>
+        <button aria-label="Ir a la diapositiva 3" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="2"></button>
+    </div>
         </div>
     </div>
 </section>
@@ -557,88 +580,170 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    // Enhanced Carousel logic with preloading and smooth transitions
-    const carousel = document.getElementById('carousel');
-    const items = document.querySelectorAll('[data-carousel-item]');
-    const totalItems = items.length;
-    let currentIndex = 0;
-    let isAnimating = false;
+    // Carrusel mejorado con animaciones y soporte táctil
+    const initCarousel = () => {
+        const carousel = document.getElementById('carousel');
+        const items = document.querySelectorAll('[data-carousel-item]');
+        const dots = document.querySelectorAll('#carousel-dots button');
+        const totalItems = items.length;
+        let currentIndex = 0;
+        let isAnimating = false;
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-    // Preload images
-    function preloadImages() {
-        items.forEach(item => {
-            const img = item.querySelector('img');
-            if (img) {
-                const preloadImg = new Image();
-                preloadImg.src = img.src;
-            }
-        });
-    }
+        // Precargar imágenes
+        const preloadImages = () => {
+            items.forEach(item => {
+                const img = item.querySelector('img');
+                if (img) {
+                    const preloadImg = new Image();
+                    preloadImg.src = img.src;
+                    preloadImg.onerror = () => {
+                        img.src = 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';
+                    };
+                }
+            });
+        };
 
-    const showItem = (index, direction = 'next') => {
-        if (isAnimating) return;
-        isAnimating = true;
+        // Actualizar indicadores de puntos
+        const updateDots = (newIndex) => {
+            dots.forEach((dot, index) => {
+                if (index === newIndex) {
+                    dot.classList.add('bg-white');
+                    dot.classList.remove('bg-white/60');
+                } else {
+                    dot.classList.remove('bg-white');
+                    dot.classList.add('bg-white/60');
+                }
+            });
+        };
 
-        const currentItem = items[currentIndex];
-        const nextItem = items[index];
+        // Mostrar slide
+        const showItem = (index, direction = 'next') => {
+            if (isAnimating) return;
+            isAnimating = true;
 
-        // Set initial positions
-        nextItem.style.display = 'block';
-        nextItem.style.opacity = '0';
-        
-        // Trigger animation
-        requestAnimationFrame(() => {
-            currentItem.style.opacity = '0';
+            const currentItem = items[currentIndex];
+            const nextItem = items[index];
+            const translateValue = direction === 'next' ? 100 : -100;
+
+            // Configurar posiciones iniciales
+            nextItem.style.transform = `translateX(${translateValue}%)`;
+            nextItem.style.display = 'block';
             nextItem.style.opacity = '1';
-            nextItem.classList.add('active');
-        });
 
-        // Cleanup after animation
-        setTimeout(() => {
-            currentItem.style.display = 'none';
-            currentItem.classList.remove('active');
-            isAnimating = false;
-        }, 700);
+            // Animar transición
+            requestAnimationFrame(() => {
+                currentItem.style.transform = `translateX(${-translateValue}%)`;
+                currentItem.style.opacity = '0';
+                nextItem.style.transform = 'translateX(0)';
+            });
 
-        currentIndex = index;
-    };
+            // Limpiar después de la animación
+            setTimeout(() => {
+                currentItem.style.display = 'none';
+                currentItem.style.transform = '';
+                isAnimating = false;
+            }, 700);
 
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
+            currentIndex = index;
+            updateDots(index);
+        };
 
-    if (prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => {
+        // Manejadores de eventos táctiles
+        const handleTouchStart = (e) => {
+            touchStartX = e.touches[0].clientX;
+        };
+
+        const handleTouchMove = (e) => {
+            if (!touchStartX) return;
+            touchEndX = e.touches[0].clientX;
+            const diff = touchStartX - touchEndX;
+
+            // Prevenir scroll vertical mientras se desliza
+            if (Math.abs(diff) > 5) {
+                e.preventDefault();
+            }
+        };
+
+        const handleTouchEnd = () => {
+            if (!touchStartX || !touchEndX) return;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    // Deslizar a la izquierda
+                    const newIndex = (currentIndex + 1) % totalItems;
+                    showItem(newIndex, 'next');
+                } else {
+                    // Deslizar a la derecha
+                    const newIndex = (currentIndex - 1 + totalItems) % totalItems;
+                    showItem(newIndex, 'prev');
+                }
+            }
+
+            touchStartX = 0;
+            touchEndX = 0;
+        };
+
+        // Event Listeners
+        document.getElementById('prevBtn').addEventListener('click', () => {
             const newIndex = (currentIndex - 1 + totalItems) % totalItems;
             showItem(newIndex, 'prev');
         });
 
-        nextBtn.addEventListener('click', () => {
+        document.getElementById('nextBtn').addEventListener('click', () => {
             const newIndex = (currentIndex + 1) % totalItems;
             showItem(newIndex, 'next');
         });
 
-        // Auto slide with pause on hover
-        let autoSlideInterval;
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (index !== currentIndex) {
+                    showItem(index, index > currentIndex ? 'next' : 'prev');
+                }
+            });
+        });
+
+        carousel.addEventListener('touchstart', handleTouchStart, { passive: false });
+        carousel.addEventListener('touchmove', handleTouchMove, { passive: false });
+        carousel.addEventListener('touchend', handleTouchEnd);
+
+        // Auto rotación con pausa al hover
+        let autoplayInterval;
         
-        const startAutoSlide = () => {
-            autoSlideInterval = setInterval(() => {
+        const startAutoplay = () => {
+            autoplayInterval = setInterval(() => {
                 const newIndex = (currentIndex + 1) % totalItems;
                 showItem(newIndex, 'next');
             }, 5000);
         };
 
-        const stopAutoSlide = () => {
-            clearInterval(autoSlideInterval);
+        const stopAutoplay = () => {
+            clearInterval(autoplayInterval);
         };
 
-        carousel.addEventListener('mouseenter', stopAutoSlide);
-        carousel.addEventListener('mouseleave', startAutoSlide);
+        carousel.addEventListener('mouseenter', stopAutoplay);
+        carousel.addEventListener('mouseleave', startAutoplay);
+        carousel.addEventListener('touchstart', stopAutoplay);
+        carousel.addEventListener('touchend', () => {
+            setTimeout(startAutoplay, 3000);
+        });
 
-        // Initialize
+        // Inicialización
         preloadImages();
-        showItem(currentIndex);
-        startAutoSlide();
+        updateDots(0);
+        startAutoplay();
+    };
+
+    // Iniciar carrusel cuando el DOM esté listo
+    try {
+        initCarousel();
+    } catch (error) {
+        console.error('Error al inicializar el carrusel:', error);
     }
+
+    // El código del carrusel ya está manejado por la función initCarousel()
 
     // Enhanced Modal System with smooth animations
     function setupModals() {
