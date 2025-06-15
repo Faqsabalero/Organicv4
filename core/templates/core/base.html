@@ -65,6 +65,10 @@
                                 <p class="text-sm font-medium text-gray-900">{{ user.get_rol_display }}</p>
                             </div>
                             {% endif %}
+                            <a href="{% url 'core:perfil' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-all duration-200 ease-in-out flex items-center space-x-2 border-b border-gray-200">
+                                <i class="fas fa-user-circle"></i>
+                                <span>Ver Perfil</span>
+                            </a>
                             <form action="{% url 'core:logout' %}" method="post" class="block">
                                 {% csrf_token %}
                                 <button type="submit" 

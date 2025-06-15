@@ -28,4 +28,5 @@ urlpatterns = [
     path('tienda-oculta/', views.tienda_oculta_view, name='tienda_oculta'),
     path('contact/', views.contact_view, name='contact'),
     path('cambiar-estado-venta/<int:venta_id>/', views.cambiar_estado_venta, name='cambiar_estado_venta'),
+    path('perfil/', views.perfil_view, name='perfil'),
 ]

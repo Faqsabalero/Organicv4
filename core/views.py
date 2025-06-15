@@ -766,6 +766,21 @@ def cambiar_estado_venta(request, venta_id):
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+@login_required
+def perfil_view(request):
+    """Vista para mostrar el perfil del usuario"""
+    # Obtener estadísticas del usuario
+    total_compras = Venta.objects.filter(comprador=request.user).count()
+    total_gastado = Venta.objects.filter(comprador=request.user).aggregate(total=Sum('total'))['total'] or 0
+    fecha_registro = request.user.date_joined
+
+    context = {
+        'total_compras': total_compras,
+        'total_gastado': total_gastado,
+        'fecha_registro': fecha_registro,
+    }
+    return render(request, 'core/perfil.html', context)
+
 def contact_view(request):
     """Vista para procesar el formulario de contacto"""
     if request.method == 'POST':
