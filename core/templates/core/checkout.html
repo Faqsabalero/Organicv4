@@ -3,149 +3,239 @@
 {% block title %}Proceder al Pago - Organic Shops{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-        <!-- Header -->
-        <div class="px-6 py-4 bg-green-700">
-            <h2 class="text-2xl font-bold text-white">Proceder al Pago</h2>
+<div class="min-h-screen bg-gradient-to-br from-green-50 to-green-100 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Progress Steps -->
+        <div class="mb-8">
+            <div class="flex items-center justify-center space-x-4">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="ml-2 text-sm font-medium text-green-600">Carrito</div>
+                </div>
+                <div class="h-1 w-16 bg-green-600"></div>
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">
+                        <i class="fas fa-credit-card"></i>
+                    </div>
+                    <div class="ml-2 text-sm font-medium text-green-600">Pago</div>
+                </div>
+                <div class="h-1 w-16 bg-gray-300"></div>
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-500 flex items-center justify-center">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="ml-2 text-sm font-medium text-gray-500">Confirmación</div>
+                </div>
+            </div>
         </div>
 
-        <div class="p-6">
-            <!-- Resumen del pedido -->
-            <div class="mb-8">
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Resumen del Pedido</h3>
-                <div class="bg-green-50 rounded-lg p-4">
-                    {% if items %}
-                        <div class="space-y-3">
-                            {% for item in items %}
-                            <div class="flex justify-between items-center">
-                                <span class="text-gray-700">{{ item.producto.nombre }} x {{ item.cantidad }}</span>
-                                <span class="text-green-700 font-semibold">${{ item.producto.precio|floatformat:2 }} ARS</span>
-                            </div>
-                            {% endfor %}
-                        </div>
-                        <hr class="my-4 border-green-200">
-                        <div class="flex justify-between items-center">
-                            <span class="text-xl font-semibold text-gray-700">Total:</span>
-                            <span class="text-2xl font-bold text-green-700">${{ total }} ARS</span>
-                        </div>
-                    {% endif %}
+        <div class="bg-white rounded-2xl shadow-enhanced border border-gray-100 overflow-hidden">
+            <!-- Header -->
+            <div class="px-6 py-6 bg-gradient-to-r from-green-600 to-green-700">
+                <div class="flex items-center space-x-4">
+                    <div class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
+                        <i class="fas fa-credit-card text-2xl text-white"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Proceder al Pago</h2>
+                        <p class="text-green-100 text-sm">Complete sus datos para finalizar la compra</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Formulario de datos del comprador -->
-            <form method="POST" action="{% url 'core:procesar_pago' %}" class="space-y-6">
-                {% csrf_token %}
-                
-                <h3 class="text-xl font-semibold text-gray-900 mb-4">Datos del Comprador</h3>
-                
-                <!-- Nombre -->
-                <div>
-                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
-                        Nombre Completo *
-                    </label>
-                    <input type="text" 
-                           id="nombre" 
-                           name="nombre" 
-                           required
-                           value="{{ user.nombre|default:'' }}"
-                           placeholder="Ingresa tu nombre completo" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
+            <div class="p-6 md:p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Formulario de datos -->
+                    <div class="order-2 lg:order-1">
+                        <form method="POST" action="{% url 'core:procesar_pago' %}" class="space-y-6" id="checkoutForm">
+                            {% csrf_token %}
+                            
+                            <h3 class="text-xl font-bold text-gray-900 mb-6">Datos del Comprador</h3>
+                            
+                            <!-- Nombre -->
+                            <div class="space-y-2">
+                                <label for="nombre" class="block text-sm font-medium text-gray-700">
+                                    Nombre Completo *
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-user text-gray-400"></i>
+                                    </div>
+                                    <input type="text" 
+                                           id="nombre" 
+                                           name="nombre" 
+                                           required
+                                           value="{{ user.nombre|default:'' }}"
+                                           placeholder="Ingresa tu nombre completo" 
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200">
+                                </div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="space-y-2">
+                                <label for="email" class="block text-sm font-medium text-gray-700">
+                                    Correo Electrónico *
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-envelope text-gray-400"></i>
+                                    </div>
+                                    <input type="email" 
+                                           id="email" 
+                                           name="email" 
+                                           required
+                                           value="{{ user.email|default:'' }}"
+                                           placeholder="tuemail@ejemplo.com" 
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200">
+                                </div>
+                            </div>
+
+                            <!-- DNI -->
+                            <div class="space-y-2">
+                                <label for="dni" class="block text-sm font-medium text-gray-700">
+                                    DNI *
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-id-card text-gray-400"></i>
+                                    </div>
+                                    <input type="text" 
+                                           id="dni" 
+                                           name="dni" 
+                                           required
+                                           value="{{ user.dni|default:'' }}"
+                                           placeholder="12345678" 
+                                           pattern="[0-9]{7,8}"
+                                           title="Ingresa un DNI válido (7-8 dígitos)"
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200">
+                                </div>
+                                <p class="text-xs text-gray-500">Formato: 7-8 dígitos sin puntos</p>
+                            </div>
+
+                            <!-- Ciudad -->
+                            <div class="space-y-2">
+                                <label for="ciudad" class="block text-sm font-medium text-gray-700">
+                                    {% if items.0.producto.es_exclusivo %}
+                                        Selecciona Ciudad *
+                                    {% else %}
+                                        Ciudad *
+                                    {% endif %}
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                    </div>
+                                    <select id="ciudad" 
+                                            name="ciudad" 
+                                            required
+                                            class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200">
+                                        <option value="">Seleccione una ciudad</option>
+                                        <option value="santa fe" {% if user.ciudad == 'santa fe' %}selected{% endif %}>Santa Fe</option>
+                                        <option value="cordoba" {% if user.ciudad == 'cordoba' %}selected{% endif %}>Córdoba</option>
+                                        <option value="rosario" {% if user.ciudad == 'rosario' %}selected{% endif %}>Rosario</option>
+                                        <option value="esperanza" {% if user.ciudad == 'esperanza' %}selected{% endif %}>Esperanza</option>
+                                        <option value="rafaela" {% if user.ciudad == 'rafaela' %}selected{% endif %}>Rafaela</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Botones de acción -->
+                            <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                                <a href="{% url 'core:carrito' %}" 
+                                   class="flex-1 bg-white border-2 border-gray-300 text-gray-700 px-6 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
+                                    <i class="fas fa-arrow-left"></i>
+                                    <span>Volver al Carrito</span>
+                                </a>
+
+                                <button type="submit" 
+                                        id="finalizarCompra"
+                                        class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
+                                    <span>Finalizar Compra</span>
+                                    <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Resumen del pedido -->
+                    <div class="order-1 lg:order-2">
+                        <div class="bg-gray-50 rounded-xl p-6 border border-gray-100">
+                            <h3 class="text-xl font-bold text-gray-900 mb-6">Resumen del Pedido</h3>
+                            
+                            {% if items %}
+                                <div class="space-y-4">
+                                    {% for item in items %}
+                                    <div class="flex items-center space-x-4 bg-white p-4 rounded-lg border border-gray-100">
+                                        <div class="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
+                                            <img src="{{ item.producto.imagen_url }}" 
+                                                 alt="{{ item.producto.nombre }}" 
+                                                 class="w-full h-full object-cover"
+                                                 loading="lazy">
+                                        </div>
+                                        <div class="flex-grow">
+                                            <h4 class="text-sm font-medium text-gray-900">{{ item.producto.nombre }}</h4>
+                                            <div class="flex items-center mt-1 text-sm text-gray-500">
+                                                <span>Cantidad: {{ item.cantidad }}</span>
+                                                <span class="mx-2">•</span>
+                                                <span>${{ item.producto.precio|floatformat:2 }} c/u</span>
+                                            </div>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <span class="text-green-600 font-semibold">${{ item.producto.precio|multiply:item.cantidad|floatformat:2 }}</span>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="mt-6 pt-6 border-t border-gray-200">
+                                    <div class="flex justify-between items-center text-lg font-bold">
+                                        <span class="text-gray-900">Total:</span>
+                                        <span class="text-green-600">${{ total }} ARS</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-6 flex items-center justify-center space-x-2 text-sm text-gray-500">
+                                    <i class="fas fa-lock text-green-600"></i>
+                                    <span>Pago seguro a través de</span>
+                                    <img src="https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.png" 
+                                         alt="Mercado Pago" 
+                                         class="h-5"
+                                         loading="lazy">
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Correo Electrónico -->
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                        Correo Electrónico *
-                    </label>
-                    <input type="email" 
-                           id="email" 
-                           name="email" 
-                           required
-                           value="{{ user.email|default:'' }}"
-                           placeholder="tuemail@ejemplo.com" 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
-                </div>
-
-                <!-- DNI -->
-                <div>
-                    <label for="dni" class="block text-sm font-medium text-gray-700 mb-2">
-                        DNI *
-                    </label>
-                    <input type="text" 
-                           id="dni" 
-                           name="dni" 
-                           required
-                           value="{{ user.dni|default:'' }}"
-                           placeholder="12345678" 
-                           pattern="[0-9]{7,8}"
-                           title="Ingresa un DNI válido (7-8 dígitos)"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
-                </div>
-
-                <!-- Ciudad -->
-                <div>
-                    <label for="ciudad" class="block text-sm font-medium text-gray-700 mb-2">
-                        {% if items.0.producto.es_exclusivo %}
-                            Selecciona Ciudad *
-                        {% else %}
-                            Ciudad *
-                        {% endif %}
-                    </label>
-                    <select id="ciudad" 
-                            name="ciudad" 
-                            required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-transparent">
-                        <option value="">Seleccione una ciudad</option>
-                        <option value="santa fe" {% if user.ciudad == 'santa fe' %}selected{% endif %}>Santa Fe</option>
-                        <option value="cordoba" {% if user.ciudad == 'cordoba' %}selected{% endif %}>Córdoba</option>
-                        <option value="rosario" {% if user.ciudad == 'rosario' %}selected{% endif %}>Rosario</option>
-                        <option value="esperanza" {% if user.ciudad == 'esperanza' %}selected{% endif %}>Esperanza</option>
-                        <option value="rafaela" {% if user.ciudad == 'rafaela' %}selected{% endif %}>Rafaela</option>
-                    </select>
-                </div>
-
-                <!-- Botones de acción -->
-                <div class="flex flex-col sm:flex-row gap-4 pt-6">
-                    <!-- Botón Volver al Carrito -->
-                    <a href="{% url 'core:carrito' %}" 
-                       class="flex-1 bg-gray-600 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
-                        <i class="fas fa-arrow-left"></i>
-                        <span>Volver al Carrito</span>
-                    </a>
-
-                    <!-- Botón Confirmar Pago -->
-                    <button type="submit" 
-                            id="finalizarCompra"
-                            class="flex-1 bg-green-700 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
-                        <span>Finalizar Compra</span>
-                    </button>
-                </div>
-
-                <p class="text-sm text-gray-500 text-center mt-4">
-                    <i class="fas fa-lock text-green-600"></i>
-                    Pago seguro a través de Mercado Pago
-                </p>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 
 <!-- Modal de Registro -->
-<div id="registroModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-    <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-        <h3 class="text-2xl font-bold text-gray-900 mb-4">¿Deseas registrarte?</h3>
-        <p class="text-gray-600 mb-6">
-            Regístrate ahora para recibir descuentos exclusivos en tus futuras compras.
-        </p>
-        <div class="flex flex-col gap-4">
+<div id="registroModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95">
+        <div class="text-center mb-6">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-user-plus text-2xl text-green-600"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-gray-900">¿Deseas registrarte?</h3>
+            <p class="text-gray-600 mt-2">
+                Regístrate ahora para recibir descuentos exclusivos en tus futuras compras.
+            </p>
+        </div>
+        
+        <div class="space-y-4">
             <button onclick="redirigirARegistro()" 
-                    class="w-full bg-green-700 text-white px-6 py-3 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors">
-                Sí, quiero registrarme
+                    class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
+                <i class="fas fa-user-plus"></i>
+                <span>Sí, quiero registrarme</span>
             </button>
+            
             <button onclick="continuarSinRegistro()" 
-                    class="w-full bg-gray-100 text-gray-700 px-6 py-3 rounded-md font-semibold text-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors">
-                No, gracias
+                    class="w-full bg-white border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold text-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
+                <span>No, gracias</span>
             </button>
         </div>
     </div>
@@ -156,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const dniInput = document.getElementById('dni');
     const modal = document.getElementById('registroModal');
+    const submitButton = document.getElementById('finalizarCompra');
     
     // Validación del DNI en tiempo real
     dniInput.addEventListener('input', function() {
@@ -164,8 +255,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (dni.length < 7 || dni.length > 8) {
             this.setCustomValidity('El DNI debe tener entre 7 y 8 dígitos');
+            this.classList.add('border-red-500');
+            this.classList.remove('border-green-500');
         } else {
             this.setCustomValidity('');
+            this.classList.remove('border-red-500');
+            this.classList.add('border-green-500');
         }
     });
     
@@ -179,17 +274,54 @@ document.addEventListener('DOMContentLoaded', function() {
         const ciudad = document.getElementById('ciudad').value.trim();
         
         if (!nombre || !email || !dni || !ciudad) {
-            alert('Por favor, completa todos los campos obligatorios.');
+            // Mostrar mensaje de error estilizado
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 right-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-lg transform transition-all duration-300';
+            toast.innerHTML = `
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium">Por favor, completa todos los campos obligatorios.</p>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+            
             return false;
         }
         
         if (dni.length < 7 || dni.length > 8) {
-            alert('Por favor, ingresa un DNI válido (7-8 dígitos).');
+            dniInput.classList.add('border-red-500');
             return false;
         }
         
-        // Mostrar modal de registro
-        modal.classList.remove('hidden');
+        // Mostrar loading state en el botón
+        submitButton.disabled = true;
+        submitButton.innerHTML = `
+            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+        `;
+        
+        // Mostrar modal de registro con animación
+        setTimeout(() => {
+            submitButton.disabled = false;
+            submitButton.innerHTML = `
+                <span>Finalizar Compra</span>
+                <i class="fas fa-arrow-right"></i>
+            `;
+            modal.classList.remove('hidden');
+            const modalContent = modal.querySelector('.bg-white');
+            modalContent.style.transform = 'scale(1)';
+            modalContent.style.opacity = '1';
+        }, 1000);
     });
 });
 
@@ -197,21 +329,39 @@ function redirigirARegistro() {
     const form = document.querySelector('form');
     const formData = new FormData(form);
     
+    // Mostrar loading state
+    const modalContent = document.querySelector('#registroModal .bg-white');
+    modalContent.innerHTML = `
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent mx-auto"></div>
+            <p class="mt-4 text-gray-600">Redirigiendo al registro...</p>
+        </div>
+    `;
+    
     // Redirigir al formulario de registro con los datos del checkout
-    window.location.href = "{% url 'core:registro_rapido' %}?" + new URLSearchParams({
-        nombre: formData.get('nombre'),
-        email: formData.get('email'),
-        dni: formData.get('dni'),
-        ciudad: formData.get('ciudad')
-    }).toString();
+    setTimeout(() => {
+        window.location.href = "{% url 'core:registro_rapido' %}?" + new URLSearchParams({
+            nombre: formData.get('nombre'),
+            email: formData.get('email'),
+            dni: formData.get('dni'),
+            ciudad: formData.get('ciudad')
+        }).toString();
+    }, 1000);
 }
 
 function continuarSinRegistro() {
     const modal = document.getElementById('registroModal');
-    modal.classList.add('hidden');
+    const modalContent = modal.querySelector('.bg-white');
     
-    // Enviar el formulario original
-    document.querySelector('form').submit();
+    // Animación de salida
+    modalContent.style.transform = 'scale(0.95)';
+    modalContent.style.opacity = '0';
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        // Enviar el formulario
+        document.querySelector('form').submit();
+    }, 300);
 }
 </script>
 {% endblock %}

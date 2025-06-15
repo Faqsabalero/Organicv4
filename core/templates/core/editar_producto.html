@@ -4,129 +4,366 @@
 {% block title %}{% if producto %}Editar{% else %}Crear{% endif %} Producto - Organic Shops{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+<div class="min-h-screen bg-gray-50 py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Header -->
-        <div class="px-6 py-4 bg-green-700">
-            <h2 class="text-2xl font-bold text-white">{% if producto %}Editar{% else %}Crear{% endif %} Producto</h2>
+        <div class="mb-8">
+            <div class="flex items-center space-x-4">
+                <div class="h-12 w-12 rounded-xl bg-green-600 flex items-center justify-center">
+                    <i class="fas {% if producto %}fa-edit{% else %}fa-plus{% endif %} text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-900">
+                        {% if producto %}Editar{% else %}Crear{% endif %} Producto
+                    </h1>
+                    <p class="text-sm text-gray-500">Complete los detalles del producto a continuación</p>
+                </div>
+            </div>
         </div>
 
-        <div class="p-6">
-            <form method="post" class="space-y-6">
+        <div class="bg-white rounded-2xl shadow-enhanced border border-gray-100 overflow-hidden">
+            <form method="post" class="divide-y divide-gray-100" id="productForm">
                 {% csrf_token %}
-                <div>
-                    <label for="nombre" class="block text-sm font-medium text-gray-700 mb-2">
-                        Nombre
-                    </label>
-                    <input type="text" name="nombre" id="nombre" value="{{ producto.nombre|default:'' }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                </div>
-
-                <div>
-                    <label for="descripcion" class="block text-sm font-medium text-gray-700 mb-2">
-                        Descripción
-                    </label>
-                    <textarea name="descripcion" id="descripcion" rows="3"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">{{ producto.descripcion|default:'' }}</textarea>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="precio" class="block text-sm font-medium text-gray-700 mb-2">
-                            Precio Público
-                        </label>
-                        <div class="relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
+                
+                <!-- Basic Information -->
+                <div class="p-8 space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Left Column -->
+                        <div class="space-y-6">
+                            <!-- Product Name -->
+                            <div class="space-y-2">
+                                <label for="nombre" class="block text-sm font-medium text-gray-700">
+                                    Nombre del Producto *
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-box text-gray-400"></i>
+                                    </div>
+                                    <input type="text" 
+                                           name="nombre" 
+                                           id="nombre" 
+                                           required
+                                           value="{{ producto.nombre|default:'' }}"
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                           placeholder="Ej: Aceite CBD Premium">
+                                </div>
                             </div>
-                            <input type="number" name="precio" id="precio" step="0.01" value="{{ producto.precio|default:'' }}"
-                                class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">ARS</span>
+
+                            <!-- Description -->
+                            <div class="space-y-2">
+                                <label for="descripcion" class="block text-sm font-medium text-gray-700">
+                                    Descripción *
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <textarea name="descripcion" 
+                                              id="descripcion" 
+                                              rows="4"
+                                              required
+                                              class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 resize-none"
+                                              placeholder="Describe las características y beneficios del producto...">{{ producto.descripcion|default:'' }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="space-y-6">
+                            <!-- Image URL with Preview -->
+                            <div class="space-y-2">
+                                <label for="imagen_url" class="block text-sm font-medium text-gray-700">
+                                    URL de la Imagen *
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-image text-gray-400"></i>
+                                    </div>
+                                    <input type="url" 
+                                           name="imagen_url" 
+                                           id="imagen_url" 
+                                           required
+                                           value="{{ producto.imagen_url|default:'' }}"
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                           placeholder="https://ejemplo.com/imagen.jpg">
+                                </div>
+                                <!-- Image Preview -->
+                                <div id="imagePreview" class="mt-4 relative aspect-video rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                                    {% if producto.imagen_url %}
+                                        <img src="{{ producto.imagen_url }}" 
+                                             alt="Vista previa" 
+                                             class="w-full h-full object-cover">
+                                    {% else %}
+                                        <div class="text-gray-400 text-center">
+                                            <i class="fas fa-image text-3xl mb-2"></i>
+                                            <p class="text-sm">Vista previa de la imagen</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div>
-                        <label for="precio_distribuidor" class="block text-sm font-medium text-gray-700 mb-2">
-                            Precio Distribuidor
-                        </label>
-                        <div class="relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
+                <!-- Pricing Information -->
+                <div class="p-8 space-y-6 bg-gray-50">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-6">Información de Precios</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Public Price -->
+                        <div class="space-y-2">
+                            <label for="precio" class="block text-sm font-medium text-gray-700">
+                                Precio Público *
+                            </label>
+                            <div class="relative rounded-lg shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">$</span>
+                                </div>
+                                <input type="number" 
+                                       name="precio" 
+                                       id="precio" 
+                                       required
+                                       step="0.01" 
+                                       value="{{ producto.precio|default:'' }}"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       placeholder="0.00">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">ARS</span>
+                                </div>
                             </div>
-                            <input type="number" name="precio_distribuidor" id="precio_distribuidor" step="0.01" value="{{ producto.precio_distribuidor|default:'' }}"
-                                class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">ARS</span>
+                        </div>
+
+                        <!-- Distributor Price -->
+                        <div class="space-y-2">
+                            <label for="precio_distribuidor" class="block text-sm font-medium text-gray-700">
+                                Precio Distribuidor *
+                            </label>
+                            <div class="relative rounded-lg shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">$</span>
+                                </div>
+                                <input type="number" 
+                                       name="precio_distribuidor" 
+                                       id="precio_distribuidor" 
+                                       required
+                                       step="0.01" 
+                                       value="{{ producto.precio_distribuidor|default:'' }}"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       placeholder="0.00">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">ARS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reseller Price -->
+                        <div class="space-y-2">
+                            <label for="precio_revendedor" class="block text-sm font-medium text-gray-700">
+                                Precio Revendedor *
+                            </label>
+                            <div class="relative rounded-lg shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">$</span>
+                                </div>
+                                <input type="number" 
+                                       name="precio_revendedor" 
+                                       id="precio_revendedor" 
+                                       required
+                                       step="0.01" 
+                                       value="{{ producto.precio_revendedor|default:'' }}"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       placeholder="0.00">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">ARS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cost (Admin/Superuser only) -->
+                        {% if request.user.rol in 'ADMIN,SUPERUSUARIO'|split:"," %}
+                        <div class="space-y-2">
+                            <label for="costo" class="block text-sm font-medium text-gray-700">
+                                Costo *
+                            </label>
+                            <div class="relative rounded-lg shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">$</span>
+                                </div>
+                                <input type="number" 
+                                       name="costo" 
+                                       id="costo" 
+                                       required
+                                       step="0.01" 
+                                       value="{{ producto.costo|default:'' }}"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       placeholder="0.00">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500">ARS</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Profit Margins Calculator -->
+                    <div class="mt-6 p-4 bg-white rounded-lg border border-gray-200">
+                        <h4 class="text-sm font-medium text-gray-700 mb-4">Márgenes de Ganancia</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <span class="text-gray-600">Margen Público:</span>
+                                <span id="marginPublic" class="font-semibold text-green-700">-</span>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <span class="text-gray-600">Margen Distribuidor:</span>
+                                <span id="marginDistributor" class="font-semibold text-green-700">-</span>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <span class="text-gray-600">Margen Revendedor:</span>
+                                <span id="marginReseller" class="font-semibold text-green-700">-</span>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div>
-                        <label for="precio_revendedor" class="block text-sm font-medium text-gray-700 mb-2">
-                            Precio Revendedor
-                        </label>
-                        <div class="relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
-                            </div>
-                            <input type="number" name="precio_revendedor" id="precio_revendedor" step="0.01" value="{{ producto.precio_revendedor|default:'' }}"
-                                class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">ARS</span>
+                <!-- Additional Options -->
+                <div class="p-8 space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex items-center">
+                            <input type="checkbox" 
+                                   name="es_exclusivo" 
+                                   id="es_exclusivo" 
+                                   {% if producto.es_exclusivo %}checked{% endif %}
+                                   class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-green-500 transition-colors duration-200">
+                            <label for="es_exclusivo" class="ml-2 block text-sm font-medium text-gray-700">
+                                Producto Exclusivo
+                            </label>
+                        </div>
+                        <div class="relative group">
+                            <i class="fas fa-info-circle text-gray-400 cursor-help"></i>
+                            <div class="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-48 p-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                                Los productos exclusivos solo están disponibles en la tienda oculta
                             </div>
                         </div>
                     </div>
-
-                    {% if request.user.rol in 'ADMIN,SUPERUSUARIO'|split:"," %}
-                    <div>
-                        <label for="costo" class="block text-sm font-medium text-gray-700 mb-2">
-                            Costo
-                        </label>
-                        <div class="relative rounded-md shadow-sm">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">$</span>
-                            </div>
-                            <input type="number" name="costo" id="costo" step="0.01" value="{{ producto.costo|default:'' }}"
-                                class="w-full pl-7 pr-12 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                                <span class="text-gray-500 sm:text-sm">ARS</span>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
                 </div>
 
-
-                <div>
-                    <label for="imagen_url" class="block text-sm font-medium text-gray-700 mb-2">
-                        URL de la Imagen
-                    </label>
-                    <input type="url" name="imagen_url" id="imagen_url" value="{{ producto.imagen_url|default:'' }}"
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500">
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" name="es_exclusivo" id="es_exclusivo" {% if producto.es_exclusivo %}checked{% endif %}
-                        class="h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500">
-                    <label for="es_exclusivo" class="ml-2 block text-sm font-medium text-gray-700">
-                        Producto Exclusivo
-                    </label>
-                </div>
-
-                <div class="flex justify-end space-x-4">
+                <!-- Form Actions -->
+                <div class="p-8 bg-gray-50 flex items-center justify-end space-x-4">
                     <a href="{% url 'core:home' %}" 
-                        class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                        Cancelar
+                       class="px-6 py-3 bg-white border-2 border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-times"></i>
+                        <span>Cancelar</span>
                     </a>
                     <button type="submit"
-                        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
-                        Guardar Cambios
+                            class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 flex items-center space-x-2">
+                        <i class="fas fa-save"></i>
+                        <span>Guardar Cambios</span>
                     </button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('productForm');
+    const imageUrlInput = document.getElementById('imagen_url');
+    const imagePreview = document.getElementById('imagePreview');
+    const precioInput = document.getElementById('precio');
+    const precioDistribuidorInput = document.getElementById('precio_distribuidor');
+    const precioRevendedorInput = document.getElementById('precio_revendedor');
+    const costoInput = document.getElementById('costo');
+    
+    // Image Preview
+    imageUrlInput.addEventListener('input', function() {
+        const url = this.value;
+        if (url) {
+            imagePreview.innerHTML = `
+                <img src="${url}" 
+                     alt="Vista previa" 
+                     class="w-full h-full object-cover"
+                     onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'text-red-500 text-center\'><i class=\'fas fa-exclamation-circle text-3xl mb-2\'></i><p class=\'text-sm\'>Error al cargar la imagen</p></div>'">
+            `;
+        } else {
+            imagePreview.innerHTML = `
+                <div class="text-gray-400 text-center">
+                    <i class="fas fa-image text-3xl mb-2"></i>
+                    <p class="text-sm">Vista previa de la imagen</p>
+                </div>
+            `;
+        }
+    });
+
+    // Calculate Margins
+    function calculateMargins() {
+        const costo = parseFloat(costoInput?.value) || 0;
+        const precio = parseFloat(precioInput.value) || 0;
+        const precioDistribuidor = parseFloat(precioDistribuidorInput.value) || 0;
+        const precioRevendedor = parseFloat(precioRevendedorInput.value) || 0;
+
+        if (costo > 0) {
+            document.getElementById('marginPublic').textContent = 
+                `${(((precio - costo) / costo) * 100).toFixed(1)}%`;
+            document.getElementById('marginDistributor').textContent = 
+                `${(((precioDistribuidor - costo) / costo) * 100).toFixed(1)}%`;
+            document.getElementById('marginReseller').textContent = 
+                `${(((precioRevendedor - costo) / costo) * 100).toFixed(1)}%`;
+        }
+    }
+
+    // Add input event listeners for price fields
+    [precioInput, precioDistribuidorInput, precioRevendedorInput, costoInput].forEach(input => {
+        if (input) {
+            input.addEventListener('input', calculateMargins);
+        }
+    });
+
+    // Initial calculation
+    calculateMargins();
+
+    // Form Validation
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate required fields
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('border-red-500');
+                
+                // Add error message
+                const errorMsg = field.parentElement.querySelector('.error-message');
+                if (!errorMsg) {
+                    const msg = document.createElement('p');
+                    msg.className = 'text-red-500 text-xs mt-1 error-message';
+                    msg.textContent = 'Este campo es requerido';
+                    field.parentElement.appendChild(msg);
+                }
+            } else {
+                field.classList.remove('border-red-500');
+                const errorMsg = field.parentElement.querySelector('.error-message');
+                if (errorMsg) errorMsg.remove();
+            }
+        });
+
+        if (isValid) {
+            // Show loading state
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalContent = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Guardando...</span>
+            `;
+            
+            // Submit the form
+            form.submit();
+        }
+    });
+});
+</script>
 {% endblock %}

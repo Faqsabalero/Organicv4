@@ -3,35 +3,141 @@
 {% block title %}Iniciar Sesión - Organic Shops{% endblock %}
 
 {% block content %}
-<div class="min-h-screen flex items-center justify-center bg-green-50 py-12 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-md w-full space-y-8 bg-white p-10 rounded-lg shadow-lg">
-    <h2 class="mt-6 text-center text-3xl font-extrabold text-green-700">
-      Iniciar Sesión
-    </h2>
-    <form method="post" class="mt-8 space-y-6" novalidate>
-      {% csrf_token %}
-      <div class="rounded-md shadow-sm -space-y-px">
-        <div>
-          <label for="id_username" class="sr-only">Usuario</label>
-          {{ form.username }}
-          {% if form.username.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.username.errors.0 }}</p>
-          {% endif %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-green-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full animate-scaleIn">
+        <!-- Card Container -->
+        <div class="bg-white rounded-2xl shadow-enhanced border border-gray-100 p-8 md:p-10 space-y-8 relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-green-100 to-green-200 rounded-full transform translate-x-20 -translate-y-20 opacity-50"></div>
+            <div class="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-green-100 to-green-200 rounded-full transform -translate-x-20 translate-y-20 opacity-50"></div>
+
+            <!-- Logo and Title -->
+            <div class="text-center relative">
+                <div class="mx-auto h-16 w-16 rounded-full overflow-hidden shadow-lg mb-4 border-4 border-white">
+                    <img src="https://storage.googleapis.com/a1aa/image/6aaebe32-d6ed-4dec-96f6-ff630ed08f4d.jpg" 
+                         alt="Logo" class="h-full w-full object-cover">
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 tracking-tight">
+                    Bienvenido de nuevo
+                </h2>
+                <p class="mt-2 text-sm text-gray-600">
+                    Ingresa tus credenciales para continuar
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <form method="post" class="mt-8 space-y-6 relative" novalidate>
+                {% csrf_token %}
+                
+                <!-- Username Field -->
+                <div class="space-y-2">
+                    <label for="id_username" class="block text-sm font-medium text-gray-700">
+                        Usuario
+                    </label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-user text-gray-400"></i>
+                        </div>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if form.username.errors %}
+                    <p class="text-red-600 text-sm mt-1 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                        {{ form.username.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+
+                <!-- Password Field -->
+                <div class="space-y-2">
+                    <label for="id_password" class="block text-sm font-medium text-gray-700">
+                        Contraseña
+                    </label>
+                    <div class="relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-lock text-gray-400"></i>
+                        </div>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <i class="fas fa-exclamation-circle text-red-500"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if form.password.errors %}
+                    <p class="text-red-600 text-sm mt-1 flex items-center">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                        {{ form.password.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+
+                <!-- Submit Button -->
+                <div>
+                    <button type="submit" 
+                            class="w-full flex justify-center py-3 px-4 rounded-lg text-white bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transform transition-all duration-300 hover:scale-[1.02] font-medium">
+                        <span class="flex items-center">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Iniciar Sesión
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Additional Links -->
+                <div class="flex items-center justify-between mt-4 text-sm">
+                    <a href="#" class="text-green-600 hover:text-green-700 transition-colors duration-200">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                    <button type="button" 
+                            onclick="document.getElementById('registerBtn').click()"
+                            class="text-green-600 hover:text-green-700 transition-colors duration-200">
+                        Crear cuenta
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="mt-4">
-          <label for="id_password" class="sr-only">Contraseña</label>
-          {{ form.password }}
-          {% if form.password.errors %}
-            <p class="text-red-600 text-sm mt-1">{{ form.password.errors.0 }}</p>
-          {% endif %}
-        </div>
-      </div>
-      <div>
-        <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 transition">
-          Entrar
-        </button>
-      </div>
-    </form>
-  </div>
+
+        <!-- Footer Text -->
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Al iniciar sesión, aceptas nuestros 
+            <a href="#" class="text-green-600 hover:text-green-700">términos y condiciones</a>
+        </p>
+    </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Add input styling
+    document.getElementById('id_username').classList.add(
+        'pl-10',
+        'form-input',
+        'block',
+        'w-full',
+        'rounded-lg',
+        'border-gray-300',
+        'focus:ring-green-500',
+        'focus:border-green-500',
+        'transition-colors',
+        'duration-200'
+    );
+    
+    document.getElementById('id_password').classList.add(
+        'pl-10',
+        'form-input',
+        'block',
+        'w-full',
+        'rounded-lg',
+        'border-gray-300',
+        'focus:ring-green-500',
+        'focus:border-green-500',
+        'transition-colors',
+        'duration-200'
+    );
+</script>
 {% endblock %}
