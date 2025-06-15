@@ -411,7 +411,8 @@ def procesar_compra_carrito(request):
                 producto=item.producto,
                 cantidad=item.cantidad,
                 total=subtotal,
-                email_comprador=email
+                email_comprador=email,
+                estado_pago='PENDIENTE'  # Set default state
             )
             ventas.append(venta.id)
         
