@@ -763,8 +763,11 @@ def cambiar_estado_venta(request, venta_id):
     messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
     return redirect('core:asignar')
 
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
 def contact_view(request):
-    """Vista para la página de contacto"""
+    """Vista para procesar el formulario de contacto"""
     if request.method == 'POST':
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -772,10 +775,11 @@ def contact_view(request):
         
         if not all([name, email, message]):
             messages.error(request, 'Por favor complete todos los campos.')
-            return redirect('core:home')
+            return HttpResponseRedirect(reverse('core:home') + '#contact')
         
         # Aquí se podría agregar el código para enviar el email
         messages.success(request, 'Mensaje enviado correctamente. Nos pondremos en contacto pronto.')
-        return redirect('core:home')
+        return HttpResponseRedirect(reverse('core:home') + '#contact')
     
-    return render(request, 'core/contact.html')
+    # Si es GET, redirigir a la página de inicio con el ancla del formulario de contacto
+    return HttpResponseRedirect(reverse('core:home') + '#contact')
