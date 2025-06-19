@@ -6,13 +6,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        'dark-blue': {
-          DEFAULT: '#001F3F',   // Primary azul oscuro
-          light: '#013374',     // Lighter variant for hover states
-          dark: '#000F1F'       // Darker variant for gradients
-        },
-      },
       animation: {
         'gradient': 'gradient 15s ease infinite',
         'shimmer': 'shimmer 2s linear infinite',
