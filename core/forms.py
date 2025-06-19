@@ -57,9 +57,27 @@ class UserCreationFormWithRol(UserCreationForm):
         )
     )
 
+    PROVINCIAS_CHOICES = [
+        ('', 'Seleccione una provincia'),
+        ('santa fe', 'Santa Fe'),
+        ('cordoba', 'Córdoba'),
+        ('buenos aires', 'Buenos Aires'),
+        ('entre rios', 'Entre Ríos'),
+        ('mendoza', 'Mendoza'),
+    ]
+
+    provincia = forms.ChoiceField(
+        choices=PROVINCIAS_CHOICES,
+        widget=forms.Select(
+            attrs={
+                'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600',
+            }
+        ),
+    )
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad', 'domicilio', 'es_distribuidor_exclusivo')
+        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad', 'provincia', 'domicilio', 'es_distribuidor_exclusivo')
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)

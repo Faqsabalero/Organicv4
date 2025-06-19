@@ -14,6 +14,7 @@ class CustomUser(AbstractUser):
     nombre = models.CharField(max_length=100, blank=True, null=True)
     dni = models.CharField(max_length=20, blank=True, null=True)
     ciudad = models.CharField(max_length=100, blank=True, null=True)
+    provincia = models.CharField(max_length=100, blank=True, null=True)  # Nuevo campo: provincia
     domicilio = models.CharField(max_length=200, blank=True, null=True)
     es_distribuidor_exclusivo = models.BooleanField(default=False)
 

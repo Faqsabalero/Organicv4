@@ -131,6 +131,25 @@
                             {% endif %}
                         </div>
 
+                        <!-- Provincia -->
+                        <div class="space-y-2">
+                            <label for="{{ form.provincia.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                                Provincia
+                            </label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-map-marker-alt text-gray-400"></i>
+                                </div>
+                                {{ form.provincia }}
+                            </div>
+                            {% if form.provincia.errors %}
+                            <p class="text-red-600 text-sm mt-1 flex items-center">
+                                <i class="fas fa-exclamation-triangle mr-1"></i>
+                                {{ form.provincia.errors.0 }}
+                            </p>
+                            {% endif %}
+                        </div>
+
                         <!-- Domicilio -->
                         <div class="space-y-2">
                             <label for="{{ form.domicilio.id_for_label }}" class="block text-sm font-medium text-gray-700">
