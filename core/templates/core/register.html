@@ -169,6 +169,25 @@
                             {% endif %}
                         </div>
 
+                        <!-- Teléfono -->
+                        <div class="space-y-2">
+                            <label for="{{ form.telefono.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                                Teléfono
+                            </label>
+                            <div class="relative rounded-md shadow-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-phone text-gray-400"></i>
+                                </div>
+                                {{ form.telefono }}
+                            </div>
+                            {% if form.telefono.errors %}
+                            <p class="text-red-600 text-sm mt-1 flex items-center">
+                                <i class="fas fa-exclamation-triangle mr-1"></i>
+                                {{ form.telefono.errors.0 }}
+                            </p>
+                            {% endif %}
+                        </div>
+
                         <!-- Rol -->
                         <div class="space-y-2">
                             <label for="{{ form.rol.id_for_label }}" class="block text-sm font-medium text-gray-700">
@@ -260,7 +279,7 @@
 <script>
     // Estilizar inputs
     const inputs = [
-        'username', 'nombre', 'email', 'dni', 'ciudad', 'rol', 'password1', 'password2'
+        'username', 'nombre', 'email', 'dni', 'ciudad', 'telefono', 'rol', 'password1', 'password2'
     ];
 
     inputs.forEach(input => {

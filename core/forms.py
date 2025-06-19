@@ -59,11 +59,30 @@ class UserCreationFormWithRol(UserCreationForm):
 
     PROVINCIAS_CHOICES = [
         ('', 'Seleccione una provincia'),
-        ('santa fe', 'Santa Fe'),
-        ('cordoba', 'Córdoba'),
         ('buenos aires', 'Buenos Aires'),
+        ('catamarca', 'Catamarca'),
+        ('chaco', 'Chaco'),
+        ('chubut', 'Chubut'),
+        ('cordoba', 'Córdoba'),
+        ('corrientes', 'Corrientes'),
         ('entre rios', 'Entre Ríos'),
+        ('formosa', 'Formosa'),
+        ('jujuy', 'Jujuy'),
+        ('la pampa', 'La Pampa'),
+        ('la rioja', 'La Rioja'),
         ('mendoza', 'Mendoza'),
+        ('misiones', 'Misiones'),
+        ('neuquen', 'Neuquén'),
+        ('rio negro', 'Río Negro'),
+        ('salta', 'Salta'),
+        ('san juan', 'San Juan'),
+        ('san luis', 'San Luis'),
+        ('santa cruz', 'Santa Cruz'),
+        ('santa fe', 'Santa Fe'),
+        ('santiago del estero', 'Santiago del Estero'),
+        ('tierra del fuego', 'Tierra del Fuego'),
+        ('tucuman', 'Tucumán'),
+        ('ciudad autonoma de buenos aires', 'Ciudad Autónoma de Buenos Aires'),
     ]
 
     provincia = forms.ChoiceField(
@@ -75,9 +94,19 @@ class UserCreationFormWithRol(UserCreationForm):
         ),
     )
 
+    telefono = forms.CharField(
+        required=False,
+        widget=forms.TextInput(
+            attrs={
+                'class': 'w-full px-4 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-600',
+                'placeholder': 'Ingresa tu número de teléfono'
+            }
+        )
+    )
+
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad', 'provincia', 'domicilio', 'es_distribuidor_exclusivo')
+        fields = ('username', 'email', 'rol', 'password1', 'password2', 'nombre', 'dni', 'ciudad', 'provincia', 'domicilio', 'telefono', 'es_distribuidor_exclusivo')
 
     def __init__(self, *args, user=None, **kwargs):
         super().__init__(*args, **kwargs)
