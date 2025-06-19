@@ -15,11 +15,11 @@
     </style>
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-dark-blue text-white">
     <style>
         /* Glassmorphism effect */
         .navbar-glass {
-            background: rgba(15, 118, 53, 0.95);
+            background: rgba(0, 31, 63, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
@@ -57,7 +57,7 @@
     </style>
 
     <!-- Header -->
-    <header class="navbar-glass sticky top-0 z-[40] shadow-lg transition-all duration-300">
+    <header class="navbar-glass sticky top-0 z-[40] shadow-lg transition-all duration-300 bg-dark-blue">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
             <a href="{% url 'core:home' %}" class="flex items-center space-x-3 group">
                 <div class="relative h-12 w-12 rounded-full overflow-hidden shadow-lg transition-transform duration-300 group-hover:scale-110">
@@ -65,40 +65,40 @@
                          alt="Logo" class="h-full w-full object-cover transform transition-transform duration-300 group-hover:scale-110">
                 </div>
                 <div class="flex flex-col">
-                    <span class="text-2xl font-bold text-white transition-all duration-300 group-hover:text-green-300">Organic Shops</span>
-                    <span class="text-xs text-green-300 font-medium tracking-wider">NATURAL & SALUDABLE</span>
+                    <span class="text-2xl font-bold text-white transition-all duration-300 group-hover:text-blue-300">Organic Shops</span>
+                    <span class="text-xs text-blue-300 font-medium tracking-wider">NATURAL & SALUDABLE</span>
                 </div>
             </a>
             
             <nav class="hidden md:flex items-center space-x-8 font-semibold text-white">
-                <a href="{% url 'core:home' %}" class="nav-link nav-transition flex items-center space-x-2 {% if request.path == '/' %}active{% endif %}">
+                <a href="{% url 'core:home' %}" class="nav-link nav-transition flex items-center space-x-2 hover:text-blue-300 {% if request.path == '/' %}active{% endif %}">
                     <i class="fas fa-home"></i>
                     <span>Inicio</span>
                 </a>
-                <a href="{% url 'core:home' %}#about" class="nav-link nav-transition flex items-center space-x-2">
+                <a href="{% url 'core:home' %}#about" class="nav-link nav-transition flex items-center space-x-2 hover:text-blue-300">
                     <i class="fas fa-info-circle"></i>
                     <span>Nosotros</span>
                 </a>
-                <a href="{% url 'core:home' %}#products" class="nav-link nav-transition flex items-center space-x-2">
+                <a href="{% url 'core:home' %}#products" class="nav-link nav-transition flex items-center space-x-2 hover:text-blue-300">
                     <i class="fas fa-box"></i>
                     <span>Productos</span>
                 </a>
-                <a href="{% url 'core:contact' %}" class="nav-link nav-transition flex items-center space-x-2 {% if request.path == '/contact/' %}active{% endif %}">
+                <a href="{% url 'core:contact' %}" class="nav-link nav-transition flex items-center space-x-2 hover:text-blue-300 {% if request.path == '/contact/' %}active{% endif %}">
                     <i class="fas fa-envelope"></i>
                     <span>Contacto</span>
                 </a>
-                <a href="{% url 'core:carrito' %}" class="nav-link nav-transition flex items-center space-x-2 {% if request.path == '/carrito/' %}active{% endif %}">
+                <a href="{% url 'core:carrito' %}" class="nav-link nav-transition flex items-center space-x-2 hover:text-blue-300 {% if request.path == '/carrito/' %}active{% endif %}">
                     <i class="fas fa-shopping-cart"></i>
                     <span>Carrito</span>
                 </a>
                 {% if user.is_authenticated %}
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
-                        <a href="{% url 'core:asignar' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
-                        <a href="{% url 'core:gestionar_productos' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Gestionar Productos</a>
+                        <a href="{% url 'core:asignar' %}" class="hover:text-blue-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
+                        <a href="{% url 'core:gestionar_productos' %}" class="hover:text-blue-300 transition-all duration-200 ease-in-out hover-scale">Gestionar Productos</a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
-                        <a href="{% url 'core:distribuidor' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
+                        <a href="{% url 'core:distribuidor' %}" class="hover:text-blue-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
                     {% elif user.rol == 'REVENDEDOR' %}
-                        <a href="{% url 'core:revendedor' %}" class="hover:text-green-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
+                        <a href="{% url 'core:revendedor' %}" class="hover:text-blue-300 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
                     {% endif %}
                     <div class="relative inline-block">
                         <button class="nav-link nav-transition flex items-center space-x-2 group" onclick="toggleUserMenu()">
@@ -145,24 +145,24 @@
             </button>
         </div>
 
-        <!-- Mobile menu -->
-        <nav id="mobile-menu" class="md:hidden bg-white/95 backdrop-blur-md border-t border-white/20 hidden transform transition-all duration-300 overflow-hidden">
+            <!-- Mobile menu -->
+            <nav id="mobile-menu" class="md:hidden bg-dark-blue/95 backdrop-blur-md border-t border-blue-800/20 hidden transform transition-all duration-300 overflow-hidden">
             <div class="divide-y divide-gray-100/20">
-            <a href="{% url 'core:home' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-home text-green-600"></i>
+            <a href="{% url 'core:home' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-dark-blue-light/50 font-medium text-white transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center group-hover:bg-blue-800 transition-colors duration-200">
+                    <i class="fas fa-home text-white"></i>
                 </div>
                 Inicio
             </a>
-            <a href="#about" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-info-circle text-green-600"></i>
+            <a href="#about" class="flex items-center space-x-3 px-6 py-4 hover:bg-dark-blue-light/50 font-medium text-white transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center group-hover:bg-blue-800 transition-colors duration-200">
+                    <i class="fas fa-info-circle text-white"></i>
                 </div>
                 <span>Nosotros</span>
             </a>
-            <a href="#products" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-box text-green-600"></i>
+            <a href="#products" class="flex items-center space-x-3 px-6 py-4 hover:bg-dark-blue-light/50 font-medium text-white transition-all duration-200 ease-in-out group">
+                <div class="w-8 h-8 rounded-full bg-blue-900 flex items-center justify-center group-hover:bg-blue-800 transition-colors duration-200">
+                    <i class="fas fa-box text-white"></i>
                 </div>
                 <span>Productos</span>
             </a>
@@ -302,7 +302,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-green-700 to-green-800 text-green-200 py-12 mt-12 shadow-lg relative overflow-hidden">
+    <footer class="bg-gradient-to-r from-dark-blue-dark to-dark-blue text-white py-12 mt-12 shadow-lg relative overflow-hidden">
         <!-- Decorative Elements -->
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-0 left-0 w-32 h-32 transform -translate-x-16 -translate-y-16 bg-white rounded-full"></div>
@@ -373,10 +373,10 @@
             const header = document.querySelector('header');
             if (window.scrollY > 0) {
                 header.classList.add('shadow-xl');
-                header.style.background = 'rgba(22, 163, 74, 0.95)';
+            header.style.background = 'rgba(0, 31, 63, 0.95)';
             } else {
                 header.classList.remove('shadow-xl');
-                header.style.background = 'rgba(22, 163, 74, 0.85)';
+                header.style.background = 'rgba(0, 31, 63, 0.85)';
             }
         });
 
@@ -506,60 +506,60 @@
 
     <!-- Registration Modal -->
     <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-[200] hidden">
-        <div class="bg-white rounded-2xl max-w-md w-11/12 p-8 relative transform transition-all duration-300 scale-95">
-            <button id="closeRegisterModal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-gray-100">
+        <div class="bg-dark-blue rounded-2xl max-w-md w-11/12 p-8 relative transform transition-all duration-300 scale-95 border border-blue-800">
+            <button id="closeRegisterModal" class="absolute -top-4 -right-4 bg-dark-blue text-white hover:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center shadow-lg border border-blue-800">
                 <i class="fas fa-times"></i>
             </button>
             
             <div class="text-center mb-6">
-                <h3 class="text-2xl font-bold text-gray-800">Crear Cuenta</h3>
-                <p class="text-gray-600 mt-2">Únete a nuestra comunidad exclusiva</p>
+                <h3 class="text-2xl font-bold text-white">Crear Cuenta</h3>
+                <p class="text-blue-300 mt-2">Únete a nuestra comunidad exclusiva</p>
             </div>
 
             <form id="registerForm" class="space-y-4" method="POST" action="{% url 'core:registro_rapido' %}">
                 {% csrf_token %}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="nombre">
+                    <label class="block text-sm font-medium text-white mb-1" for="nombre">
                         Nombre Completo
                     </label>
                     <input type="text" id="nombre" name="nombre" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full px-4 py-2 border border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-dark-blue-light text-white">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="dni">
+                    <label class="block text-sm font-medium text-white mb-1" for="dni">
                         DNI
                     </label>
                     <input type="text" id="dni" name="dni" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full px-4 py-2 border border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-dark-blue-light text-white">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="domicilio">
+                    <label class="block text-sm font-medium text-white mb-1" for="domicilio">
                         Domicilio
                     </label>
                     <input type="text" id="domicilio" name="domicilio" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full px-4 py-2 border border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-dark-blue-light text-white">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="username">
+                    <label class="block text-sm font-medium text-white mb-1" for="username">
                         Usuario
                     </label>
                     <input type="text" id="username" name="username" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full px-4 py-2 border border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-dark-blue-light text-white">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1" for="password">
+                    <label class="block text-sm font-medium text-white mb-1" for="password">
                         Contraseña
                     </label>
                     <input type="password" id="password" name="password" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent">
+                           class="w-full px-4 py-2 border border-blue-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-dark-blue-light text-white">
                 </div>
 
                 <button type="submit" 
-                        class="w-full py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold rounded-lg hover:shadow-lg hover:shadow-yellow-500/50 transition-all duration-300 hover:scale-[1.02]">
+                        class="w-full py-3 bg-gradient-to-r from-dark-blue-light to-dark-blue text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 hover:scale-[1.02]">
                     Crear Cuenta
                 </button>
             </form>

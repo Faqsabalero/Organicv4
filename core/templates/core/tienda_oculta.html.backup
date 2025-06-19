@@ -1,0 +1,61 @@
+{% extends "core/base.html" %}
+
+{% block title %}Tienda Oculta - Organic Shops{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-gray-900 to-black py-20">
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-6">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6">
+                Tienda <span class="text-green-400">Exclusiva</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Bienvenido a nuestra colección exclusiva de productos premium disponibles solo para miembros registrados.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Products Grid -->
+<section class="max-w-7xl mx-auto px-6 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {% for producto in productos %}
+        <div class="group bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+            <div class="relative overflow-hidden">
+                <img src="{{ producto.imagen_url }}" 
+                     alt="{{ producto.nombre }}" 
+                     class="w-full h-64 object-cover transform transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-xl font-bold text-gray-800">{{ producto.nombre }}</h3>
+                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                        ${{ producto.precio }} ARS
+                    </span>
+                </div>
+                <p class="text-gray-600 flex-grow mb-4">{{ producto.descripcion }}</p>
+                <a href="{% url 'core:agregar_carrito' producto.id %}" 
+                   class="inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white font-semibold rounded-lg hover:bg-gray-800 transition-colors duration-300">
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    Agregar al Carrito
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12">
+            <div class="flex flex-col items-center justify-center text-gray-500">
+                <i class="fas fa-store-slash text-5xl mb-4"></i>
+                <p class="text-xl font-medium">No hay productos exclusivos disponibles</p>
+                <p class="text-gray-400 mt-2">Vuelve a consultar más tarde</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

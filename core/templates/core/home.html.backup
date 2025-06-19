@@ -1,0 +1,710 @@
+{% extends "core/base.html" %}
+
+{% block title %}Inicio - Organic Shops{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-br from-green-50 to-green-100 flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-16 md:py-24 gap-10 rounded-3xl shadow-lg mx-4 my-8" id="home">
+    <div class="md:w-1/2 text-center md:text-left animate-fadeIn">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-green-800 leading-tight">
+            Productos orgánicos <span class="text-green-600">para tu bienestar</span>
+        </h1>
+        <p class="mt-6 text-lg text-gray-700 max-w-md mx-auto md:mx-0 leading-relaxed">
+            Descubre productos naturales y terapias basadas en cannabis para mejorar tu calidad de vida.
+        </p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <a href="#products" class="inline-block px-8 py-4 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg shadow-lg hover:from-green-700 hover:to-green-800 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <span class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Ver Productos</span>
+                </span>
+            </a>
+            <a href="#contact" class="inline-block px-8 py-4 bg-white text-green-700 font-semibold rounded-lg shadow-lg hover:bg-green-50 transition-all duration-300 transform hover:scale-105 border-2 border-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                <span class="flex items-center justify-center space-x-2">
+                    <i class="fas fa-envelope"></i>
+                    <span>Contáctanos</span>
+                </span>
+            </a>
+        </div>
+    </div>
+    <div class="md:w-1/2 flex justify-center relative animate-fadeIn" style="animation-delay: 0.3s;">
+        <div class="w-full max-w-3xl relative overflow-hidden rounded-2xl shadow-2xl select-none transform hover:scale-[1.02] transition-transform duration-300" id="carousel-container">
+            <div class="relative w-full h-72 sm:h-[500px]" id="carousel">
+                <!-- Carousel items -->
+                <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-100" data-carousel-item="">
+                    <img src="https://storage.googleapis.com/a1aa/image/924b4e0b-cd3a-406c-4a54-84888bc92068.jpg" alt="Investigación con ONG" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                            Investigación con ONG
+                        </h2>
+                    </div>
+                </div>
+                <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0" data-carousel-item="">
+                    <img src="https://storage.googleapis.com/a1aa/image/52ec146e-18fa-4fc2-4b22-bde76267f003.jpg" alt="Fitomejoramiento" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center" id="fitomejoramiento-overlay">
+                        <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center select-none">
+                            Fitomejoramiento
+                        </h2>
+                    </div>
+                </div>
+                <div class="absolute inset-0 transition-opacity duration-700 ease-in-out opacity-0" data-carousel-item="">
+                    <img src="https://storage.googleapis.com/a1aa/image/bbfdf398-ba34-4073-d181-ad22223184cc.jpg" alt="Manufacturado en Laboratorios" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                            Manufacturado en Laboratorios
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <button aria-label="Anterior" class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white" id="prevBtn">
+                <i class="fas fa-chevron-left text-lg"></i>
+            </button>
+            <button aria-label="Siguiente" class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black bg-opacity-50 hover:bg-opacity-75 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white" id="nextBtn">
+                <i class="fas fa-chevron-right text-lg"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<!-- About Section -->
+<section class="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-gradient-to-br from-white to-green-50" id="about">
+    <div class="text-center max-w-3xl mx-auto mb-16 animate-fadeIn">
+        <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Nuestra Misión</span>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6">
+            Comprometidos con tu <span class="text-green-600">bienestar natural</span>
+        </h2>
+    </div>
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div tabindex="0" 
+             class="group bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" 
+             role="button" 
+             data-modal="investigation-modal"
+             aria-haspopup="dialog" 
+             aria-controls="investigation-modal" 
+             aria-expanded="false">
+            <div class="relative h-80">
+                <img src="https://storage.googleapis.com/a1aa/image/6f794ea5-295d-4b25-95e2-803fcd013ce8.jpg" 
+                     alt="Investigación con ONGs" 
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-xl font-bold mb-2">Investigación con ONGs</h3>
+                    <p class="text-sm text-white/80">Desarrollo de productos efectivos y seguros</p>
+                </div>
+            </div>
+        </div>
+
+        <div tabindex="0" 
+             class="group bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" 
+             role="button" 
+             data-modal="phytobreeding-modal"
+             aria-haspopup="dialog" 
+             aria-controls="phytobreeding-modal" 
+             aria-expanded="false">
+            <div class="relative h-80">
+                <img src="https://storage.googleapis.com/a1aa/image/5152ec04-f547-41c3-db6b-0775ee77a5f0.jpg" 
+                     alt="Fitomejoramiento" 
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-xl font-bold mb-2">Fitomejoramiento</h3>
+                    <p class="text-sm text-white/80">Cultivos de alta calidad y pureza</p>
+                </div>
+            </div>
+        </div>
+
+        <div tabindex="0" 
+             class="group bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl" 
+             role="button" 
+             data-modal="manufacturing-modal"
+             aria-haspopup="dialog" 
+             aria-controls="manufacturing-modal" 
+             aria-expanded="false">
+            <div class="relative h-80">
+                <img src="https://storage.googleapis.com/a1aa/image/24f506c8-9915-487b-fdbc-a7bc2bfefd10.jpg" 
+                     alt="Manufacturación en lab" 
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-xl font-bold mb-2">Manufacturación en lab</h3>
+                    <p class="text-sm text-white/80">Distribución responsable y legal</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modales -->
+<div aria-hidden="true" aria-labelledby="investigation-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="investigation-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 25rem;">
+                <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="investigation-modal-close" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="text-center mb-6">
+                    <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Investigación</span>
+                    <h3 class="text-3xl font-bold text-green-800 mb-2" id="investigation-modal-title" tabindex="0">
+                        Investigación con ONGs
+                    </h3>
+                </div>
+                <div class="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
+                    <img alt="Research lab with scientists analyzing cannabis plants" 
+                         class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" 
+                         src="https://storage.googleapis.com/a1aa/image/6f794ea5-295d-4b25-95e2-803fcd013ce8.jpg"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>
+                        Contamos con un equipo de expertos que estudian las propiedades terapéuticas del cannabis para desarrollar productos efectivos y seguros. Nuestra investigación se realiza en colaboración con diversas ONGs para garantizar un enfoque ético y responsable.
+                    </p>
+                    <p>
+                        Además, participamos en proyectos comunitarios y educativos para difundir el conocimiento sobre los beneficios del cannabis medicinal y promover su uso seguro y legal.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+<div aria-hidden="true" aria-labelledby="phytobreeding-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="phytobreeding-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 25rem;">
+                <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="phytobreeding-modal-close" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="text-center mb-6">
+                    <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Cultivo</span>
+                    <h3 class="text-3xl font-bold text-green-800 mb-2" id="phytobreeding-modal-title" tabindex="0">
+                        Fitomejoramiento
+                    </h3>
+                </div>
+                <div class="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
+                    <img alt="Greenhouse with cannabis plants" 
+                         class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" 
+                         src="https://storage.googleapis.com/a1aa/image/5152ec04-f547-41c3-db6b-0775ee77a5f0.jpg"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>
+                        Nuestros cultivos se realizan bajo estrictos controles de calidad para garantizar la pureza y potencia de cada planta. Utilizamos técnicas avanzadas de fitomejoramiento para optimizar las características terapéuticas y la resistencia de las plantas.
+                    </p>
+                    <p>
+                        Además, trabajamos en colaboración con expertos para asegurar que cada cultivo cumpla con los más altos estándares de calidad y sostenibilidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+<div aria-hidden="true" aria-labelledby="manufacturing-modal-title" aria-modal="true" class="absolute inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="manufacturing-modal" role="dialog" style="transition: opacity 0.3s ease-in-out; display: none;">
+            <div class="bg-white rounded-2xl max-w-lg w-11/12 p-6 relative shadow-2xl mx-auto" style="transform: scale(0.95); transition: transform 0.3s ease-in-out; margin-top: 25rem;">
+                <button aria-label="Close modal" class="absolute -top-4 -right-4 bg-white text-gray-600 hover:text-gray-900 focus:outline-none w-8 h-8 rounded-full flex items-center justify-center shadow-lg border border-gray-100 transform hover:scale-110 transition-transform duration-300" id="manufacturing-modal-close" type="button">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="text-center mb-6">
+                    <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Producción</span>
+                    <h3 class="text-3xl font-bold text-green-800 mb-2" id="manufacturing-modal-title" tabindex="0">
+                        Manufacturación en lab
+                    </h3>
+                </div>
+                <div class="relative w-full h-48 mb-6 rounded-xl overflow-hidden">
+                    <img alt="Laboratory manufacturing process" 
+                         class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500" 
+                         src="https://storage.googleapis.com/a1aa/image/24f506c8-9915-487b-fdbc-a7bc2bfefd10.jpg"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                </div>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <p>
+                        Entregamos nuestros productos a farmacias y centros de salud, asegurando un acceso responsable y legal. Nuestro proceso de manufactura cumple con estrictas normas de calidad y seguridad.
+                    </p>
+                    <p>
+                        Trabajamos con materiales eco-amigables y procesos sostenibles para minimizar el impacto ambiental y garantizar la eficacia de nuestros productos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Banner Section -->
+<section class="relative py-24 overflow-hidden z-[50]">
+    <!-- Fondo con gradiente y patrón -->
+    <div class="absolute inset-0 bg-gradient-to-r from-green-900 to-green-700 z-[51]">
+        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 z-[52]">
+        <!-- Contenido del banner -->
+        <div class="md:w-1/2 text-center md:text-left">
+            <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-semibold mb-4">
+                Descubre más
+            </span>
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                Mejora tu calidad de vida con productos naturales
+            </h2>
+            <p class="text-green-100 text-lg mb-8 leading-relaxed">
+                Nuestros productos están diseñados para ayudarte a alcanzar un mejor bienestar de manera natural y segura.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a href="#products" class="inline-flex items-center justify-center px-8 py-4 bg-white text-green-800 font-semibold rounded-lg shadow-lg hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+                    <span class="flex items-center">
+                        <i class="fas fa-leaf mr-2"></i>
+                        Ver Catálogo
+                    </span>
+                </a>
+                <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                    <span class="flex items-center">
+                        <i class="fas fa-phone-alt mr-2"></i>
+                        Contactar
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Imagen decorativa -->
+        <div class="md:w-1/2 relative">
+            <div class="relative w-full aspect-square max-w-md mx-auto">
+                <!-- Círculos decorativos -->
+                <div class="absolute inset-0 animate-spin-slow" style="animation-duration: 20s;">
+                    <div class="absolute inset-0 border-2 border-white/20 rounded-full"></div>
+                    <div class="absolute inset-4 border-2 border-white/20 rounded-full"></div>
+                    <div class="absolute inset-8 border-2 border-white/20 rounded-full"></div>
+                </div>
+                <!-- Imagen central -->
+                <div class="absolute inset-12 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
+                    <img src="https://storage.googleapis.com/a1aa/image/924b4e0b-cd3a-406c-4a54-84888bc92068.jpg" 
+                         alt="Productos naturales" 
+                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-gradient-to-br from-green-50 to-white" id="products">
+    <div class="text-center max-w-3xl mx-auto mb-16 animate-fadeIn">
+        <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Nuestros Productos</span>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6">
+            Descubre nuestra <span class="text-green-600">selección premium</span>
+        </h2>
+        <p class="text-gray-600 text-lg leading-relaxed">
+            Productos naturales de la más alta calidad, desarrollados bajo estrictos estándares de seguridad y eficacia.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {% for producto in productos %}
+        <div class="group bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-100">
+            <div class="relative overflow-hidden">
+                <img src="{{ producto.imagen_url }}" 
+                     alt="{{ producto.nombre }}" 
+                     class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 class="text-xl font-bold text-green-800 group-hover:text-green-600 transition-colors duration-300">
+                        {{ producto.nombre }}
+                    </h3>
+                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+                        ${{ producto.precio }} ARS
+                    </span>
+                </div>
+                <p class="text-gray-600 flex-grow leading-relaxed mb-6">{{ producto.descripcion }}</p>
+                {% if user.is_authenticated and user.rol == 'ADMIN' %}
+                <div class="text-gray-500 text-sm mb-4">
+                    <i class="fas fa-tag mr-2"></i>Costo: ${{ producto.costo }} ARS
+                </div>
+                {% endif %}
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="{% url 'core:agregar_carrito' producto.id %}" 
+                       class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 px-4 rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Agregar al Carrito</span>
+                    </a>
+                    {% if user.is_authenticated and user.rol == 'ADMIN' %}
+                    <a href="{% url 'core:editar_producto' producto.id %}" 
+                       class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
+                        <i class="fas fa-edit"></i>
+                        <span>Editar</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12">
+            <div class="flex flex-col items-center justify-center text-gray-500">
+                <i class="fas fa-box-open text-5xl mb-4"></i>
+                <p class="text-xl font-medium">No hay productos disponibles en este momento</p>
+                <p class="text-gray-400 mt-2">Vuelve a consultar más tarde</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- News Section -->
+<section class="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-white" id="news">
+    <div class="text-center max-w-3xl mx-auto mb-16 animate-fadeIn">
+        <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Últimas Novedades</span>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6">
+            Mantente <span class="text-green-600">informado</span>
+        </h2>
+        <p class="text-gray-600 text-lg leading-relaxed">
+            Descubre las últimas noticias y eventos relacionados con nuestra misión de promover el bienestar a través de productos naturales.
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <article class="group bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-100">
+            <div class="relative overflow-hidden">
+                <img src="https://storage.googleapis.com/a1aa/image/9989e41d-f486-4894-9f90-97e42a9363f5.jpg" 
+                     alt="Talleres comunitarios" 
+                     class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-calendar-alt text-green-600 mr-2"></i>
+                    <time class="text-sm text-gray-500 font-medium" datetime="2024-04-10">10 de Abril, 2024</time>
+                </div>
+                <h3 class="text-xl font-bold text-green-800 mb-3 group-hover:text-green-600 transition-colors duration-300">
+                    Talleres comunitarios sobre terapias con cannabis
+                </h3>
+                <p class="text-gray-600 flex-grow leading-relaxed">
+                    Organizamos talleres para educar sobre el uso responsable y beneficios del cannabis medicinal.
+                </p>
+                <a href="#" class="mt-6 inline-flex items-center text-green-600 font-semibold group-hover:text-green-700">
+                    <span>Leer más</span>
+                    <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+        </article>
+
+        <article class="group bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-100">
+            <div class="relative overflow-hidden">
+                <img src="https://storage.googleapis.com/a1aa/image/0bac36c0-a52c-421e-a2d1-592d8e4089b5.jpg" 
+                     alt="Historias de pacientes" 
+                     class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-calendar-alt text-green-600 mr-2"></i>
+                    <time class="text-sm text-gray-500 font-medium" datetime="2024-03-25">25 de Marzo, 2024</time>
+                </div>
+                <h3 class="text-xl font-bold text-green-800 mb-3 group-hover:text-green-600 transition-colors duration-300">
+                    Historias de pacientes y testimonios
+                </h3>
+                <p class="text-gray-600 flex-grow leading-relaxed">
+                    Conoce las experiencias reales de quienes han mejorado su salud con nuestros productos.
+                </p>
+                <a href="#" class="mt-6 inline-flex items-center text-green-600 font-semibold group-hover:text-green-700">
+                    <span>Leer más</span>
+                    <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+        </article>
+
+        <article class="group bg-white rounded-xl shadow-lg overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-100">
+            <div class="relative overflow-hidden">
+                <img src="https://storage.googleapis.com/a1aa/image/832527e8-a271-4816-5167-94c3600ab44e.jpg" 
+                     alt="Conferencia internacional" 
+                     class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+            <div class="p-6 flex flex-col flex-grow">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-calendar-alt text-green-600 mr-2"></i>
+                    <time class="text-sm text-gray-500 font-medium" datetime="2024-03-10">10 de Marzo, 2024</time>
+                </div>
+                <h3 class="text-xl font-bold text-green-800 mb-3 group-hover:text-green-600 transition-colors duration-300">
+                    Conferencia internacional de cannabis 2024
+                </h3>
+                <p class="text-gray-600 flex-grow leading-relaxed">
+                    Participamos en el evento más importante del sector para compartir avances y establecer alianzas.
+                </p>
+                <a href="#" class="mt-6 inline-flex items-center text-green-600 font-semibold group-hover:text-green-700">
+                    <span>Leer más</span>
+                    <i class="fas fa-arrow-right ml-2 transform group-hover:translate-x-1 transition-transform duration-300"></i>
+                </a>
+            </div>
+        </article>
+    </div>
+</section>
+
+<!-- Hidden Store Banner -->
+<section class="relative py-24 overflow-hidden">
+    <!-- Background with animated gradient -->
+    <div class="absolute inset-0 bg-gradient-to-r from-gray-900 via-black to-gray-900 animate-gradient">
+        <!-- Animated particles effect -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23FFD700\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');" class="animate-float"></div>
+        </div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6">
+        <!-- Content container with glass effect and golden border -->
+        <div class="bg-white/10 backdrop-blur-lg rounded-3xl p-12 border border-yellow-400/50 transform hover:scale-[1.02] transition-all duration-500 shadow-lg shadow-yellow-400/30">
+            <div class="text-center space-y-8">
+                <!-- Glowing badge with golden gradient -->
+                <div class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-yellow-400/30 to-yellow-500/30 rounded-full backdrop-blur-sm border border-yellow-400/70 animate-pulse shadow-yellow-400/50">
+                    <span class="text-yellow-300 font-semibold tracking-wider text-sm">ACCESO EXCLUSIVO</span>
+                </div>
+                
+                <h2 class="text-5xl md:text-6xl font-bold text-white">
+                    Descubre Nuestra Tienda Oculta
+                </h2>
+                
+                <p class="text-xl text-white max-w-2xl mx-auto leading-relaxed">
+                    Regístrate ahora y accede a productos exclusivos disponibles solo para miembros selectos.
+                    <span class="block mt-2 text-green-400">Beneficios especiales y descuentos únicos te esperan.</span>
+                </p>
+                
+                <!-- CTA Button with golden hover effects -->
+                <div class="mt-10">
+                    <a href="{% url 'core:tienda_oculta' %}" 
+                       class="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold shadow-2xl transition-all duration-500 hover:scale-105 hover:shadow-yellow-500/50">
+                        <div class="absolute inset-0 w-0 bg-white transition-all duration-[250ms] ease-out group-hover:w-full opacity-20"></div>
+                        <span class="relative flex items-center space-x-3">
+                            <i class="fas fa-lock text-xl group-hover:rotate-12 transition-transform duration-300 text-yellow-700"></i>
+                            <span class="tracking-wider">ACCEDER AHORA</span>
+                            <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform text-yellow-700"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="max-w-7xl mx-auto px-6 py-16 md:py-24 bg-gradient-to-br from-green-50 to-white" id="contact">
+    <div class="text-center max-w-3xl mx-auto mb-16 animate-fadeIn">
+        <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">Contáctanos</span>
+        <h2 class="text-4xl md:text-5xl font-extrabold text-green-800 mb-6">
+            ¿Tienes alguna <span class="text-green-600">consulta</span>?
+        </h2>
+        <p class="text-gray-600 text-lg leading-relaxed">
+            Estamos aquí para ayudarte. Contáctanos y te responderemos a la brevedad.
+        </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
+        <form action="{% url 'core:contact' %}" method="POST" class="bg-white rounded-xl shadow-lg p-8 flex flex-col border border-gray-100 animate-fadeIn" style="animation-delay: 0.2s;">
+            {% csrf_token %}
+            <div class="mb-6">
+                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-user text-gray-400"></i>
+                    </div>
+                    <input type="text" 
+                           id="name" 
+                           name="name" 
+                           placeholder="Tu nombre completo" 
+                           required 
+                           class="pl-10 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300" />
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-gray-400"></i>
+                    </div>
+                    <input type="email" 
+                           id="email" 
+                           name="email" 
+                           placeholder="tuemail@ejemplo.com" 
+                           required 
+                           class="pl-10 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300" />
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="message" class="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
+                <div class="relative">
+                    <div class="absolute top-3 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-pencil-alt text-gray-400"></i>
+                    </div>
+                    <textarea id="message" 
+                              name="message" 
+                              rows="5" 
+                              placeholder="Escribe tu mensaje aquí" 
+                              required 
+                              class="pl-10 w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 resize-none"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" 
+                    class="bg-gradient-to-r from-green-600 to-green-700 text-white py-4 rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 flex items-center justify-center space-x-2">
+                <i class="fas fa-paper-plane"></i>
+                <span>Enviar Mensaje</span>
+            </button>
+        </form>
+
+        <div class="bg-white rounded-xl shadow-lg p-8 flex flex-col justify-between border border-gray-100 animate-fadeIn" style="animation-delay: 0.4s;">
+            <div>
+                <h3 class="text-2xl font-bold text-green-800 mb-8">Información de contacto</h3>
+                <div class="space-y-6">
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-map-marker-alt text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-900 mb-1">Dirección</h4>
+                            <p class="text-gray-600">SANTA FE, 3000</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-phone-alt text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-900 mb-1">Teléfono</h4>
+                            <p class="text-gray-600">+54 342 111 111 11</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start space-x-4">
+                        <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-envelope text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-semibold text-gray-900 mb-1">Email</h4>
+                            <p class="text-gray-600">contacto@organishops.com.ar</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-8 border-t border-gray-200">
+                <h4 class="text-sm font-semibold text-gray-900 mb-4">Síguenos en redes sociales</h4>
+                <div class="flex space-x-4">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" 
+                       class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 hover:bg-green-200 hover:text-green-700 transition-all duration-300">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
+                       class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 hover:bg-green-200 hover:text-green-700 transition-all duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                       class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 hover:bg-green-200 hover:text-green-700 transition-all duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"
+                       class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600 hover:bg-green-200 hover:text-green-700 transition-all duration-300">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Modal functions (defined globally)
+    function openModal(modalId) {
+        const modal = document.querySelector(`#${modalId}`);
+        if (!modal) return;
+        
+        modal.style.display = 'flex';
+        const modalContent = modal.querySelector('.bg-white');
+        if (modalContent) {
+            modalContent.style.marginTop = '25rem';
+        }
+    }
+    
+    function closeModal(modalId) {
+        const modal = document.querySelector(`#${modalId}`);
+        if (!modal) return;
+        modal.style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Carousel logic
+        const items = document.querySelectorAll('[data-carousel-item]');
+        const totalItems = items.length;
+        let currentIndex = 0;
+
+        const showItem = (index) => {
+            items.forEach((item, i) => {
+                if (i === index) {
+                    item.style.display = 'block';
+                    item.style.opacity = '1';
+                    item.style.zIndex = '10';
+                } else {
+                    item.style.opacity = '0';
+                    item.style.zIndex = '0';
+                    setTimeout(() => {
+                        if (i !== currentIndex) {
+                            item.style.display = 'none';
+                        }
+                    }, 700);
+                }
+            });
+        };
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        if (prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                showItem(currentIndex);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                showItem(currentIndex);
+            });
+
+            // Auto slide every 5 seconds
+            let autoSlideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % totalItems;
+                showItem(currentIndex);
+            }, 5000);
+
+            showItem(currentIndex);
+        }
+
+        // Configurar eventos de los modales
+        function setupModalEvents() {
+            // Setup card click events
+            document.querySelectorAll('[data-modal]').forEach(card => {
+                card.addEventListener('click', () => {
+                    const modalId = card.getAttribute('data-modal');
+                    if (modalId) openModal(modalId);
+                });
+            });
+
+            // Setup close button events
+            document.querySelectorAll('button[id$="-close"]').forEach(button => {
+                button.addEventListener('click', () => closeModal(button.id.replace('-close', '')));
+            });
+
+            // Setup modal background click and initial state
+            document.querySelectorAll('[aria-modal="true"]').forEach(modal => {
+                modal.style.display = 'none';
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal(modal.id);
+                });
+            });
+        }
+
+        // Llamar a la función de configuración después de que el DOM esté listo
+        setupModalEvents();
+
+        // Manejar la tecla Escape para cerrar modales
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                document.querySelectorAll('[aria-modal="true"]').forEach(modal => {
+                    if (modal.style.display === 'flex') closeModal(modal.id);
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}

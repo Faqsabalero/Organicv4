@@ -1,0 +1,80 @@
+{% extends "core/base.html" %}
+
+{% block title %}Productos - Organic Shops{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for producto in productos %}
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="relative pb-2/3">
+                <img src="{{ producto.imagen_url }}" alt="{{ producto.nombre }}" class="absolute h-full w-full object-cover">
+            </div>
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-xl font-semibold text-gray-900">{{ producto.nombre }}</h3>
+                    <p class="text-lg font-bold text-green-600">${{ producto.precio }} ARS</p>
+                </div>
+                <p class="mt-2 text-gray-600">{{ producto.descripcion }}</p>
+                
+                {% if request.user.rol in 'ADMIN,SUPERUSUARIO'|split:"," %}
+                <div class="mt-2 text-sm text-red-600">
+                    <span class="font-semibold">Costo:</span> ${{ producto.costo }} ARS
+                </div>
+                {% endif %}
+
+                <div class="mt-4 space-y-2">
+                    {% if request.user.rol in 'ADMIN,SUPERUSUARIO'|split:"," %}
+                    <a href="{% url 'core:editar_producto' producto.id %}" 
+                        class="block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Editar Producto
+                    </a>
+                    {% endif %}
+                    
+                    <button onclick="agregarAlCarrito({{ producto.id }})" 
+                        class="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                        Agregar al Carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-3 text-center py-12">
+            <p class="text-gray-500 text-lg">No hay productos disponibles.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% block extra_scripts %}
+<script>
+    function agregarAlCarrito(productoId) {
+        fetch(`/agregar-al-carrito/${productoId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Actualizar el contador del carrito
+                const carritoCounter = document.getElementById('carrito-counter');
+                if (carritoCounter) {
+                    carritoCounter.textContent = data.items_count;
+                }
+                // Mostrar mensaje de éxito
+                alert('Producto agregado al carrito');
+            } else {
+                alert(data.error || 'Error al agregar al carrito');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al agregar al carrito');
+        });
+    }
+</script>
+{% endblock %}
+{% endblock %}
