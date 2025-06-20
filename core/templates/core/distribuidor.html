@@ -70,12 +70,16 @@
         <div class="border-b border-gray-200">
             <nav class="flex -mb-px" aria-label="Tabs">
                 <button onclick="showTab('asignaciones_propias')" 
-                        class="tab-button w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600">
+                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600">
                     Mis Asignaciones
                 </button>
                 <button onclick="showTab('asignaciones_creadas')" 
-                        class="tab-button w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
                     Asignaciones Realizadas
+                </button>
+                <button onclick="showTab('inventario')" 
+                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Inventario
                 </button>
             </nav>
         </div>
@@ -270,13 +274,349 @@
                 </div>
             </div>
         </div>
+
+        <!-- Tab Content: Inventario -->
+        <div id="inventarioTab" class="hidden">
+            <div class="p-6">
+                <h3 class="text-xl font-semibold text-green-700 mb-4">Gestión de Inventario</h3>
+                
+                <!-- Filtros de búsqueda para Inventario -->
+                <div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label for="searchProductoInventario" class="block text-sm font-medium text-gray-700 mb-1">Producto</label>
+                        <input type="text" id="searchProductoInventario" placeholder="Buscar por nombre..." 
+                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="searchStockInventario" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
+                        <input type="text" id="searchStockInventario" placeholder="Buscar por cantidad..." 
+                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                    </div>
+                    <div>
+                        <label for="searchPrecioInventario" class="block text-sm font-medium text-gray-700 mb-1">Precio</label>
+                        <input type="text" id="searchPrecioInventario" placeholder="Buscar por precio..." 
+                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                    </div>
+                </div>
+
+                <!-- Botón para agregar nuevo producto -->
+                <div class="mb-6">
+                    <button onclick="openAddInventoryModal()" 
+                            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                        <i class="fas fa-plus mr-2"></i>
+                        Agregar Producto
+                    </button>
+                </div>
+
+                <!-- Tabla de Inventario -->
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Producto
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Stock
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Precio
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            {% for item in inventario_items %}
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm font-medium text-gray-900">{{ item.nombre }}</div>
+                                    <div class="text-xs text-gray-500">ID: {{ item.id }}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {% if item.stock > 10 %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                        {{ item.stock }} unidades
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    ${{ item.precio }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button onclick="editarInventario({{ item.id }})" class="text-blue-600 hover:text-blue-900 mr-3">
+                                        <i class="fas fa-edit mr-1"></i>
+                                        Editar
+                                    </button>
+                                    <button onclick="eliminarInventario({{ item.id }})" class="text-red-600 hover:text-red-900">
+                                        <i class="fas fa-trash-alt mr-1"></i>
+                                        Eliminar
+                                    </button>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="px-6 py-4 text-center text-sm text-gray-500">
+                                    No hay productos en el inventario.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Agregar/Editar Inventario -->
+<div id="inventoryModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg max-w-md w-full mx-4">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-900" id="modalTitle">Agregar Producto</h3>
+                <button onclick="closeInventoryModal()" class="text-gray-400 hover:text-gray-500">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="inventoryForm" class="space-y-4">
+                {% csrf_token %}
+                <input type="hidden" id="productoId" name="productoId">
+                <div>
+                    <label for="nombreProducto" class="block text-sm font-medium text-gray-700">Nombre del Producto</label>
+                    <input type="text" id="nombreProducto" name="nombre" required
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="stockProducto" class="block text-sm font-medium text-gray-700">Stock</label>
+                    <input type="number" id="stockProducto" name="stock" required min="0"
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="precioProducto" class="block text-sm font-medium text-gray-700">Precio</label>
+                    <div class="mt-1 relative rounded-md shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        <input type="number" id="precioProducto" name="precio" required min="0" step="0.01"
+                               class="block w-full pl-7 border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                    </div>
+                </div>
+                <div class="mt-5 sm:mt-6">
+                    <button type="submit"
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
-    // Función para filtrar la tabla de Mis Asignaciones
+    // Modal functions
+    const modal = {
+        open: function(id = null) {
+            const modalEl = document.getElementById('inventoryModal');
+            const form = document.getElementById('inventoryForm');
+            const title = document.getElementById('modalTitle');
+            
+            form.reset();
+            document.getElementById('productoId').value = id || '';
+            title.textContent = id ? 'Editar Producto' : 'Agregar Producto';
+            
+            modalEl.classList.remove('hidden');
+        },
+        close: function() {
+            document.getElementById('inventoryModal').classList.add('hidden');
+        }
+    };
+
+    // Filter functions
+    const filters = {
+        inventario: function() {
+            const producto = document.getElementById('searchProductoInventario').value.toLowerCase();
+            const stock = document.getElementById('searchStockInventario').value.toLowerCase();
+            const precio = document.getElementById('searchPrecioInventario').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('#inventarioTab table tbody tr');
+            
+            rows.forEach(row => {
+                if (row.querySelector('td')) {
+                    const productoCell = row.cells[0].textContent.toLowerCase();
+                    const stockCell = row.cells[1].textContent.toLowerCase();
+                    const precioCell = row.cells[2].textContent.toLowerCase();
+                    
+                    const matchProducto = productoCell.includes(producto);
+                    const matchStock = stockCell.includes(stock);
+                    const matchPrecio = precioCell.includes(precio);
+                    
+                    row.style.display = (matchProducto && matchStock && matchPrecio) ? '' : 'none';
+                }
+            });
+        },
+        asignacionesPropias: function() {
+            const fecha = document.getElementById('searchFechaAsignaciones').value.toLowerCase();
+            const asignador = document.getElementById('searchAsignadoPor').value.toLowerCase();
+            const producto = document.getElementById('searchProductoAsignaciones').value.toLowerCase();
+            const estado = document.getElementById('searchEstadoAsignaciones').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('#asignaciones_propiasTab table tbody tr');
+            
+            rows.forEach(row => {
+                if (row.querySelector('td')) {
+                    const fechaCell = row.cells[0].textContent.toLowerCase();
+                    const asignadorCell = row.cells[1].textContent.toLowerCase();
+                    const productoCell = row.cells[2].textContent.toLowerCase();
+                    const estadoCell = row.cells[4].textContent.toLowerCase();
+                    
+                    const matchFecha = fechaCell.includes(fecha);
+                    const matchAsignador = asignadorCell.includes(asignador);
+                    const matchProducto = productoCell.includes(producto);
+                    const matchEstado = estadoCell.includes(estado);
+                    
+                    row.style.display = (matchFecha && matchAsignador && matchProducto && matchEstado) ? '' : 'none';
+                }
+            });
+        },
+        asignacionesCreadas: function() {
+            const fecha = document.getElementById('searchFechaCreadas').value.toLowerCase();
+            const revendedor = document.getElementById('searchRevendedor').value.toLowerCase();
+            const producto = document.getElementById('searchProductoCreadas').value.toLowerCase();
+            const estado = document.getElementById('searchEstadoCreadas').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('#asignaciones_creadasTab table tbody tr');
+            
+            rows.forEach(row => {
+                if (row.querySelector('td')) {
+                    const fechaCell = row.cells[0].textContent.toLowerCase();
+                    const revendedorCell = row.cells[1].textContent.toLowerCase();
+                    const productoCell = row.cells[2].textContent.toLowerCase();
+                    const estadoCell = row.cells[4].textContent.toLowerCase();
+                    
+                    const matchFecha = fechaCell.includes(fecha);
+                    const matchRevendedor = revendedorCell.includes(revendedor);
+                    const matchProducto = productoCell.includes(producto);
+                    const matchEstado = estadoCell.includes(estado);
+                    
+                    row.style.display = (matchFecha && matchRevendedor && matchProducto && matchEstado) ? '' : 'none';
+                }
+            });
+        }
+    };
+
+    // Tab switching function
+    function showTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.tab-button').forEach(button => {
+            const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '_');
+            if (buttonText === tabName) {
+                button.classList.remove('text-gray-500', 'border-transparent');
+                button.classList.add('border-green-500', 'text-green-600');
+            } else {
+                button.classList.remove('border-green-500', 'text-green-600');
+                button.classList.add('text-gray-500', 'border-transparent');
+            }
+        });
+
+        // Show/hide content
+        document.getElementById('asignaciones_propiasTab').classList.toggle('hidden', tabName !== 'asignaciones_propias');
+        document.getElementById('asignaciones_creadasTab').classList.toggle('hidden', tabName !== 'asignaciones_creadas');
+        document.getElementById('inventarioTab').classList.toggle('hidden', tabName !== 'inventario');
+    }
+
+    // Initialize event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // Event listeners for Mis Asignaciones
+        ['searchFechaAsignaciones', 'searchAsignadoPor', 'searchProductoAsignaciones', 'searchEstadoAsignaciones']
+            .forEach(id => document.getElementById(id).addEventListener('input', filters.asignacionesPropias));
+
+        // Event listeners for Asignaciones Realizadas
+        ['searchFechaCreadas', 'searchRevendedor', 'searchProductoCreadas', 'searchEstadoCreadas']
+            .forEach(id => document.getElementById(id).addEventListener('input', filters.asignacionesCreadas));
+
+        // Event listeners for Inventario
+        ['searchProductoInventario', 'searchStockInventario', 'searchPrecioInventario']
+            .forEach(id => document.getElementById(id).addEventListener('input', filters.inventario));
+
+        // Handle inventory form submission
+        document.getElementById('inventoryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            modal.close();
+        });
+    });
+
+    // Expose functions needed by HTML
+    window.openAddInventoryModal = () => modal.open();
+    window.editarInventario = (id) => modal.open(id);
+    window.closeInventoryModal = () => modal.close();
+    window.eliminarInventario = (id) => {
+        if (confirm('¿Está seguro de que desea eliminar este producto?')) {
+            console.log('Eliminar producto:', id);
+        }
+    };
+    window.showTab = showTab;
+    // Modal functions for inventory management
+    function openAddInventoryModal() {
+        const modal = document.getElementById('inventoryModal');
+        const form = document.getElementById('inventoryForm');
+        const title = document.getElementById('modalTitle');
+        
+        form.reset();
+        document.getElementById('productoId').value = '';
+        title.textContent = 'Agregar Producto';
+        
+        modal.classList.remove('hidden');
+    }
+
+    function editarInventario(id) {
+        const modal = document.getElementById('inventoryModal');
+        const title = document.getElementById('modalTitle');
+        
+        document.getElementById('productoId').value = id;
+        title.textContent = 'Editar Producto';
+        
+        modal.classList.remove('hidden');
+    }
+
+    function closeInventoryModal() {
+        document.getElementById('inventoryModal').classList.add('hidden');
+    }
+
+    function eliminarInventario(id) {
+        if (confirm('¿Está seguro de que desea eliminar este producto?')) {
+            console.log('Eliminar producto:', id);
+        }
+    }
+
+    // Filter functions for all tables
+    function filterInventario() {
+        const producto = document.getElementById('searchProductoInventario').value.toLowerCase();
+        const stock = document.getElementById('searchStockInventario').value.toLowerCase();
+        const precio = document.getElementById('searchPrecioInventario').value.toLowerCase();
+        
+        const rows = document.querySelectorAll('#inventarioTab table tbody tr');
+        
+        rows.forEach(row => {
+            if (row.querySelector('td')) {
+                const productoCell = row.cells[0].textContent.toLowerCase();
+                const stockCell = row.cells[1].textContent.toLowerCase();
+                const precioCell = row.cells[2].textContent.toLowerCase();
+                
+                const matchProducto = productoCell.includes(producto);
+                const matchStock = stockCell.includes(stock);
+                const matchPrecio = precioCell.includes(precio);
+                
+                if (matchProducto && matchStock && matchPrecio) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    }
+
     function filterAsignacionesPropias() {
         const fecha = document.getElementById('searchFechaAsignaciones').value.toLowerCase();
         const asignador = document.getElementById('searchAsignadoPor').value.toLowerCase();
@@ -306,7 +646,6 @@
         });
     }
 
-    // Función para filtrar la tabla de Asignaciones Realizadas
     function filterAsignacionesCreadas() {
         const fecha = document.getElementById('searchFechaCreadas').value.toLowerCase();
         const revendedor = document.getElementById('searchRevendedor').value.toLowerCase();
@@ -336,9 +675,29 @@
         });
     }
 
-    // Agregar event listeners a los campos de búsqueda
+    // Tab switching function
+    function showTab(tabName) {
+        // Update tab buttons
+        document.querySelectorAll('.tab-button').forEach(button => {
+            const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '_');
+            if (buttonText === tabName) {
+                button.classList.remove('text-gray-500', 'border-transparent');
+                button.classList.add('border-green-500', 'text-green-600');
+            } else {
+                button.classList.remove('border-green-500', 'text-green-600');
+                button.classList.add('text-gray-500', 'border-transparent');
+            }
+        });
+
+        // Show/hide content
+        document.getElementById('asignaciones_propiasTab').classList.toggle('hidden', tabName !== 'asignaciones_propias');
+        document.getElementById('asignaciones_creadasTab').classList.toggle('hidden', tabName !== 'asignaciones_creadas');
+        document.getElementById('inventarioTab').classList.toggle('hidden', tabName !== 'inventario');
+    }
+
+    // Initialize all event listeners
     document.addEventListener('DOMContentLoaded', function() {
-        // Event listeners para Mis Asignaciones
+        // Event listeners for Mis Asignaciones
         const searchInputsAsignaciones = [
             'searchFechaAsignaciones',
             'searchAsignadoPor',
@@ -361,6 +720,24 @@
         searchInputsCreadas.forEach(inputId => {
             document.getElementById(inputId).addEventListener('input', filterAsignacionesCreadas);
         });
+
+        // Event listeners para Inventario
+        const searchInputsInventario = [
+            'searchProductoInventario',
+            'searchStockInventario',
+            'searchPrecioInventario'
+        ];
+        
+        searchInputsInventario.forEach(inputId => {
+            document.getElementById(inputId).addEventListener('input', filterInventario);
+        });
+
+        // Handle inventory form submission
+        document.getElementById('inventoryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Here you would typically handle the form submission
+            closeInventoryModal();
+        });
     });
 
     function showTab(tabName) {
@@ -379,6 +756,7 @@
         // Show/hide content
         document.getElementById('asignaciones_propiasTab').classList.toggle('hidden', tabName !== 'asignaciones_propias');
         document.getElementById('asignaciones_creadasTab').classList.toggle('hidden', tabName !== 'asignaciones_creadas');
+        document.getElementById('inventarioTab').classList.toggle('hidden', tabName !== 'inventario');
     }
 </script>
 {% endblock %}
