@@ -28,6 +28,11 @@ class CustomUser(AbstractUser):
         return self.username
 
 class Producto(models.Model):
+    CATEGORIA_CHOICES = (
+        ('SALUD', 'Salud'),
+        ('BELLEZA', 'Belleza'),
+        ('HIGIENE', 'Higiene Personal'),
+    )
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
     precio = models.DecimalField(max_digits=10, decimal_places=2)
@@ -36,6 +41,7 @@ class Producto(models.Model):
     costo = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     imagen_url = models.URLField()
     es_exclusivo = models.BooleanField(default=False)
+    categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, default='SALUD')
 
     def __str__(self):
         return self.nombre

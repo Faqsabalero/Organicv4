@@ -23,9 +23,15 @@ class CustomLogoutView(LogoutView):
     next_page = 'core:home'
 
 def home_view(request):
-    productos = Producto.objects.filter(es_exclusivo=False)
-    print(f"Cantidad de productos en DB: {productos.count()}")
-    return render(request, 'core/home.html', {'productos': productos})
+    productos_salud = Producto.objects.filter(es_exclusivo=False, categoria='SALUD')
+    productos_belleza = Producto.objects.filter(es_exclusivo=False, categoria='BELLEZA')
+    productos_higiene = Producto.objects.filter(es_exclusivo=False, categoria='HIGIENE')
+    context = {
+        'productos_salud': productos_salud,
+        'productos_belleza': productos_belleza,
+        'productos_higiene': productos_higiene,
+    }
+    return render(request, 'core/home.html', context)
 
 @login_required
 def tienda_oculta_view(request):
