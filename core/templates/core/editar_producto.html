@@ -63,6 +63,27 @@
                                               placeholder="Describe las características y beneficios del producto...">{{ producto.descripcion|default:'' }}</textarea>
                                 </div>
                             </div>
+
+                            <!-- Category -->
+                            <div class="space-y-2">
+                                <label for="categoria" class="block text-sm font-medium text-gray-700">
+                                    Categoría *
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fas fa-tags text-gray-400"></i>
+                                    </div>
+                                    <select name="categoria" 
+                                            id="categoria" 
+                                            required
+                                            class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 bg-white">
+                                        <option value="">Seleccionar categoría...</option>
+                                        <option value="SALUD" {% if producto.categoria == 'SALUD' %}selected{% endif %}>Salud</option>
+                                        <option value="BELLEZA" {% if producto.categoria == 'BELLEZA' %}selected{% endif %}>Belleza</option>
+                                        <option value="HIGIENE" {% if producto.categoria == 'HIGIENE' %}selected{% endif %}>Higiene Personal</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Right Column -->

@@ -94,6 +94,7 @@ def crear_producto_view(request):
             precio_revendedor=request.POST.get('precio_revendedor'),
             imagen_url=request.POST.get('imagen_url'),
             es_exclusivo=request.POST.get('es_exclusivo') == 'on',
+            categoria=request.POST.get('categoria', 'SALUD'),  # Added categoria field with default
         )
         
         # Solo establecer el costo si el usuario es admin o superusuario
