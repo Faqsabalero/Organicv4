@@ -302,65 +302,30 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-green-700 to-green-800 text-green-200 py-12 mt-12 shadow-lg relative overflow-hidden">
-        <!-- Decorative Elements -->
-        <div class="absolute inset-0 opacity-10">
-            <div class="absolute top-0 left-0 w-32 h-32 transform -translate-x-16 -translate-y-16 bg-white rounded-full"></div>
-            <div class="absolute bottom-0 right-0 w-32 h-32 transform translate-x-16 translate-y-16 bg-white rounded-full"></div>
-        </div>
-        
+    <footer class="bg-green-800 text-white py-8 mt-12">
         <div class="max-w-7xl mx-auto px-6">
-            <!-- Main Footer Content -->
-            <div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <!-- Logo and Copyright -->
-                <div class="flex flex-col items-center md:items-start space-y-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="h-10 w-10 rounded-full overflow-hidden shadow-lg">
-                            <img src="https://storage.googleapis.com/a1aa/image/6aaebe32-d6ed-4dec-96f6-ff630ed08f4d.jpg" 
-                                 alt="Logo" class="h-full w-full object-cover">
-                        </div>
-                        <span class="text-xl font-bold">Organic Shops</span>
+                <div class="flex items-center gap-3">
+                    <img src="https://storage.googleapis.com/a1aa/image/6aaebe32-d6ed-4dec-96f6-ff630ed08f4d.jpg" 
+                         alt="Logo" class="h-8 w-8 rounded-full">
+                    <div class="flex flex-col">
+                        <span class="font-bold">Organic Shops</span>
+                        <span class="text-xs text-green-300">© {% now "Y" %} Todos los derechos reservados</span>
                     </div>
-                    <p class="text-sm text-green-300">© {% now "Y" %} Organic Shops. Todos los derechos reservados.</p>
                 </div>
 
-                <!-- Navigation -->
-                <nav class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
-                    <div class="flex space-x-6 font-semibold">
-                        <a href="{% url 'core:home' %}" class="hover:text-green-400 transition-all duration-200 ease-in-out hover-scale flex items-center space-x-2">
-                            <i class="fas fa-home"></i>
-                            <span>Inicio</span>
-                        </a>
-                        {% if user.is_authenticated %}
-                            {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
-                                <a href="{% url 'core:asignar' %}" class="hover:text-green-400 transition-all duration-200 ease-in-out hover-scale flex items-center space-x-2">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>Panel Admin</span>
-                                </a>
-                            {% elif user.rol == 'DISTRIBUIDOR' %}
-                                <a href="{% url 'core:distribuidor' %}" class="hover:text-green-400 transition-all duration-200 ease-in-out hover-scale flex items-center space-x-2">
-                                    <i class="fas fa-user-tie"></i>
-                                    <span>Mi Panel</span>
-                                </a>
-                            {% endif %}
-                        {% endif %}
-                    </div>
-                </nav>
-            </div>
-
-            <!-- Bottom Bar -->
-            <div class="mt-8 pt-8 border-t border-green-600/30 flex flex-col md:flex-row justify-between items-center text-sm text-green-300">
-                <div class="flex space-x-4">
-                    <a href="#" class="hover:text-white transition-colors duration-200">Política de Privacidad</a>
-                    <a href="#" class="hover:text-white transition-colors duration-200">Términos de Servicio</a>
-                </div>
-                <div class="mt-4 md:mt-0 flex items-center space-x-4">
-                    <span>Síguenos en:</span>
-                    <div class="flex space-x-4">
-                        <a href="#" class="hover:text-white transition-colors duration-200"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="hover:text-white transition-colors duration-200"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="hover:text-white transition-colors duration-200"><i class="fab fa-twitter"></i></a>
-                    </div>
+                <!-- Social Links -->
+                <div class="flex gap-6">
+                    <a href="#" class="text-green-300 hover:text-white transition-colors duration-200">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-green-300 hover:text-white transition-colors duration-200">
+                        <i class="fab fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-green-300 hover:text-white transition-colors duration-200">
+                        <i class="fab fa-whatsapp text-xl"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -368,15 +333,15 @@
 
     <!-- Scripts -->
     <script>
-        // Navbar scroll effect
+        // Navbar effect - keep consistent color
+        const header = document.querySelector('header');
+        header.style.background = 'rgba(22, 163, 74, 0.95)';
+        
         window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
             if (window.scrollY > 0) {
                 header.classList.add('shadow-xl');
-                header.style.background = 'rgba(22, 163, 74, 0.95)';
             } else {
                 header.classList.remove('shadow-xl');
-                header.style.background = 'rgba(22, 163, 74, 0.85)';
             }
         });
 
