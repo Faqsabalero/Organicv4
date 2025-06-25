@@ -9,6 +9,15 @@ from django.db.models import Count, Q, Sum, F, Case, When, Value
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
 from .forms import StockForm
+from django.contrib.auth.forms import AuthenticationForm
+
+class CustomLoginView(LoginView):
+    template_name = 'core/login.html'
+    authentication_form = AuthenticationForm
+    redirect_authenticated_user = True
+
+class CustomLogoutView(LogoutView):
+    next_page = 'core:home'
 from decimal import Decimal
 from django.http import JsonResponse
 from django.utils import timezone
@@ -16,7 +25,7 @@ from datetime import timedelta
 
 class CustomLoginView(LoginView):
     template_name = 'core/login.html'
-    authentication_form = CustomLoginForm
+    authentication_form = AuthenticationForm
     redirect_authenticated_user = True
 
 class CustomLogoutView(LogoutView):
