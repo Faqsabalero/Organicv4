@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.db.models import Count, Q, Sum, F, Case, When, Value
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
-from .forms import CustomLoginForm, AsignacionForm, UserCreationFormWithRol, ProductoForm
+from .forms import StockForm
 from decimal import Decimal
 from django.http import JsonResponse
 from django.utils import timezone
@@ -304,20 +304,36 @@ def asignar_view(request):
 def distribuidor_view(request):
     if request.user.rol != 'DISTRIBUIDOR':
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
-    
-    # Filtrar asignaciones propias y las que ha creado
-    asignaciones_propias = Asignacion.objects.filter(distribuidor=request.user).select_related('admin').order_by('-fecha_asignacion')
-    asignaciones_creadas = Asignacion.objects.filter(admin=request.user).order_by('-fecha_asignacion')
-    
-    productos_distintos = Asignacion.objects.filter(distribuidor=request.user).aggregate(
-        total=Count('producto', distinct=True)
-    )['total']
-    
-    return render(request, 'core/distribuidor.html', {
-        'asignaciones_propias': asignaciones_propias,
-        'asignaciones_creadas': asignaciones_creadas,
-        'productos_distintos': productos_distintos
-    })
+
+@login_required
+def inventario_view(request):
+    # Solo accesible para ADMIN o SUPERUSUARIO
+    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO']:
+        return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
+
+    productos = Producto.objects.all().order_by('nombre')
+    form = StockForm()
+
+    if request.method == 'POST':
+        form = StockForm(request.POST)
+        if form.is_valid():
+            producto = form.cleaned_data['producto']
+            cantidad = form.cleaned_data['cantidad']
+
+            # Actualizar el stock del producto
+            producto.stock = producto.stock + cantidad
+            producto.save()
+
+            messages.success(request, f'Se agregó {cantidad} unidades al producto "{producto.nombre}".')
+            return redirect('core:inventario')
+        else:
+            messages.error(request, 'Por favor corrija los errores en el formulario.')
+
+    context = {
+        'productos': productos,
+        'form': form,
+    }
+    return render(request, 'core/inventario.html', context)
 
 @login_required
 def asignar_distribuidor_view(request):

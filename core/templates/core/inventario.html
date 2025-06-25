@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Inventario - Organic Shops{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">Inventario de Productos</h1>
+
+    <!-- Tabla de productos con stock -->
+    <div class="overflow-x-auto mb-8">
+        <table class="min-w-full bg-white rounded-lg shadow-md">
+            <thead class="bg-green-600 text-white">
+                <tr>
+                    <th class="py-3 px-6 text-left">Nombre</th>
+                    <th class="py-3 px-6 text-left">Descripción</th>
+                    <th class="py-3 px-6 text-left">Stock Actual</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for producto in productos %}
+                <tr class="border-b border-gray-200 hover:bg-green-50">
+                    <td class="py-3 px-6">{{ producto.nombre }}</td>
+                    <td class="py-3 px-6">{{ producto.descripcion }}</td>
+                    <td class="py-3 px-6">{{ producto.stock }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="py-3 px-6 text-center text-gray-500">No hay productos registrados.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formulario para agregar stock -->
+    <div class="max-w-md bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Agregar Stock</h2>
+        <form method="POST" action="{% url 'core:inventario' %}">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="mb-4">
+                <label for="{{ form.producto.id_for_label }}" class="block text-gray-700 font-medium mb-1">Producto</label>
+                {{ form.producto }}
+                {% for error in form.producto.errors %}
+                    <p class="text-red-600 text-sm">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <div class="mb-4">
+                <label for="{{ form.cantidad.id_for_label }}" class="block text-gray-700 font-medium mb-1">Cantidad</label>
+                {{ form.cantidad }}
+                {% for error in form.cantidad.errors %}
+                    <p class="text-red-600 text-sm">{{ error }}</p>
+                {% endfor %}
+            </div>
+            <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition-colors">Agregar Stock</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
