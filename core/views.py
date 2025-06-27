@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.db.models import Count, Q, Sum, F, Case, When, Value
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
-from .forms import StockForm, AsignacionForm
+from .forms import StockForm, AsignacionForm, UserCreationFormWithRol
 from django.contrib.auth.forms import AuthenticationForm
 
 class CustomLoginView(LoginView):
@@ -522,10 +522,10 @@ def revendedor_view(request):
     })
 
 def register_user(request):
-    if not request.user.is_authenticated:
-        return redirect('core:login')
+    # if not request.user.is_authenticated:
+    #     return redirect('core:login')
         
-    if request.user.rol not in ['ADMIN', 'SUPERUSUARIO', 'DISTRIBUIDOR']:
+    if not request.user.is_authenticated or request.user.rol not in ['ADMIN', 'SUPERUSUARIO', 'DISTRIBUIDOR']:
         return HttpResponseForbidden("No tiene permiso para registrar usuarios.")
         
     if request.method == 'POST':

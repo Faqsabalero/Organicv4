@@ -1,5 +1,6 @@
 from django import forms
-from .models import Producto, Asignacion
+from django.contrib.auth.forms import UserCreationForm
+from .models import Producto, Asignacion, CustomUser
 
 class StockForm(forms.Form):
     producto = forms.ModelChoiceField(
@@ -29,7 +30,7 @@ class AsignacionForm(forms.ModelForm):
             'estado': forms.Select(attrs={'class': 'form-select'}),
         }
 
-class UserCreationFormWithRol(forms.UserCreationForm):
+class UserCreationFormWithRol(UserCreationForm):
     ROL_CHOICES = (
         ('ADMIN', 'Admin'),
         ('DISTRIBUIDOR', 'Distribuidor'),
