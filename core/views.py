@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.db.models import Count, Q, Sum, F, Case, When, Value
 from django.views.decorators.http import require_http_methods
 from django.utils.decorators import method_decorator
-from .forms import StockForm
+from .forms import StockForm, AsignacionForm
 from django.contrib.auth.forms import AuthenticationForm
 
 class CustomLoginView(LoginView):
