@@ -14,6 +14,10 @@ class StockForm(forms.Form):
     )
 
 class AsignacionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
     class Meta:
         model = Asignacion
         fields = ['distribuidor', 'producto', 'cantidad', 'plan_pago', 'estado']
