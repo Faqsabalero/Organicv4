@@ -790,10 +790,26 @@ def cambiar_estado_venta(request, venta_id):
         return HttpResponseForbidden("No tiene permiso para cambiar el estado.")
     
     venta = get_object_or_404(Venta, id=venta_id)
-    venta.estado_pago = 'PAGADO' if venta.estado_pago == 'PENDIENTE' else 'PENDIENTE'
-    venta.save()
+    producto = venta.producto
     
-    messages.success(request, f'Estado de venta actualizado a {venta.estado_pago}')
+    if venta.estado_pago == 'PENDIENTE':
+        # Cambiar a PAGADO y descontar stock
+        if producto.stock >= venta.cantidad:
+            producto.stock -= venta.cantidad
+            producto.save()
+            venta.estado_pago = 'PAGADO'
+            venta.save()
+            messages.success(request, f'Venta marcada como PAGADO y stock actualizado.')
+        else:
+            messages.error(request, f'Stock insuficiente para completar la venta.')
+    else:
+        # Cambiar a PENDIENTE y revertir stock
+        producto.stock += venta.cantidad
+        producto.save()
+        venta.estado_pago = 'PENDIENTE'
+        venta.save()
+        messages.success(request, f'Venta marcada como PENDIENTE y stock revertido.')
+    
     return redirect('core:asignar')
 
 from django.http import HttpResponseRedirect
