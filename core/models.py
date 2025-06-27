@@ -42,6 +42,7 @@ class Producto(models.Model):
     imagen_url = models.URLField()
     es_exclusivo = models.BooleanField(default=False)
     categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, default='SALUD')
+    stock = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nombre
