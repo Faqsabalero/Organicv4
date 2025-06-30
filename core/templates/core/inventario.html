@@ -5,23 +5,23 @@
 
 {% block content %}
 <div class="max-w-7xl mx-auto px-6 py-10">
-    <h1 class="text-5xl font-extrabold mb-12 text-gray-900 tracking-tight">Inventario de Productos</h1>
+    <h1 class="text-4xl font-extrabold mb-12 text-gray-900 tracking-tight">Inventario de Productos</h1>
 
     <!-- Tabla de productos con stock -->
     <div class="overflow-x-auto mb-12 shadow-xl rounded-xl border border-gray-300 bg-white">
-        <table class="min-w-full rounded-xl border-collapse">
-            <thead class="bg-green-700 text-white rounded-t-xl">
+        <table class="min-w-full rounded-xl border-collapse border border-gray-300">
+            <thead class="bg-gradient-to-r from-green-600 to-green-400 text-white rounded-t-xl">
                 <tr>
-                    <th class="py-5 px-8 text-left text-xl font-semibold tracking-wide">Nombre</th>
-                    <th class="py-5 px-8 text-left text-xl font-semibold tracking-wide">Descripción</th>
-                    <th class="py-5 px-8 text-left text-xl font-semibold tracking-wide">Stock Actual</th>
+                    <th class="py-5 px-8 text-left font-semibold tracking-wide border-r border-green-500">Nombre</th>
+                    <th class="py-5 px-8 text-left font-semibold tracking-wide border-r border-green-500">Descripción</th>
+                    <th class="py-5 px-8 text-left font-semibold tracking-wide">Stock Actual</th>
                 </tr>
             </thead>
             <tbody>
                 {% for producto in productos %}
-                <tr class="border-b border-gray-200 hover:bg-green-100 transition-colors duration-300 cursor-pointer">
-                    <td class="py-5 px-8 text-gray-900 font-semibold">{{ producto.nombre }}</td>
-                    <td class="py-5 px-8 text-gray-700">{{ producto.descripcion }}</td>
+                <tr class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100 transition-colors duration-300 cursor-pointer">
+                    <td class="py-5 px-8 text-gray-900 font-semibold border-r border-gray-300">{{ producto.nombre }}</td>
+                    <td class="py-5 px-8 text-gray-700 border-r border-gray-300">{{ producto.descripcion }}</td>
                     <td class="py-5 px-8 text-gray-900 font-bold">{{ producto.stock }}</td>
                 </tr>
                 {% empty %}
@@ -35,25 +35,25 @@
 
     <!-- Formulario para agregar stock -->
     <div class="max-w-md bg-white p-10 rounded-2xl shadow-2xl border border-gray-300">
-        <h2 class="text-3xl font-bold mb-8 text-gray-900">Agregar Stock</h2>
+        <h2 class="text-2xl font-bold mb-8 text-gray-900">Agregar Stock</h2>
         <form method="POST" action="{% url 'core:inventario' %}" class="space-y-8">
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div>
-                <label for="{{ form.producto.id_for_label }}" class="block text-gray-800 font-semibold mb-3 text-lg">Producto</label>
+                <label for="{{ form.producto.id_for_label }}" class="block text-gray-800 font-semibold mb-3">Producto</label>
                 {{ form.producto|add_class:"w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-4 focus:ring-green-600 transition" }}
                 {% for error in form.producto.errors %}
                     <p class="text-red-600 text-sm mt-2">{{ error }}</p>
                 {% endfor %}
             </div>
             <div>
-                <label for="{{ form.cantidad.id_for_label }}" class="block text-gray-800 font-semibold mb-3 text-lg">Cantidad</label>
+                <label for="{{ form.cantidad.id_for_label }}" class="block text-gray-800 font-semibold mb-3">Cantidad</label>
                 {{ form.cantidad|add_class:"w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-4 focus:ring-green-600 transition" }}
                 {% for error in form.cantidad.errors %}
                     <p class="text-red-600 text-sm mt-2">{{ error }}</p>
                 {% endfor %}
             </div>
-            <button type="submit" class="w-full bg-green-700 text-white py-4 rounded-xl hover:bg-green-800 transition-colors duration-300 font-bold text-lg shadow-lg">Agregar Stock</button>
+            <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-green-400 text-white py-4 rounded-xl hover:from-green-700 hover:to-green-500 transition-colors duration-300 font-bold shadow-lg">Agregar Stock</button>
         </form>
     </div>
 </div>
