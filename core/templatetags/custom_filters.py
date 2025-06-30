@@ -40,3 +40,7 @@ def subtract(value, arg):
         return float(value) - float(arg)
     except (ValueError, TypeError):
         return value
+
+@register.filter(name='add_class')
+def add_class(field, css_class):
+    return field.as_widget(attrs={"class": css_class})
