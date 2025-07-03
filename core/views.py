@@ -552,45 +552,25 @@ def register_user(request):
     return render(request, 'core/register.html', {'form': form})
 
 def registro_rapido(request):
+    from .forms import RegistroRapidoForm
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        nombre = request.POST.get('nombre')
-        email = request.POST.get('email')
-        dni = request.POST.get('dni')
-        ciudad = request.POST.get('ciudad')
-        
-        try:
-            # Crear usuario con rol CLIENTE por defecto
-            user = CustomUser.objects.create_user(
-                username=username,
-                password=password,
-                email=email,
-                nombre=nombre,
-                dni=dni,
-                ciudad=ciudad,
-                domicilio=request.POST.get('domicilio', ''),
-                rol='CLIENTE'
-            )
-            
-            # Iniciar sesión automáticamente
+        form = RegistroRapidoForm(request.POST)
+        if form.is_valid():
+            user = form.save()
             login(request, user)
-            
             messages.success(request, '¡Cuenta creada exitosamente! Bienvenido/a.')
             return redirect('core:home')
-            
-        except Exception as e:
-            messages.error(request, f'Error al crear la cuenta: {str(e)}')
-            return redirect('core:checkout')
+        else:
+            messages.error(request, 'Por favor corrija los errores en el formulario.')
+            return render(request, 'core/registro_rapido.html', {'form': form})
     else:
-        # GET: mostrar formulario con datos pre-llenados
-        context = {
+        form = RegistroRapidoForm(initial={
             'nombre': request.GET.get('nombre', ''),
             'email': request.GET.get('email', ''),
             'dni': request.GET.get('dni', ''),
             'domicilio': request.GET.get('domicilio', '')
-        }
-        return render(request, 'core/registro_rapido.html', context)
+        })
+        return render(request, 'core/registro_rapido.html', {'form': form})
 
 def checkout_view(request):
     if not request.session.session_key:
