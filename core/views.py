@@ -132,6 +132,14 @@ def asignar_view(request):
                 return redirect('core:asignar')
             
             asignacion.save()
+            # Descontar stock del producto asignado
+            producto = asignacion.producto
+            if producto.stock >= asignacion.cantidad:
+                producto.stock -= asignacion.cantidad
+                producto.save()
+            else:
+                messages.error(request, 'Stock insuficiente para la asignación.')
+                return redirect('core:asignar')
             messages.success(request, 'Asignación creada correctamente.')
             return redirect('core:asignar')
         else:
