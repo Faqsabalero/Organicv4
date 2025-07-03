@@ -536,6 +536,14 @@ def register_user(request):
             if user.rol == 'DISTRIBUIDOR':
                 user.es_distribuidor_exclusivo = form.cleaned_data.get('es_distribuidor_exclusivo', False)
             user.save()
+            # Crear cupón de descuento si es revendedor
+            if user.rol == 'REVENDEDOR':
+                from .models import CuponDescuento
+                CuponDescuento.objects.create(
+                    codigo=user.username,
+                    revendedor=user,
+                    descuento_porcentaje=10.00
+                )
             messages.success(request, 'Usuario creado exitosamente.')
             return redirect('core:asignar')
     else:
@@ -719,6 +727,7 @@ def procesar_pago(request):
         email = request.POST.get('email', '').strip()
         dni = request.POST.get('dni', '').strip()
         ciudad = request.POST.get('ciudad', '').strip()
+        codigo_cupon = request.POST.get('codigo_cupon', '').strip()
         
         # Validar campos obligatorios
         if not all([nombre, email, dni, ciudad]):
@@ -747,10 +756,26 @@ def procesar_pago(request):
         # Verificar si hay productos exclusivos
         tiene_productos_exclusivos = any(item.producto.es_exclusivo for item in items)
 
+        # Validar y aplicar cupón de descuento
+        descuento_porcentaje = Decimal('0')
+        if codigo_cupon:
+            from .models import CuponDescuento
+            try:
+                cupon = CuponDescuento.objects.get(codigo=codigo_cupon)
+                descuento_porcentaje = cupon.descuento_porcentaje
+                messages.success(request, f'Cupón aplicado: {descuento_porcentaje}% de descuento.')
+            except CuponDescuento.DoesNotExist:
+                messages.error(request, 'Código de cupón inválido.')
+                return redirect('core:checkout')
+
         # Crear las ventas
         for item in items:
             subtotal = item.producto.precio * item.cantidad
             total_venta += subtotal
+            
+            # Aplicar descuento si hay cupón válido
+            if descuento_porcentaje > 0:
+                subtotal = subtotal * (Decimal('100') - descuento_porcentaje) / Decimal('100')
             
             venta = Venta.objects.create(
                 producto=item.producto,

@@ -27,6 +27,16 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
 
+
+class CuponDescuento(models.Model):
+    codigo = models.CharField(max_length=150, unique=True)
+    revendedor = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='cupon_descuento')
+    descuento_porcentaje = models.DecimalField(max_digits=5, decimal_places=2, default=10.00)
+
+    def __str__(self):
+        return f'Cupón {self.codigo} - {self.descuento_porcentaje}%'
+
+
 class Producto(models.Model):
     CATEGORIA_CHOICES = (
         ('SALUD', 'Salud'),

@@ -54,6 +54,21 @@
                             {% csrf_token %}
                             
                             <h3 class="text-xl font-bold text-gray-900 mb-6">Datos del Comprador</h3>
+
+                            <!-- Cupón de descuento -->
+                            <div class="space-y-2">
+                                <label for="codigo_cupon" class="block text-sm font-medium text-gray-700">
+                                    Código de Cupón (opcional)
+                                </label>
+                                <div class="relative rounded-lg shadow-sm">
+                                    <input type="text"
+                                           id="codigo_cupon"
+                                           name="codigo_cupon"
+                                           placeholder="Ingresa el código de cupón"
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30"
+                                           value="{{ request.POST.codigo_cupon|default:'' }}">
+                                </div>
+                            </div>
                             
                             <!-- Nombre -->
                             <div class="space-y-2">
