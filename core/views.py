@@ -785,7 +785,32 @@ def procesar_pago(request):
         request.session['email_comprador'] = email
         
         messages.success(request, f'¡Compra exitosa! Tu número de pedido es #{ventas[-1]}')
-        
+
+        # Construir mensaje para WhatsApp
+        try:
+            import urllib.parse
+
+            mensaje = f"Nuevo pedido recibido:%0A"
+            mensaje += f"Cliente: {nombre}%0A"
+            mensaje += f"Email: {email}%0A"
+            if comprador and comprador.telefono:
+                mensaje += f"Teléfono: {comprador.telefono}%0A"
+            if comprador and comprador.domicilio:
+                mensaje += f"Domicilio: {comprador.domicilio}%0A"
+            mensaje += f"Productos:%0A"
+            for item in items:
+                mensaje += f"- {item.producto.nombre} x{item.cantidad} - ${item.producto.precio * item.cantidad:.2f}%0A"
+            mensaje += f"Total: ${total_venta:.2f}%0A"
+
+            numero_wsp = "+5493425091741"
+            url_wsp = f"https://api.whatsapp.com/send?phone={numero_wsp}&text={urllib.parse.quote(mensaje)}"
+
+            # Guardar url en sesión para mostrar o redirigir después si se desea
+            request.session['url_wsp_pedido'] = url_wsp
+        except Exception as e:
+            # No bloquear la compra si falla el mensaje
+            print(f"Error al generar mensaje WhatsApp: {e}")
+
         # Redirigir según el tipo de productos
         if tiene_productos_exclusivos:
             return redirect('core:checkout_exclusivo')
