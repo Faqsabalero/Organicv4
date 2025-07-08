@@ -6,87 +6,34 @@
 {% block content %}
 <div class="min-h-screen bg-gradient-to-br from-green-50 to-green-100 py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Progress Steps -->
-        <div class="mb-8">
-            <div class="flex items-center justify-center space-x-4">
-                <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div class="ml-2 text-sm font-medium text-green-600">Carrito</div>
-                </div>
-                <div class="h-1 w-16 bg-green-600"></div>
-                <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">
-                        <i class="fas fa-credit-card"></i>
-                    </div>
-                    <div class="ml-2 text-sm font-medium text-green-600">Pago</div>
-                </div>
-                <div class="h-1 w-16 bg-gray-300"></div>
-                <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-gray-300 text-gray-500 flex items-center justify-center">
-                        <i class="fas fa-check"></i>
-                    </div>
-                    <div class="ml-2 text-sm font-medium text-gray-500">Confirmación</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_84,_0.1)] border border-gray-100 overflow-hidden transform transition-all duration-300 hover:shadow-[0_20px_50px_rgba(8,_112,_84,_0.15)]">
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
             <!-- Header -->
             <div class="px-6 py-6 bg-gradient-to-r from-green-600 to-green-700">
-                <div class="flex items-center space-x-4">
-                    <div class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
-                        <i class="fas fa-credit-card text-2xl text-white"></i>
-                    </div>
-                    <div>
-                        <h2 class="text-2xl font-bold text-white">Proceder al Pago</h2>
-                        <p class="text-green-100 text-sm">Complete sus datos para finalizar la compra</p>
-                    </div>
-                </div>
+                <h2 class="text-2xl font-bold text-white">Finalizar Compra</h2>
+                <p class="text-green-100 text-sm">Complete sus datos para procesar el pedido</p>
             </div>
 
             <div class="p-6 md:p-8">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Formulario de datos -->
                     <div class="order-2 lg:order-1">
-                        <form method="POST" action="{% url 'core:procesar_pago' %}" class="space-y-6" id="checkoutForm">
+                        <form method="POST" action="{% url 'core:procesar_pago' %}" class="space-y-6">
                             {% csrf_token %}
                             
                             <h3 class="text-xl font-bold text-gray-900 mb-6">Datos del Comprador</h3>
 
-                            <!-- Cupón de descuento -->
-                            <div class="space-y-2">
-                                <label for="codigo_cupon" class="block text-sm font-medium text-gray-700">
-                                    Código de Cupón (opcional)
-                                </label>
-                                <div class="relative rounded-lg shadow-sm">
-                                    <input type="text"
-                                           id="codigo_cupon"
-                                           name="codigo_cupon"
-                                           placeholder="Ingresa el código de cupón"
-                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30"
-                                           value="{{ request.POST.codigo_cupon|default:'' }}">
-                                </div>
-                            </div>
-                            
                             <!-- Nombre -->
                             <div class="space-y-2">
                                 <label for="nombre" class="block text-sm font-medium text-gray-700">
                                     Nombre Completo *
                                 </label>
-                                <div class="relative rounded-lg shadow-sm">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-user text-gray-400"></i>
-                                    </div>
-                                    <input type="text" 
-                                           id="nombre" 
-                                           name="nombre" 
-                                           required
-                                           value="{{ user.nombre|default:'' }}"
-                                           placeholder="Ingresa tu nombre completo" 
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30">
-                                </div>
+                                <input type="text" 
+                                       id="nombre" 
+                                       name="nombre" 
+                                       required
+                                       value="{{ user.nombre|default:'' }}"
+                                       placeholder="Ingresa tu nombre completo" 
+                                       class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             </div>
 
                             <!-- Email -->
@@ -94,18 +41,13 @@
                                 <label for="email" class="block text-sm font-medium text-gray-700">
                                     Correo Electrónico *
                                 </label>
-                                <div class="relative rounded-lg shadow-sm">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-envelope text-gray-400"></i>
-                                    </div>
-                                    <input type="email" 
-                                           id="email" 
-                                           name="email" 
-                                           required
-                                           value="{{ user.email|default:'' }}"
-                                           placeholder="tuemail@ejemplo.com" 
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30">
-                                </div>
+                                <input type="email" 
+                                       id="email" 
+                                       name="email" 
+                                       required
+                                       value="{{ user.email|default:'' }}"
+                                       placeholder="tuemail@ejemplo.com" 
+                                       class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             </div>
 
                             <!-- DNI -->
@@ -113,20 +55,14 @@
                                 <label for="dni" class="block text-sm font-medium text-gray-700">
                                     DNI *
                                 </label>
-                                <div class="relative rounded-lg shadow-sm">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <i class="fas fa-id-card text-gray-400"></i>
-                                    </div>
-                                    <input type="text" 
-                                           id="dni" 
-                                           name="dni" 
-                                           required
-                                           value="{{ user.dni|default:'' }}"
-                                           placeholder="12345678" 
-                                           pattern="[0-9]{7,8}"
-                                           title="Ingresa un DNI válido (7-8 dígitos)"
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30">
-                                </div>
+                                <input type="text" 
+                                       id="dni" 
+                                       name="dni" 
+                                       required
+                                       value="{{ user.dni|default:'' }}"
+                                       placeholder="12345678" 
+                                       pattern="[0-9]{7,8}"
+                                       class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                                 <p class="text-xs text-gray-500">Formato: 7-8 dígitos sin puntos</p>
                             </div>
 
@@ -135,30 +71,25 @@
                                 <label for="ciudad" class="block text-sm font-medium text-gray-700">
                                     Ciudad *
                                 </label>
-                                <div class="relative rounded-lg shadow-sm">
-                                    <input type="text"
-                                           id="ciudad"
-                                           name="ciudad"
-                                           required
-                                           value="{{ user.ciudad|default:'' }}"
-                                           placeholder="Ingresa tu ciudad"
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30" />
-                                </div>
+                                <input type="text"
+                                       id="ciudad"
+                                       name="ciudad"
+                                       required
+                                       value="{{ user.ciudad|default:'' }}"
+                                       placeholder="Ingresa tu ciudad"
+                                       class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
                             </div>
 
                             <!-- Botones de acción -->
                             <div class="flex flex-col sm:flex-row gap-4 pt-6">
                                 <a href="{% url 'core:carrito' %}" 
-                                   class="flex-1 bg-white border-2 border-gray-300 text-gray-700 px-6 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
-                                    <i class="fas fa-arrow-left"></i>
-                                    <span>Volver al Carrito</span>
+                                   class="flex-1 bg-white border-2 border-gray-300 text-gray-700 px-6 py-4 rounded-lg font-semibold text-center hover:bg-gray-50 transition-colors">
+                                    Volver al Carrito
                                 </a>
 
                                 <button type="submit" 
-                                        id="finalizarCompra"
-                                        class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
-                                    <span>Finalizar Compra</span>
-                                    <i class="fas fa-arrow-right"></i>
+                                        class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-4 rounded-lg font-semibold hover:from-green-700 hover:to-green-800 transition-colors">
+                                    Finalizar Compra
                                 </button>
                             </div>
                         </form>
@@ -172,12 +103,11 @@
                             {% if items %}
                                 <div class="space-y-4">
                                     {% for item in items %}
-                                    <div class="flex items-center space-x-4 bg-white p-4 rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-all duration-200 transform hover:scale-[1.02]">
+                                    <div class="flex items-center space-x-4 bg-white p-4 rounded-lg border border-gray-100">
                                         <div class="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden">
                                             <img src="{{ item.producto.imagen_url }}" 
                                                  alt="{{ item.producto.nombre }}" 
-                                                 class="w-full h-full object-cover"
-                                                 loading="lazy">
+                                                 class="w-full h-full object-cover">
                                         </div>
                                         <div class="flex-grow">
                                             <h4 class="text-sm font-medium text-gray-900">{{ item.producto.nombre }}</h4>
@@ -200,22 +130,6 @@
                                         <span class="text-green-600">${{ total }} ARS</span>
                                     </div>
                                 </div>
-
-                                <div class="mt-6 p-4 bg-green-50 rounded-lg border border-green-100">
-                                    <div class="flex items-center justify-center space-x-3">
-                                        <i class="fas fa-shield-alt text-green-600 text-xl"></i>
-                                        <div class="text-center">
-                                            <p class="font-medium text-green-800">Pago 100% Seguro</p>
-                                            <div class="flex items-center mt-2 space-x-2">
-                                                <span class="text-sm text-green-600">Procesado por</span>
-                                                <img src="https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.png" 
-                                                     alt="Mercado Pago" 
-                                                     class="h-6"
-                                                     loading="lazy">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             {% endif %}
                         </div>
                     </div>
@@ -224,156 +138,4 @@
         </div>
     </div>
 </div>
-
-<!-- Modal de Registro -->
-<div id="registroModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden z-50">
-    <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95">
-        <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-user-plus text-2xl text-green-600"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900">¿Deseas registrarte?</h3>
-            <p class="text-gray-600 mt-2">
-                Regístrate ahora para recibir descuentos exclusivos en tus futuras compras.
-            </p>
-        </div>
-        
-        <div class="space-y-4">
-            <button onclick="redirigirARegistro()" 
-                    class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
-                <i class="fas fa-user-plus"></i>
-                <span>Sí, quiero registrarme</span>
-            </button>
-            
-            <button onclick="continuarSinRegistro()" 
-                    class="w-full bg-white border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold text-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
-                <span>No, gracias</span>
-            </button>
-        </div>
-    </div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
-    const dniInput = document.getElementById('dni');
-    const modal = document.getElementById('registroModal');
-    const submitButton = document.getElementById('finalizarCompra');
-    
-    // Validación del DNI en tiempo real
-    dniInput.addEventListener('input', function() {
-        const dni = this.value.replace(/\D/g, ''); // Solo números
-        this.value = dni;
-        
-        if (dni.length < 7 || dni.length > 8) {
-            this.setCustomValidity('El DNI debe tener entre 7 y 8 dígitos');
-            this.classList.add('border-red-500');
-            this.classList.remove('border-green-500');
-        } else {
-            this.setCustomValidity('');
-            this.classList.remove('border-red-500');
-            this.classList.add('border-green-500');
-        }
-    });
-    
-    // Validación antes del envío
-    form.addEventListener('submit', function(e) {
-        e.preventDefault(); // Prevenir envío del formulario
-        
-        const nombre = document.getElementById('nombre').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const dni = document.getElementById('dni').value.trim();
-        const ciudad = document.getElementById('ciudad').value.trim();
-        
-        if (!nombre || !email || !dni || !ciudad) {
-            // Mostrar mensaje de error estilizado
-            const toast = document.createElement('div');
-            toast.className = 'fixed bottom-4 right-4 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-lg transform transition-all duration-300';
-            toast.innerHTML = `
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <i class="fas fa-exclamation-circle"></i>
-                    </div>
-                    <div class="ml-3">
-                        <p class="text-sm font-medium">Por favor, completa todos los campos obligatorios.</p>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.remove();
-            }, 3000);
-            
-            return false;
-        }
-        
-        if (dni.length < 7 || dni.length > 8) {
-            dniInput.classList.add('border-red-500');
-            return false;
-        }
-        
-        // Mostrar loading state en el botón
-        submitButton.disabled = true;
-        submitButton.innerHTML = `
-            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-        `;
-        
-        // Mostrar modal de registro con animación
-        setTimeout(() => {
-            submitButton.disabled = false;
-            submitButton.innerHTML = `
-                <span>Finalizar Compra</span>
-                <i class="fas fa-arrow-right"></i>
-            `;
-            modal.classList.remove('hidden');
-            const modalContent = modal.querySelector('.bg-white');
-            modalContent.style.transform = 'scale(1)';
-            modalContent.style.opacity = '1';
-        }, 1000);
-    });
-});
-
-function redirigirARegistro() {
-    const form = document.querySelector('form');
-    const formData = new FormData(form);
-    
-    // Mostrar loading state
-    const modalContent = document.querySelector('#registroModal .bg-white');
-    modalContent.innerHTML = `
-        <div class="text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent mx-auto"></div>
-            <p class="mt-4 text-gray-600">Redirigiendo al registro...</p>
-        </div>
-    `;
-    
-    // Redirigir al formulario de registro con los datos del checkout
-    setTimeout(() => {
-        window.location.href = "{% url 'core:registro_rapido' %}?" + new URLSearchParams({
-            nombre: formData.get('nombre'),
-            email: formData.get('email'),
-            dni: formData.get('dni'),
-            ciudad: formData.get('ciudad')
-        }).toString();
-    }, 1000);
-}
-
-function continuarSinRegistro() {
-    const modal = document.getElementById('registroModal');
-    const modalContent = modal.querySelector('.bg-white');
-    
-    // Animación de salida
-    modalContent.style.transform = 'scale(0.95)';
-    modalContent.style.opacity = '0';
-    
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        // Enviar el formulario
-        document.querySelector('form').submit();
-    }, 300);
-}
-</script>
 {% endblock %}
