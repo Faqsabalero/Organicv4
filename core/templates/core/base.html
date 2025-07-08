@@ -79,9 +79,14 @@
                         object-fit: cover;
                     }
                 </style>
-                <div class="relative h-12 w-12 logo-container">
-                    <img src="https://storage.googleapis.com/a1aa/image/6aaebe32-d6ed-4dec-96f6-ff630ed08f4d.jpg" 
-                         alt="Logo" class="logo-image">
+                <div class="relative h-12 w-12 logo-container flex items-center justify-center bg-white rounded-full shadow-md">
+                    <!-- Nuevo logo SVG moderno -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" class="w-10 h-10 text-green-600">
+                        <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="4"/>
+                        <path d="M32 12C24 20 20 28 20 36C20 44 28 52 36 52C44 52 52 44 52 36C52 28 40 20 32 12Z" fill="currentColor"/>
+                        <path d="M32 12V52" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M20 36H52" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
                 </div>
                 <div class="flex flex-col">
                     <span class="text-2xl font-bold text-white transition-all duration-300 group-hover:text-green-300">Organic Shops</span>
