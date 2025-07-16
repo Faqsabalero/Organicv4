@@ -47,6 +47,43 @@
         animation: slideInRight 0.7s ease-in-out;
     }
 
+    /* Mobile responsive carousel fixes */
+    @media (max-width: 768px) {
+        #carousel-container {
+            max-width: 100%;
+            margin: 0 1rem;
+        }
+        
+        #carousel {
+            height: 300px;
+        }
+        
+        #carousel img {
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        #carousel h2 {
+            font-size: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        #prevBtn, #nextBtn {
+            padding: 0.5rem;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        #carousel {
+            height: 250px;
+        }
+        
+        #carousel h2 {
+            font-size: 1.25rem;
+        }
+    }
+
     .hover-scale {
         transition: transform 0.3s ease-in-out;
     }

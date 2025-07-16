@@ -54,6 +54,15 @@ class UserCreationFormWithRol(UserCreationForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
+        
+        # Filtrar opciones de rol según el usuario actual
+        if self.user and self.user.rol == 'ADMIN':
+            # Los administradores no pueden crear superusuarios ni otros administradores
+            self.fields['rol'].choices = [
+                ('DISTRIBUIDOR', 'Distribuidor'),
+                ('REVENDEDOR', 'Revendedor'),
+                ('CLIENTE', 'Cliente'),
+            ]
 
     def save(self, commit=True):
         user = super().save(commit=False)
