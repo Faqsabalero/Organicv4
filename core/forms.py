@@ -78,12 +78,81 @@ class UserCreationFormWithRol(UserCreationForm):
         return user
 
 class RegistroRapidoForm(forms.ModelForm):
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
+            'placeholder': '••••••••'
+        }),
+        label="Contraseña",
+        min_length=6,
+        help_text="Mínimo 6 caracteres"
+    )
+    
     class Meta:
         model = CustomUser
         fields = ('username', 'password', 'nombre', 'email', 'dni', 'ciudad', 'domicilio')
         widgets = {
-            'password': forms.PasswordInput(),
+            'username': forms.TextInput(attrs={
+                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
+                'placeholder': 'usuario123'
+            }),
+            'nombre': forms.TextInput(attrs={
+                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
+                'placeholder': 'Tu nombre completo'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
+                'placeholder': 'tu@email.com'
+            }),
+            'dni': forms.TextInput(attrs={
+                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
+                'placeholder': '12345678',
+                'pattern': '[0-9]{7,8}'
+            }),
+            'ciudad': forms.Select(attrs={
+                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200'
+            }, choices=[
+                ('', 'Seleccione una ciudad'),
+                ('santa fe', 'Santa Fe'),
+                ('cordoba', 'Córdoba'),
+                ('rosario', 'Rosario'),
+                ('esperanza', 'Esperanza'),
+                ('rafaela', 'Rafaela'),
+            ]),
+            'domicilio': forms.TextInput(attrs={
+                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
+                'placeholder': 'Calle 123, Ciudad'
+            }),
         }
+        labels = {
+            'username': 'Nombre de Usuario',
+            'nombre': 'Nombre Completo',
+            'email': 'Email',
+            'dni': 'DNI',
+            'ciudad': 'Ciudad',
+            'domicilio': 'Domicilio (opcional)',
+        }
+    
+    def clean_dni(self):
+        dni = self.cleaned_data.get('dni')
+        if dni:
+            # Remover caracteres no numéricos
+            dni = ''.join(filter(str.isdigit, dni))
+            if len(dni) < 7 or len(dni) > 8:
+                raise forms.ValidationError('El DNI debe tener entre 7 y 8 dígitos.')
+        return dni
+    
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if CustomUser.objects.filter(username=username).exists():
+            raise forms.ValidationError('Este nombre de usuario ya está en uso.')
+        return username
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if CustomUser.objects.filter(email=email).exists():
+            raise forms.ValidationError('Este email ya está registrado.')
+        return email
     
     def save(self, commit=True):
         user = super().save(commit=False)

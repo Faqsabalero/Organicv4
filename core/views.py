@@ -570,15 +570,18 @@ def registro_rapido(request):
             return redirect('core:home')
         else:
             messages.error(request, 'Por favor corrija los errores en el formulario.')
-            return render(request, 'core/registro_rapido.html', {'form': form})
     else:
-        form = RegistroRapidoForm(initial={
+        # Inicializar el formulario con datos del GET (desde checkout)
+        initial_data = {
             'nombre': request.GET.get('nombre', ''),
             'email': request.GET.get('email', ''),
             'dni': request.GET.get('dni', ''),
+            'ciudad': request.GET.get('ciudad', ''),
             'domicilio': request.GET.get('domicilio', '')
-        })
-        return render(request, 'core/registro_rapido.html', {'form': form})
+        }
+        form = RegistroRapidoForm(initial=initial_data)
+    
+    return render(request, 'core/registro_rapido.html', {'form': form})
 
 def checkout_view(request):
     if not request.session.session_key:
