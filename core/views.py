@@ -524,16 +524,48 @@ def revendedor_view(request):
     if request.user.rol != 'REVENDEDOR':
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
     
+    # Obtener asignaciones (comentadas en el template pero mantenemos la funcionalidad)
     asignaciones = Asignacion.objects.filter(distribuidor=request.user).order_by('-fecha_asignacion')
+    
+    # Obtener clientes registrados por este revendedor
+    clientes_registrados = CustomUser.objects.filter(
+        registrado_por=request.user,
+        rol='CLIENTE'
+    ).order_by('-date_joined')
+    
+    # Calcular estadísticas de cada cliente
+    for cliente in clientes_registrados:
+        # Obtener todas las compras del cliente
+        compras_cliente = Venta.objects.filter(
+            comprador=cliente,
+            estado_pago='PAGADO'
+        )
+        
+        # Calcular totales
+        cliente.num_compras = compras_cliente.count()
+        cliente.total_compras = compras_cliente.aggregate(
+            total=Sum('total')
+        )['total'] or Decimal('0.00')
+        
+        # Calcular comisión (10% del total de compras)
+        cliente.comision_generada = cliente.total_compras * Decimal('0.10')
+    
+    # Calcular total de comisiones
+    total_comisiones = sum(
+        cliente.comision_generada for cliente in clientes_registrados
+    ) if clientes_registrados else Decimal('0.00')
+    
     return render(request, 'core/revendedor.html', {
-        'asignaciones': asignaciones
+        'asignaciones': asignaciones,
+        'clientes_registrados': clientes_registrados,
+        'total_comisiones': total_comisiones,
     })
 
 def register_user(request):
     # if not request.user.is_authenticated:
     #     return redirect('core:login')
         
-    if not request.user.is_authenticated or request.user.rol not in ['ADMIN', 'SUPERUSUARIO', 'DISTRIBUIDOR']:
+    if not request.user.is_authenticated or request.user.rol not in ['ADMIN', 'SUPERUSUARIO', 'DISTRIBUIDOR', 'REVENDEDOR']:
         return HttpResponseForbidden("No tiene permiso para registrar usuarios.")
         
     if request.method == 'POST':
@@ -553,7 +585,11 @@ def register_user(request):
                     descuento_porcentaje=10.00
                 )
             messages.success(request, 'Usuario creado exitosamente.')
-            return redirect('core:asignar')
+            # Redirigir según el rol del usuario que registra
+            if request.user.rol == 'REVENDEDOR':
+                return redirect('core:revendedor')
+            else:
+                return redirect('core:asignar')
     else:
         form = UserCreationFormWithRol(user=request.user)
     

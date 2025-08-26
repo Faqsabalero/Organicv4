@@ -55,7 +55,8 @@
                             
                             <h3 class="text-xl font-bold text-gray-900 mb-6">Datos del Comprador</h3>
 
-                            <!-- Cupón de descuento -->
+                            {# 
+                            <!-- Cupón de descuento - COMENTADO POR REQUERIMIENTO -->
                             <div class="space-y-2">
                                 <label for="codigo_cupon" class="block text-sm font-medium text-gray-700">
                                     Código de Cupón (opcional)
@@ -69,6 +70,7 @@
                                            value="{{ request.POST.codigo_cupon|default:'' }}">
                                 </div>
                             </div>
+                            #}
                             
                             <!-- Nombre -->
                             <div class="space-y-2">

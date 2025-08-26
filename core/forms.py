@@ -63,6 +63,14 @@ class UserCreationFormWithRol(UserCreationForm):
                 ('REVENDEDOR', 'Revendedor'),
                 ('CLIENTE', 'Cliente'),
             ]
+        elif self.user and self.user.rol == 'REVENDEDOR':
+            # Los revendedores solo pueden crear clientes
+            self.fields['rol'].choices = [
+                ('CLIENTE', 'Cliente'),
+            ]
+            # Hacer el campo de rol readonly ya que solo hay una opción
+            self.fields['rol'].widget.attrs['readonly'] = True
+            self.fields['rol'].initial = 'CLIENTE'
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -73,6 +81,11 @@ class UserCreationFormWithRol(UserCreationForm):
         user.provincia = self.cleaned_data.get('provincia', '')
         user.domicilio = self.cleaned_data.get('domicilio', '')
         user.telefono = self.cleaned_data.get('telefono', '')
+        
+        # Si el usuario que registra es un revendedor, asociar el cliente al revendedor
+        if self.user and self.user.rol == 'REVENDEDOR' and user.rol == 'CLIENTE':
+            user.registrado_por = self.user
+        
         if commit:
             user.save()
         return user

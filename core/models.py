@@ -16,7 +16,17 @@ class CustomUser(AbstractUser):
     ciudad = models.CharField(max_length=100, blank=True, null=True)
     provincia = models.CharField(max_length=100, blank=True, null=True)  # Nuevo campo: provincia
     domicilio = models.CharField(max_length=200, blank=True, null=True)
+    telefono = models.CharField(max_length=20, blank=True, null=True)
     es_distribuidor_exclusivo = models.BooleanField(default=False)
+    # Campo para asociar clientes con el revendedor que los registró
+    registrado_por = models.ForeignKey(
+        'self',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='clientes_registrados',
+        help_text="Para usuarios con rol CLIENTE, indica el revendedor que los registró."
+    )
 
     def save(self, *args, **kwargs):
         # Si el usuario es un superusuario, asignar el rol SUPERUSUARIO
