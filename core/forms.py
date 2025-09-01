@@ -63,6 +63,12 @@ class UserCreationFormWithRol(UserCreationForm):
                 ('REVENDEDOR', 'Revendedor'),
                 ('CLIENTE', 'Cliente'),
             ]
+        elif self.user and self.user.rol == 'DISTRIBUIDOR':
+            # Los distribuidores solo pueden crear clientes y revendedores
+            self.fields['rol'].choices = [
+                ('CLIENTE', 'Cliente'),
+                ('REVENDEDOR', 'Revendedor'),
+            ]
         elif self.user and self.user.rol == 'REVENDEDOR':
             # Los revendedores solo pueden crear clientes
             self.fields['rol'].choices = [
