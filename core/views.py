@@ -321,6 +321,24 @@ def asignar_view(request):
 def distribuidor_view(request):
     if request.user.rol != 'DISTRIBUIDOR':
         return HttpResponseForbidden("No tiene permiso para acceder a esta sección.")
+    
+    # Fetch data for the distribuidor view
+    asignaciones_propias = Asignacion.objects.filter(distribuidor=request.user).order_by('-fecha_asignacion')
+    productos_distintos = asignaciones_propias.values('producto').distinct().count()
+    asignaciones_creadas = Asignacion.objects.filter(admin=request.user).order_by('-fecha_asignacion')
+    
+    # Get all products for inventory display
+    from .models import Producto
+    inventario_items = Producto.objects.all().order_by('nombre')
+    
+    context = {
+        'asignaciones_propias': asignaciones_propias,
+        'productos_distintos': productos_distintos,
+        'asignaciones_creadas': asignaciones_creadas,
+        'inventario_items': inventario_items,
+    }
+    
+    return render(request, 'core/distribuidor.html', context)
 
 @login_required
 def inventario_view(request):
