@@ -6,7 +6,7 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
     <div class="bg-white rounded-2xl shadow-enhanced p-8">
         <div class="text-center mb-8">
-            <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-green-600 rounded-full mx-auto flex items-center justify-center mb-4">
+            <div class="w-24 h-24 bg-gradient-to-r from-[#f8faf9]0 to-[#3e5740] rounded-full mx-auto flex items-center justify-center mb-4">
                 <i class="fas fa-user-edit text-4xl text-white"></i>
             </div>
             <h1 class="text-3xl font-bold text-gray-800">Editar Perfil</h1>
@@ -20,52 +20,52 @@
                 <!-- Información Personal -->
                 <div class="space-y-6">
                     <h2 class="text-xl font-semibold text-gray-800 flex items-center">
-                        <i class="fas fa-info-circle mr-2 text-green-600"></i>
+                        <i class="fas fa-info-circle mr-2 text-[#3e5740]"></i>
                         Información Personal
                     </h2>
                     
                     <div>
                         <label for="nombre" class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
                         <input type="text" id="nombre" name="nombre" value="{{ user.nombre }}" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                     </div>
 
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Nombre de Usuario</label>
                         <input type="text" id="username" name="username" value="{{ user.username }}" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                     </div>
 
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                         <input type="email" id="email" name="email" value="{{ user.email }}" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                     </div>
                 </div>
 
                 <!-- Información de Contacto -->
                 <div class="space-y-6">
                     <h2 class="text-xl font-semibold text-gray-800 flex items-center">
-                        <i class="fas fa-map-marker-alt mr-2 text-green-600"></i>
+                        <i class="fas fa-map-marker-alt mr-2 text-[#3e5740]"></i>
                         Información de Contacto
                     </h2>
                     
                     <div>
                         <label for="dni" class="block text-sm font-medium text-gray-700 mb-1">DNI</label>
                         <input type="text" id="dni" name="dni" value="{{ user.dni }}" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                     </div>
 
                     <div>
                         <label for="ciudad" class="block text-sm font-medium text-gray-700 mb-1">Ciudad</label>
                         <input type="text" id="ciudad" name="ciudad" value="{{ user.ciudad }}" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                     </div>
 
                     <div>
                         <label for="provincia" class="block text-sm font-medium text-gray-700 mb-1">Provincia</label>
                         <select id="provincia" name="provincia" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                             <option value="">Seleccione una provincia</option>
                             <option value="buenos aires" {% if user.provincia == 'buenos aires' %}selected{% endif %}>Buenos Aires</option>
                             <option value="catamarca" {% if user.provincia == 'catamarca' %}selected{% endif %}>Catamarca</option>
@@ -97,13 +97,13 @@
                     <div>
                         <label for="domicilio" class="block text-sm font-medium text-gray-700 mb-1">Domicilio</label>
                         <input type="text" id="domicilio" name="domicilio" value="{{ user.domicilio }}" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                     </div>
 
                     <div>
                         <label for="telefono" class="block text-sm font-medium text-gray-700 mb-1">Teléfono</label>
                         <input type="tel" id="telefono" name="telefono" value="{{ user.telefono|default:'' }}"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent">
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
             <!-- Botones de Acción -->
             <div class="flex justify-center space-x-4 mt-8">
                 <button type="submit" 
-                        class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-300 flex items-center space-x-2">
+                        class="px-6 py-3 bg-[#3e5740] text-white rounded-lg hover:bg-[#2d4030] transition-colors duration-300 flex items-center space-x-2">
                     <i class="fas fa-save"></i>
                     <span>Guardar Cambios</span>
                 </button>

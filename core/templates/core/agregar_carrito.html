@@ -6,7 +6,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
-        <div class="px-6 py-4 bg-green-700">
+        <div class="px-6 py-4 bg-[#2d4030]">
             <h2 class="text-2xl font-bold text-white">Agregar al Carrito</h2>
         </div>
 
@@ -31,7 +31,7 @@
                         </h1>
                         
                         <div class="mb-6">
-                            <span class="text-4xl font-bold text-green-700">
+                            <span class="text-4xl font-bold text-[#2d4030]">
                                 ${{ producto.precio }} ARS
                             </span>
                         </div>
@@ -49,7 +49,7 @@
                             </label>
                             <div class="flex items-center space-x-3">
                                 <button type="button" 
-                                        class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
+                                        class="w-10 h-10 rounded-full bg-[#f0f4f1] text-[#1f2b20] flex items-center justify-center hover:bg-[#d9e2db] focus:outline-none focus:ring-2 focus:ring-[#3e5740]"
                                         onclick="decrementQuantity()">
                                     <i class="fas fa-minus"></i>
                                 </button>
@@ -58,9 +58,9 @@
                                        name="cantidad" 
                                        value="1" 
                                        min="1" 
-                                       class="w-20 text-center border-gray-300 rounded-md focus:ring-green-600 focus:border-green-600">
+                                       class="w-20 text-center border-gray-300 rounded-md focus:ring-[#3e5740] focus:border-[#3e5740]">
                                 <button type="button" 
-                                        class="w-10 h-10 rounded-full bg-green-100 text-green-800 flex items-center justify-center hover:bg-green-200 focus:outline-none focus:ring-2 focus:ring-green-600"
+                                        class="w-10 h-10 rounded-full bg-[#f0f4f1] text-[#1f2b20] flex items-center justify-center hover:bg-[#d9e2db] focus:outline-none focus:ring-2 focus:ring-[#3e5740]"
                                         onclick="incrementQuantity()">
                                     <i class="fas fa-plus"></i>
                                 </button>
@@ -68,10 +68,10 @@
                         </div>
 
                         <!-- Total -->
-                        <div class="mb-8 p-4 bg-green-50 rounded-lg">
+                        <div class="mb-8 p-4 bg-[#f8faf9] rounded-lg">
                             <div class="flex justify-between items-center">
                                 <span class="text-lg font-semibold text-gray-700">Total:</span>
-                                <span class="text-2xl font-bold text-green-700" id="total">
+                                <span class="text-2xl font-bold text-[#2d4030]" id="total">
                                     ${{ producto.precio }} ARS
                                 </span>
                             </div>
@@ -81,7 +81,7 @@
                     <!-- Botón agregar al carrito -->
                     <div class="mt-6">
                         <button type="submit" 
-                                class="w-full bg-green-700 text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
+                                class="w-full bg-[#2d4030] text-white px-6 py-4 rounded-md font-semibold text-lg hover:bg-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-[#3e5740] focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
                             <i class="fas fa-cart-plus"></i>
                             <span>Agregar al Carrito</span>
                         </button>

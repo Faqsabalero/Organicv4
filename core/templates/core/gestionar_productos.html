@@ -7,9 +7,9 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
-        <div class="px-6 py-4 bg-green-700 flex justify-between items-center">
+        <div class="px-6 py-4 bg-[#2d4030] flex justify-between items-center">
             <h2 class="text-2xl font-bold text-white">Gestionar Productos</h2>
-            <a href="{% url 'core:crear_producto' %}" class="px-4 py-2 bg-white text-green-700 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-green-700">
+            <a href="{% url 'core:crear_producto' %}" class="px-4 py-2 bg-white text-[#2d4030] rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-green-700">
                 <i class="fas fa-plus mr-2"></i>Nuevo Producto
             </a>
         </div>
@@ -73,7 +73,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             {% with margen=producto.precio|subtract:producto.costo %}
-                            <div class="text-sm {% if margen > 0 %}text-green-600{% else %}text-red-600{% endif %}">
+                            <div class="text-sm {% if margen > 0 %}text-[#3e5740]{% else %}text-red-600{% endif %}">
                                 ${{ margen }} ARS
                             </div>
                             {% endwith %}

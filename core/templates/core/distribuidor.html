@@ -11,10 +11,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500">Total Asignaciones</p>
-                    <p class="text-2xl font-bold text-green-600">{{ asignaciones_propias.count }}</p>
+                    <p class="text-2xl font-bold text-[#3e5740]">{{ asignaciones_propias.count }}</p>
                 </div>
-                <div class="bg-green-100 rounded-full p-3">
-                    <i class="fas fa-box text-green-600 text-xl"></i>
+                <div class="bg-[#f0f4f1] rounded-full p-3">
+                    <i class="fas fa-box text-[#3e5740] text-xl"></i>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
     <!-- Botones de Acción -->
     <div class="mb-8 flex flex-col sm:flex-row gap-4">
         <a href="{% url 'core:register' %}" 
-           class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+           class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#2d4030] hover:bg-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f8faf9]0">
             <i class="fas fa-user-plus mr-2"></i>
             Crear Usuario
         </a>
@@ -62,7 +62,7 @@
 
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
-        <div class="px-6 py-4 bg-green-700">
+        <div class="px-6 py-4 bg-[#2d4030]">
             <h2 class="text-2xl font-bold text-white">Panel de Distribuidor</h2>
         </div>
 
@@ -70,7 +70,7 @@
         <div class="border-b border-gray-200">
             <nav class="flex -mb-px" aria-label="Tabs">
                 <button onclick="showTab('asignaciones_propias')" 
-                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600">
+                        class="tab-button w-1/3 py-4 px-1 text-center border-b-2 font-medium text-sm border-[#f8faf9]0 text-[#3e5740]">
                     Mis Asignaciones
                 </button>
                 <button onclick="showTab('asignaciones_creadas')" 
@@ -87,29 +87,29 @@
         <!-- Tab Content: Mis Asignaciones -->
         <div id="asignaciones_propiasTab">
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-green-700 mb-4">Mis Asignaciones</h3>
+                <h3 class="text-xl font-semibold text-[#2d4030] mb-4">Mis Asignaciones</h3>
                 
                 <!-- Filtros de búsqueda para Mis Asignaciones -->
                 <div class="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
                         <label for="searchFechaAsignaciones" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
                         <input type="text" id="searchFechaAsignaciones" placeholder="Buscar por fecha..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchAsignadoPor" class="block text-sm font-medium text-gray-700 mb-1">Asignado por</label>
                         <input type="text" id="searchAsignadoPor" placeholder="Buscar por asignador..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchProductoAsignaciones" class="block text-sm font-medium text-gray-700 mb-1">Producto</label>
                         <input type="text" id="searchProductoAsignaciones" placeholder="Buscar por producto..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchEstadoAsignaciones" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
                         <input type="text" id="searchEstadoAsignaciones" placeholder="Buscar por estado..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                 </div>
 
@@ -160,7 +160,7 @@
                                     {{ asignacion.cantidad }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-[#f0f4f1] text-[#1f2b20]{% else %}bg-yellow-100 text-yellow-800{% endif %}">
                                         {{ asignacion.get_estado_display }}
                                     </span>
                                 </td>
@@ -181,29 +181,29 @@
         <!-- Tab Content: Asignaciones Realizadas -->
         <div id="asignaciones_creadasTab" class="hidden">
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-green-700 mb-4">Asignaciones Realizadas</h3>
+                <h3 class="text-xl font-semibold text-[#2d4030] mb-4">Asignaciones Realizadas</h3>
                 
                 <!-- Filtros de búsqueda para Asignaciones Realizadas -->
                 <div class="mb-6 grid grid-cols-1 md:grid-cols-4 gap-4">
                     <div>
                         <label for="searchFechaCreadas" class="block text-sm font-medium text-gray-700 mb-1">Fecha</label>
                         <input type="text" id="searchFechaCreadas" placeholder="Buscar por fecha..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchRevendedor" class="block text-sm font-medium text-gray-700 mb-1">Revendedor</label>
                         <input type="text" id="searchRevendedor" placeholder="Buscar por revendedor..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchProductoCreadas" class="block text-sm font-medium text-gray-700 mb-1">Producto</label>
                         <input type="text" id="searchProductoCreadas" placeholder="Buscar por producto..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchEstadoCreadas" class="block text-sm font-medium text-gray-700 mb-1">Estado</label>
                         <input type="text" id="searchEstadoCreadas" placeholder="Buscar por estado..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                 </div>
 
@@ -249,7 +249,7 @@
                                     {{ asignacion.cantidad }}
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-[#f0f4f1] text-[#1f2b20]{% else %}bg-yellow-100 text-yellow-800{% endif %}">
                                         {{ asignacion.get_estado_display }}
                                     </span>
                                 </td>
@@ -278,31 +278,31 @@
         <!-- Tab Content: Inventario -->
         <div id="inventarioTab" class="hidden">
             <div class="p-6">
-                <h3 class="text-xl font-semibold text-green-700 mb-4">Gestión de Inventario</h3>
+                <h3 class="text-xl font-semibold text-[#2d4030] mb-4">Gestión de Inventario</h3>
                 
                 <!-- Filtros de búsqueda para Inventario -->
                 <div class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
                         <label for="searchProductoInventario" class="block text-sm font-medium text-gray-700 mb-1">Producto</label>
                         <input type="text" id="searchProductoInventario" placeholder="Buscar por nombre..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchStockInventario" class="block text-sm font-medium text-gray-700 mb-1">Stock</label>
                         <input type="text" id="searchStockInventario" placeholder="Buscar por cantidad..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                     <div>
                         <label for="searchPrecioInventario" class="block text-sm font-medium text-gray-700 mb-1">Precio</label>
                         <input type="text" id="searchPrecioInventario" placeholder="Buscar por precio..." 
-                               class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                               class="shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 block w-full sm:text-sm border-gray-300 rounded-md">
                     </div>
                 </div>
 
                 <!-- Botón para agregar nuevo producto -->
                 <div class="mb-6">
                     <button onclick="openAddInventoryModal()" 
-                            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#2d4030] hover:bg-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f8faf9]0">
                         <i class="fas fa-plus mr-2"></i>
                         Agregar Producto
                     </button>
@@ -335,7 +335,7 @@
                                     <div class="text-xs text-gray-500">ID: {{ item.id }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {% if item.stock > 10 %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %}">
+                                    <span class="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {% if item.stock > 10 %}bg-[#f0f4f1] text-[#1f2b20]{% else %}bg-red-100 text-red-800{% endif %}">
                                         {{ item.stock }} unidades
                                     </span>
                                 </td>
@@ -384,12 +384,12 @@
                 <div>
                     <label for="nombreProducto" class="block text-sm font-medium text-gray-700">Nombre del Producto</label>
                     <input type="text" id="nombreProducto" name="nombre" required
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 sm:text-sm">
                 </div>
                 <div>
                     <label for="stockProducto" class="block text-sm font-medium text-gray-700">Stock</label>
                     <input type="number" id="stockProducto" name="stock" required min="0"
-                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 sm:text-sm">
                 </div>
                 <div>
                     <label for="precioProducto" class="block text-sm font-medium text-gray-700">Precio</label>
@@ -398,12 +398,12 @@
                             <span class="text-gray-500 sm:text-sm">$</span>
                         </div>
                         <input type="number" id="precioProducto" name="precio" required min="0" step="0.01"
-                               class="block w-full pl-7 border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                               class="block w-full pl-7 border-gray-300 rounded-md focus:ring-[#f8faf9]0 focus:border-[#f8faf9]0 sm:text-sm">
                     </div>
                 </div>
                 <div class="mt-5 sm:mt-6">
                     <button type="submit"
-                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">
+                            class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3e5740] text-base font-medium text-white hover:bg-[#2d4030] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f8faf9]0 sm:text-sm">
                         Guardar
                     </button>
                 </div>
@@ -513,9 +513,9 @@
             const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '_');
             if (buttonText === tabName) {
                 button.classList.remove('text-gray-500', 'border-transparent');
-                button.classList.add('border-green-500', 'text-green-600');
+                button.classList.add('border-[#f8faf9]0', 'text-[#3e5740]');
             } else {
-                button.classList.remove('border-green-500', 'text-green-600');
+                button.classList.remove('border-[#f8faf9]0', 'text-[#3e5740]');
                 button.classList.add('text-gray-500', 'border-transparent');
             }
         });
@@ -682,9 +682,9 @@
             const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '_');
             if (buttonText === tabName) {
                 button.classList.remove('text-gray-500', 'border-transparent');
-                button.classList.add('border-green-500', 'text-green-600');
+                button.classList.add('border-[#f8faf9]0', 'text-[#3e5740]');
             } else {
-                button.classList.remove('border-green-500', 'text-green-600');
+                button.classList.remove('border-[#f8faf9]0', 'text-[#3e5740]');
                 button.classList.add('text-gray-500', 'border-transparent');
             }
         });
@@ -746,9 +746,9 @@
             const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '_');
             if (buttonText === tabName) {
                 button.classList.remove('text-gray-500', 'border-transparent');
-                button.classList.add('border-green-500', 'text-green-600');
+                button.classList.add('border-[#f8faf9]0', 'text-[#3e5740]');
             } else {
-                button.classList.remove('border-green-500', 'text-green-600');
+                button.classList.remove('border-[#f8faf9]0', 'text-[#3e5740]');
                 button.classList.add('text-gray-500', 'border-transparent');
             }
         });

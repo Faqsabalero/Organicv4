@@ -7,7 +7,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 bg-gray-50">
     <div class="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
         <!-- Header con gradiente -->
-        <div class="px-6 py-6 bg-gradient-to-r from-green-600 to-green-700">
+        <div class="px-6 py-6 bg-gradient-to-r from-[#3e5740] to-[#2d4030]">
             <h2 class="text-3xl font-bold text-white tracking-tight">{{ panel_title }}</h2>
         </div>
 
@@ -15,7 +15,7 @@
         <div class="border-b border-gray-200 bg-white">
             <nav class="flex -mb-px px-4" aria-label="Tabs">
                 <button onclick="showTab('asignaciones')" 
-                        class="tab-button w-1/3 py-5 px-1 text-center border-b-2 font-medium text-sm border-green-500 text-green-600 transition-all duration-200 ease-in-out hover:bg-green-50">
+                        class="tab-button w-1/3 py-5 px-1 text-center border-b-2 font-medium text-sm border-[#f8faf9]0 text-[#3e5740] transition-all duration-200 ease-in-out hover:bg-[#f8faf9]">
                     <div class="flex items-center justify-center space-x-2">
                         <i class="fas fa-clipboard-list"></i>
                         <span>Asignaciones</span>
@@ -49,7 +49,7 @@
                         <span>Registrar Usuario</span>
                     </a>
                     <button onclick="toggleAsignacionForm()" 
-                            class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center space-x-3 shadow-lg">
+                            class="px-6 py-3 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white font-semibold rounded-lg hover:from-[#2d4030] hover:to-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-[#3e5740] focus:ring-offset-2 transition-all duration-200 ease-in-out transform hover:scale-105 flex items-center space-x-3 shadow-lg">
                         <i class="fas fa-plus-circle"></i>
                         <span>Asignar Stock</span>
                     </button>
@@ -60,7 +60,7 @@
                         {% csrf_token %}
                         {{ form.as_p }}
                         <div class="flex justify-end">
-                            <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            <button type="submit" class="px-6 py-3 bg-[#3e5740] text-white rounded-lg hover:bg-[#2d4030]">
                                 Crear Asignación
                             </button>
                         </div>
@@ -112,7 +112,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap">{{ asignacion.cantidad }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 py-1 text-xs rounded-full 
-                                        {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800
+                                        {% if asignacion.estado == 'PAGADO' %}bg-[#f0f4f1] text-[#1f2b20]
                                         {% else %}bg-yellow-100 text-yellow-800{% endif %}">
                                         {{ asignacion.estado }}
                                     </span>
@@ -191,7 +191,7 @@
                                     <td class="px-6 py-4 whitespace-nowrap">${{ venta.total|floatformat:2 }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <span class="px-2 py-1 text-xs rounded-full 
-                                            {% if venta.estado_pago == 'PAGADO' %}bg-green-100 text-green-800
+                                            {% if venta.estado_pago == 'PAGADO' %}bg-[#f0f4f1] text-[#1f2b20]
                                             {% else %}bg-yellow-100 text-yellow-800{% endif %}">
                                             {{ venta.estado_pago }}
                                         </span>
@@ -225,13 +225,13 @@
                     <div class="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="text-lg font-semibold text-gray-900">Total Ventas</h3>
-                            <i class="fas fa-dollar-sign text-green-500 text-xl"></i>
+                            <i class="fas fa-dollar-sign text-[#f8faf9]0 text-xl"></i>
                         </div>
-                        <p class="text-3xl font-bold text-green-600">${{ total_ventas|floatformat:2 }}</p>
+                        <p class="text-3xl font-bold text-[#3e5740]">${{ total_ventas|floatformat:2 }}</p>
                         <div class="mt-2 flex items-center">
                             {% if porcentaje_cambio_ventas > 0 %}
-                            <i class="fas fa-arrow-up text-green-500 mr-1"></i>
-                            <span class="text-green-500">{{ porcentaje_cambio_ventas|floatformat:1 }}%</span>
+                            <i class="fas fa-arrow-up text-[#f8faf9]0 mr-1"></i>
+                            <span class="text-[#f8faf9]0">{{ porcentaje_cambio_ventas|floatformat:1 }}%</span>
                             {% else %}
                             <i class="fas fa-arrow-down text-red-500 mr-1"></i>
                             <span class="text-red-500">{{ porcentaje_cambio_ventas|abs_value|floatformat:1 }}%</span>
@@ -284,7 +284,7 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-medium text-gray-600 mb-2">Ganancias Web</h4>
-                            <p class="text-2xl font-bold text-green-600">${{ ganancias_web|floatformat:2 }}</p>
+                            <p class="text-2xl font-bold text-[#3e5740]">${{ ganancias_web|floatformat:2 }}</p>
                             <p class="text-sm text-gray-500 mt-1">Margen: {{ margen_ganancia_web|floatformat:1 }}%</p>
                         </div>
                     </div>
@@ -294,16 +294,16 @@
                 <div class="bg-white rounded-lg shadow-lg p-6 border border-gray-100">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-xl font-semibold text-gray-900">Métricas de Asignaciones</h3>
-                        <i class="fas fa-users text-green-500 text-xl"></i>
+                        <i class="fas fa-users text-[#f8faf9]0 text-xl"></i>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
                             <h4 class="text-sm font-medium text-gray-600 mb-2">Total Asignaciones</h4>
-                            <p class="text-2xl font-bold text-green-600">${{ total_ventas_asignacion|floatformat:2 }}</p>
+                            <p class="text-2xl font-bold text-[#3e5740]">${{ total_ventas_asignacion|floatformat:2 }}</p>
                             <div class="mt-2 flex items-center">
                                 {% if porcentaje_cambio_asignaciones > 0 %}
-                                <i class="fas fa-arrow-up text-green-500 mr-1"></i>
-                                <span class="text-green-500">{{ porcentaje_cambio_asignaciones|floatformat:1 }}%</span>
+                                <i class="fas fa-arrow-up text-[#f8faf9]0 mr-1"></i>
+                                <span class="text-[#f8faf9]0">{{ porcentaje_cambio_asignaciones|floatformat:1 }}%</span>
                                 {% else %}
                                 <i class="fas fa-arrow-down text-red-500 mr-1"></i>
                                 <span class="text-red-500">{{ porcentaje_cambio_asignaciones|abs_value|floatformat:1 }}%</span>
@@ -318,7 +318,7 @@
                         </div>
                         <div>
                             <h4 class="text-sm font-medium text-gray-600 mb-2">Ganancias Asignaciones</h4>
-                            <p class="text-2xl font-bold text-green-600">${{ ganancias_asignacion|floatformat:2 }}</p>
+                            <p class="text-2xl font-bold text-[#3e5740]">${{ ganancias_asignacion|floatformat:2 }}</p>
                             <p class="text-sm text-gray-500 mt-1">Margen: {{ margen_ganancia_asignacion|floatformat:1 }}%</p>
                         </div>
                     </div>
@@ -365,7 +365,7 @@
                                     <span class="text-lg font-bold text-gray-500">#{{ forloop.counter }}</span>
                                     <div>
                                         <h4 class="text-sm font-medium text-gray-900">{{ producto.producto__nombre }}</h4>
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if producto.tipo == 'Web' %}bg-blue-100 text-blue-800{% else %}bg-green-100 text-green-800{% endif %}">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if producto.tipo == 'Web' %}bg-blue-100 text-blue-800{% else %}bg-[#f0f4f1] text-[#1f2b20]{% endif %}">
                                             {{ producto.tipo }}
                                         </span>
                                     </div>
@@ -378,7 +378,7 @@
                             <div class="relative pt-1">
                                 <div class="overflow-hidden h-2 text-xs flex rounded bg-gray-200">
                                     {% with max_unidades=productos_top.0.unidades %}
-                                    <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center {% if producto.tipo == 'Web' %}bg-blue-500{% else %}bg-green-500{% endif %}"
+                                    <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center {% if producto.tipo == 'Web' %}bg-blue-500{% else %}bg-[#f8faf9]0{% endif %}"
                                          style="width: {% widthratio producto.unidades max_unidades 100 %}%"></div>
                                     {% endwith %}
                                 </div>
@@ -407,9 +407,9 @@
             const buttonText = button.textContent.trim().toLowerCase().replace(/\s+/g, '');
             if (buttonText === tabName.toLowerCase()) {
                 button.classList.remove('text-gray-500', 'border-transparent');
-                button.classList.add('border-green-500', 'text-green-600', 'bg-green-50');
+                button.classList.add('border-[#f8faf9]0', 'text-[#3e5740]', 'bg-[#f8faf9]');
             } else {
-                button.classList.remove('border-green-500', 'text-green-600', 'bg-green-50');
+                button.classList.remove('border-[#f8faf9]0', 'text-[#3e5740]', 'bg-[#f8faf9]');
                 button.classList.add('text-gray-500', 'border-transparent');
             }
         });

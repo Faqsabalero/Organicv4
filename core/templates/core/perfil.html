@@ -6,11 +6,11 @@
 <div class="max-w-4xl mx-auto px-4 py-8">
     <div class="bg-white rounded-2xl shadow-enhanced p-8">
         <div class="text-center mb-8">
-            <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-green-600 rounded-full mx-auto flex items-center justify-center mb-4">
+            <div class="w-24 h-24 bg-gradient-to-r from-[#f8faf9]0 to-[#3e5740] rounded-full mx-auto flex items-center justify-center mb-4">
                 <i class="fas fa-user text-4xl text-white"></i>
             </div>
             <h1 class="text-3xl font-bold text-gray-800">{{ user.username }}</h1>
-            <span class="inline-block px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mt-2">
+            <span class="inline-block px-4 py-2 bg-[#f0f4f1] text-[#1f2b20] rounded-full text-sm font-semibold mt-2">
                 {{ user.get_rol_display }}
             </span>
         </div>
@@ -19,7 +19,7 @@
             <!-- Información Personal -->
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-info-circle mr-2 text-green-600"></i>
+                    <i class="fas fa-info-circle mr-2 text-[#3e5740]"></i>
                     Información Personal
                 </h2>
                 
@@ -44,7 +44,7 @@
             <!-- Información de Contacto y Ubicación -->
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-                    <i class="fas fa-map-marker-alt mr-2 text-green-600"></i>
+                    <i class="fas fa-map-marker-alt mr-2 text-[#3e5740]"></i>
                     Información de Contacto
                 </h2>
                 
@@ -72,23 +72,23 @@
         <!-- Estadísticas -->
         <div class="mt-12">
             <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                <i class="fas fa-chart-bar mr-2 text-green-600"></i>
+                <i class="fas fa-chart-bar mr-2 text-[#3e5740]"></i>
                 Estadísticas
             </h2>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center">
-                    <div class="text-3xl font-bold text-green-600 mb-2">{{ total_compras|default:"0" }}</div>
+                <div class="bg-gradient-to-br from-[#f8faf9] to-[#f0f4f1] rounded-xl p-6 text-center">
+                    <div class="text-3xl font-bold text-[#3e5740] mb-2">{{ total_compras|default:"0" }}</div>
                     <p class="text-sm text-gray-600">Compras Realizadas</p>
                 </div>
                 
-                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center">
-                    <div class="text-3xl font-bold text-green-600 mb-2">${{ total_gastado|default:"0" }}</div>
+                <div class="bg-gradient-to-br from-[#f8faf9] to-[#f0f4f1] rounded-xl p-6 text-center">
+                    <div class="text-3xl font-bold text-[#3e5740] mb-2">${{ total_gastado|default:"0" }}</div>
                     <p class="text-sm text-gray-600">Total Gastado</p>
                 </div>
                 
-                <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 text-center">
-                    <div class="text-3xl font-bold text-green-600 mb-2">{{ fecha_registro|date:"d/m/Y" }}</div>
+                <div class="bg-gradient-to-br from-[#f8faf9] to-[#f0f4f1] rounded-xl p-6 text-center">
+                    <div class="text-3xl font-bold text-[#3e5740] mb-2">{{ fecha_registro|date:"d/m/Y" }}</div>
                     <p class="text-sm text-gray-600">Miembro desde</p>
                 </div>
             </div>
@@ -96,7 +96,7 @@
 
         <!-- Acciones -->
         <div class="mt-12 flex justify-center space-x-4">
-            <a href="{% url 'core:editar_perfil' %}" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-300 flex items-center space-x-2">
+            <a href="{% url 'core:editar_perfil' %}" class="px-6 py-3 bg-[#3e5740] text-white rounded-lg hover:bg-[#2d4030] transition-colors duration-300 flex items-center space-x-2">
                 <i class="fas fa-edit"></i>
                 <span>Editar Perfil</span>
             </a>

@@ -8,15 +8,15 @@
 <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
         <div class="text-center">
-            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
-                <i class="fas fa-check text-green-600 text-xl"></i>
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-[#f0f4f1] mb-4">
+                <i class="fas fa-check text-[#3e5740] text-xl"></i>
             </div>
             {% for message in messages %}
                 <h3 class="text-lg font-medium text-gray-900 mb-4">{{ message }}</h3>
             {% endfor %}
             <div class="mt-5">
                 <button onclick="document.getElementById('successModal').style.display='none'" 
-                        class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">
+                        class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#3e5740] text-base font-medium text-white hover:bg-[#2d4030] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f8faf9]0 sm:text-sm">
                     Continuar
                 </button>
             </div>
@@ -28,7 +28,7 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
-        <div class="px-6 py-4 bg-green-700">
+        <div class="px-6 py-4 bg-[#2d4030]">
             <h2 class="text-2xl font-bold text-white">Datos para Transferencia Bancaria</h2>
         </div>
 
@@ -38,7 +38,7 @@
                 <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
                     <div class="flex justify-between items-center">
                         <span class="text-lg font-medium text-gray-700">Número de Pedido:</span>
-                        <span class="text-xl font-bold text-green-700">#{{ venta_id }}</span>
+                        <span class="text-xl font-bold text-[#2d4030]">#{{ venta_id }}</span>
                     </div>
                 </div>
             </div>
@@ -46,19 +46,19 @@
             <!-- Resumen del pedido -->
             <div class="mb-8">
                 <h3 class="text-xl font-semibold text-gray-900 mb-4">Resumen de tu Compra</h3>
-                <div class="bg-green-50 rounded-lg p-4">
+                <div class="bg-[#f8faf9] rounded-lg p-4">
                     <div class="space-y-3">
                         {% for item in items %}
                         <div class="flex justify-between items-center">
                             <span class="text-gray-700">{{ item.producto.nombre }} x {{ item.cantidad }}</span>
-                            <span class="text-green-700 font-semibold">${{ item.producto.precio|multiply:item.cantidad|floatformat:2 }} ARS</span>
+                            <span class="text-[#2d4030] font-semibold">${{ item.producto.precio|multiply:item.cantidad|floatformat:2 }} ARS</span>
                         </div>
                         {% endfor %}
                     </div>
-                    <hr class="my-4 border-green-200">
+                    <hr class="my-4 border-[#d9e2db]">
                     <div class="flex justify-between items-center">
                         <span class="text-xl font-semibold text-gray-700">Total a Transferir:</span>
-                        <span class="text-2xl font-bold text-green-700">${{ total }} ARS</span>
+                        <span class="text-2xl font-bold text-[#2d4030]">${{ total }} ARS</span>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@
                         <p class="text-sm font-medium text-gray-500">CBU</p>
                         <div class="mt-1 flex items-center space-x-2">
                             <p class="text-lg font-mono font-semibold text-gray-900">0720000720000000123456</p>
-                            <button onclick="copiarCBU()" class="p-2 text-green-600 hover:text-green-800">
+                            <button onclick="copiarCBU()" class="p-2 text-[#3e5740] hover:text-[#1f2b20]">
                                 <i class="fas fa-copy"></i>
                             </button>
                         </div>
@@ -99,7 +99,7 @@
                 <!-- Botón de WhatsApp -->
                 <a href="https://wa.me/+5491112345678?text=Hola!%20Realicé%20una%20compra%20en%20Organic%20Shops%20por%20${{ total }}%20ARS.%20Adjunto%20comprobante%20de%20transferencia." 
                    target="_blank"
-                   class="mt-8 w-full bg-green-600 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
+                   class="mt-8 w-full bg-[#3e5740] text-white px-6 py-4 rounded-lg font-semibold text-lg hover:bg-[#2d4030] focus:outline-none focus:ring-2 focus:ring-[#f8faf9]0 focus:ring-offset-2 transition-colors flex items-center justify-center space-x-2">
                     <i class="fab fa-whatsapp text-2xl"></i>
                     <span>Gestionar mi Envío por WhatsApp</span>
                 </a>

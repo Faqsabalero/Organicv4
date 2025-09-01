@@ -98,13 +98,13 @@
                 </a>
                 {% if user.is_authenticated %}
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
-                        <a href="{% url 'core:asignar' %}" class="hover:text-green-200 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
-                        <a href="{% url 'core:gestionar_productos' %}" class="hover:text-green-200 transition-all duration-200 ease-in-out hover-scale">Gestionar Productos</a>
-                        <a href="{% url 'core:inventario' %}" class="hover:text-green-200 transition-all duration-200 ease-in-out hover-scale">Inventario</a>
+                        <a href="{% url 'core:asignar' %}" class="hover:text-[#d9e2db] transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
+                        <a href="{% url 'core:gestionar_productos' %}" class="hover:text-[#d9e2db] transition-all duration-200 ease-in-out hover-scale">Gestionar Productos</a>
+                        <a href="{% url 'core:inventario' %}" class="hover:text-[#d9e2db] transition-all duration-200 ease-in-out hover-scale">Inventario</a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
-                        <a href="{% url 'core:distribuidor' %}" class="hover:text-green-200 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
+                        <a href="{% url 'core:distribuidor' %}" class="hover:text-[#d9e2db] transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
                     {% elif user.rol == 'REVENDEDOR' %}
-                        <a href="{% url 'core:revendedor' %}" class="hover:text-green-200 transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
+                        <a href="{% url 'core:revendedor' %}" class="hover:text-[#d9e2db] transition-all duration-200 ease-in-out hover-scale">Mi Panel</a>
                     {% endif %}
                     <div class="relative inline-block">
                         <button class="nav-link nav-transition flex items-center space-x-2 group" onclick="toggleUserMenu()">
@@ -140,8 +140,8 @@
                         </div>
                     </div>
                 {% else %}
-                    <a href="{% url 'core:login' %}" class="hover:text-green-200 transition-all duration-200 ease-in-out hover-scale">Iniciar Sesión</a>
-                    <a href="{% url 'core:registro_rapido' %}" class="hover:text-green-200 transition-all duration-200 ease-in-out hover-scale">Registrarse</a>
+                    <a href="{% url 'core:login' %}" class="hover:text-[#d9e2db] transition-all duration-200 ease-in-out hover-scale">Iniciar Sesión</a>
+                    <a href="{% url 'core:registro_rapido' %}" class="hover:text-[#d9e2db] transition-all duration-200 ease-in-out hover-scale">Registrarse</a>
                 {% endif %}
             </nav>
 
@@ -155,83 +155,83 @@
         <nav id="mobile-menu" class="md:hidden bg-white/95 backdrop-blur-md border-t border-white/20 hidden transform transition-all duration-300 overflow-hidden">
             <div class="divide-y divide-gray-100/20">
             <a href="{% url 'core:home' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-home text-green-600"></i>
+                <div class="w-8 h-8 rounded-full bg-[#f0f4f1] flex items-center justify-center group-hover:bg-[#d9e2db] transition-colors duration-200">
+                    <i class="fas fa-home text-[#3e5740]"></i>
                 </div>
                 Inicio
             </a>
             <a href="#about" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-info-circle text-green-600"></i>
+                <div class="w-8 h-8 rounded-full bg-[#f0f4f1] flex items-center justify-center group-hover:bg-[#d9e2db] transition-colors duration-200">
+                    <i class="fas fa-info-circle text-[#3e5740]"></i>
                 </div>
                 <span>Nosotros</span>
             </a>
             <a href="#products" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-box text-green-600"></i>
+                <div class="w-8 h-8 rounded-full bg-[#f0f4f1] flex items-center justify-center group-hover:bg-[#d9e2db] transition-colors duration-200">
+                    <i class="fas fa-box text-[#3e5740]"></i>
                 </div>
                 <span>Productos</span>
             </a>
             <a href="{% url 'core:contact' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-envelope text-green-600"></i>
+                <div class="w-8 h-8 rounded-full bg-[#f0f4f1] flex items-center justify-center group-hover:bg-[#d9e2db] transition-colors duration-200">
+                    <i class="fas fa-envelope text-[#3e5740]"></i>
                 </div>
                 <span>Contacto</span>
             </a>
             <a href="{% url 'core:carrito' %}" class="flex items-center space-x-3 px-6 py-4 hover:bg-white/50 font-medium text-gray-700 transition-all duration-200 ease-in-out group">
-                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors duration-200">
-                    <i class="fas fa-shopping-cart text-green-600"></i>
+                <div class="w-8 h-8 rounded-full bg-[#f0f4f1] flex items-center justify-center group-hover:bg-[#d9e2db] transition-colors duration-200">
+                    <i class="fas fa-shopping-cart text-[#3e5740]"></i>
                 </div>
                 <span>Carrito</span>
             </a>
             {% if user.is_authenticated %}
                     {% if user.rol == 'ADMIN' or user.rol == 'SUPERUSUARIO' %}
                         <!-- Panel de Administración -->
-                        <div class="bg-gradient-to-r from-green-700 to-green-800 px-4 py-3 border-b border-green-700">
+                        <div class="bg-gradient-to-r from-[#2d4030] to-[#1f2b20] px-4 py-3 border-b border-[#2d4030]">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-shield-alt text-white"></i>
                                 <p class="text-sm font-medium text-white">Panel de Administración</p>
                             </div>
                         </div>
-                        <a href="{% url 'core:asignar' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                        <a href="{% url 'core:asignar' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-tachometer-alt"></i>
                                 <span>Panel Principal</span>
                             </div>
                         </a>
-                        <a href="{% url 'core:gestionar_productos' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                        <a href="{% url 'core:gestionar_productos' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-boxes"></i>
                                 <span>Gestionar Productos</span>
                             </div>
                         </a>
-                        <a href="{% url 'core:inventario' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                        <a href="{% url 'core:inventario' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-warehouse"></i>
                                 <span>Inventario</span>
                             </div>
                         </a>
-                        <a href="{% url 'core:register' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                        <a href="{% url 'core:register' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-user-plus"></i>
                                 <span>Registrar Usuario</span>
                             </div>
                         </a>
                     {% elif user.rol == 'DISTRIBUIDOR' %}
-                        <a href="{% url 'core:distribuidor' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                        <a href="{% url 'core:distribuidor' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-user-tie"></i>
                                 <span>Mi Panel</span>
                             </div>
                         </a>
-                        <a href="{% url 'core:register' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                        <a href="{% url 'core:register' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-user-plus"></i>
                                 <span>Registrar Revendedor</span>
                             </div>
                         </a>
                     {% elif user.rol == 'REVENDEDOR' %}
-                        <a href="{% url 'core:revendedor' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                        <a href="{% url 'core:revendedor' %}" class="block px-4 py-3 border-b border-gray-200 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                             <div class="flex items-center space-x-2">
                                 <i class="fas fa-store"></i>
                                 <span>Mi Panel</span>
@@ -241,7 +241,7 @@
                 <div class="border-t border-gray-200">
                     <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 hover:from-gray-100 hover:to-gray-200 transition-all duration-200">
                         <div class="flex items-center space-x-2">
-                            <i class="fas fa-user text-green-600"></i>
+                            <i class="fas fa-user text-[#3e5740]"></i>
                             <div>
                                 <p class="text-sm text-gray-700">Conectado como:</p>
                                 <p class="text-sm font-medium text-gray-900">{{ user.email }}</p>
@@ -251,7 +251,7 @@
                     {% if user.rol %}
                     <div class="bg-gradient-to-r from-gray-50 to-gray-100 px-4 py-3 border-t border-gray-200 hover:from-gray-100 hover:to-gray-200 transition-all duration-200">
                         <div class="flex items-center space-x-2">
-                            <i class="fas fa-id-badge text-green-600"></i>
+                            <i class="fas fa-id-badge text-[#3e5740]"></i>
                             <div>
                                 <p class="text-xs text-gray-500">Rol:</p>
                                 <p class="text-sm font-medium text-gray-900">{{ user.get_rol_display }}</p>
@@ -268,13 +268,13 @@
                     </form>
                 </div>
             {% else %}
-                <a href="{% url 'core:login' %}" class="block px-4 py-3 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                <a href="{% url 'core:login' %}" class="block px-4 py-3 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Iniciar Sesión</span>
                     </div>
                 </a>
-                <a href="{% url 'core:registro_rapido' %}" class="block w-full text-left px-4 py-3 hover:bg-green-50 font-semibold text-green-600 transition-all duration-200 ease-in-out">
+                <a href="{% url 'core:registro_rapido' %}" class="block w-full text-left px-4 py-3 hover:bg-[#f8faf9] font-semibold text-[#3e5740] transition-all duration-200 ease-in-out">
                     <div class="flex items-center space-x-2">
                         <i class="fas fa-user-plus"></i>
                         <span>Registrarse</span>
@@ -289,11 +289,11 @@
     {% if messages %}
         <div class="container mx-auto px-4 mt-4">
             {% for message in messages %}
-            <div class="p-4 mb-4 rounded-lg animate-fadeIn shadow-enhanced overflow-hidden relative {% if message.tags == 'success' %}bg-gradient-to-r from-green-50 to-green-100 text-green-700 border-l-4 border-green-500{% elif message.tags == 'error' %}bg-gradient-to-r from-red-50 to-red-100 text-red-700 border-l-4 border-red-500{% else %}bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border-l-4 border-blue-500{% endif %}">
+            <div class="p-4 mb-4 rounded-lg animate-fadeIn shadow-enhanced overflow-hidden relative {% if message.tags == 'success' %}bg-gradient-to-r from-[#f8faf9] to-[#f0f4f1] text-[#2d4030] border-l-4 border-[#3e5740]{% elif message.tags == 'error' %}bg-gradient-to-r from-red-50 to-red-100 text-red-700 border-l-4 border-red-500{% else %}bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border-l-4 border-blue-500{% endif %}">
                 <div class="flex items-center space-x-3">
                     <div class="flex-shrink-0">
                         {% if message.tags == 'success' %}
-                            <i class="fas fa-check-circle text-green-500 text-xl"></i>
+                            <i class="fas fa-check-circle text-[#3e5740] text-xl"></i>
                         {% elif message.tags == 'error' %}
                             <i class="fas fa-exclamation-circle text-red-500 text-xl"></i>
                         {% else %}
@@ -315,7 +315,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-green-900 text-white py-8 mt-12">
+    <footer class="bg-[#141a15] text-white py-8 mt-12">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <!-- Logo and Copyright -->
@@ -324,19 +324,19 @@
                         <img src="{% static 'images/logo.jpg' %}" alt="Organic Shops" class="h-8 w-auto object-contain">
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-xs text-green-200">© {% now "Y" %} Todos los derechos reservados</span>
+                        <span class="text-xs text-[#d9e2db]">© {% now "Y" %} Todos los derechos reservados</span>
                     </div>
                 </div>
 
                 <!-- Social Links -->
                 <div class="flex gap-6">
-                    <a href="#" class="text-green-200 hover:text-white transition-colors duration-200">
+                    <a href="#" class="text-[#d9e2db] hover:text-white transition-colors duration-200">
                         <i class="fab fa-instagram text-xl"></i>
                     </a>
-                    <a href="#" class="text-green-200 hover:text-white transition-colors duration-200">
+                    <a href="#" class="text-[#d9e2db] hover:text-white transition-colors duration-200">
                         <i class="fab fa-facebook text-xl"></i>
                     </a>
-                    <a href="#" class="text-green-200 hover:text-white transition-colors duration-200">
+                    <a href="#" class="text-[#d9e2db] hover:text-white transition-colors duration-200">
                         <i class="fab fa-whatsapp text-xl"></i>
                     </a>
                 </div>

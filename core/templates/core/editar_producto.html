@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="mb-8">
             <div class="flex items-center space-x-4">
-                <div class="h-12 w-12 rounded-xl bg-green-600 flex items-center justify-center">
+                <div class="h-12 w-12 rounded-xl bg-[#3e5740] flex items-center justify-center">
                     <i class="fas {% if producto %}fa-edit{% else %}fa-plus{% endif %} text-2xl text-white"></i>
                 </div>
                 <div>
@@ -44,7 +44,7 @@
                                            id="nombre" 
                                            required
                                            value="{{ producto.nombre|default:'' }}"
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200"
                                            placeholder="Ej: Aceite CBD Premium">
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                               id="descripcion" 
                                               rows="4"
                                               required
-                                              class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 resize-none"
+                                              class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200 resize-none"
                                               placeholder="Describe las características y beneficios del producto...">{{ producto.descripcion|default:'' }}</textarea>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                     <select name="categoria" 
                                             id="categoria" 
                                             required
-                                            class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 bg-white">
+                                            class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200 bg-white">
                                         <option value="">Seleccionar categoría...</option>
                                         <option value="SALUD" {% if producto.categoria == 'SALUD' %}selected{% endif %}>Salud</option>
                                         <option value="BELLEZA" {% if producto.categoria == 'BELLEZA' %}selected{% endif %}>Belleza</option>
@@ -102,7 +102,7 @@
                                            id="imagen_url" 
                                            required
                                            value="{{ producto.imagen_url|default:'' }}"
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200"
                                            placeholder="https://ejemplo.com/imagen.jpg">
                                 </div>
                                 <!-- Image Preview -->
@@ -143,7 +143,7 @@
                                        required
                                        step="0.01" 
                                        value="{{ producto.precio|default:'' }}"
-                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200"
                                        placeholder="0.00">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500">ARS</span>
@@ -166,7 +166,7 @@
                                        required
                                        step="0.01" 
                                        value="{{ producto.precio_distribuidor|default:'' }}"
-                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200"
                                        placeholder="0.00">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500">ARS</span>
@@ -189,7 +189,7 @@
                                        required
                                        step="0.01" 
                                        value="{{ producto.precio_revendedor|default:'' }}"
-                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200"
                                        placeholder="0.00">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500">ARS</span>
@@ -213,7 +213,7 @@
                                        required
                                        step="0.01" 
                                        value="{{ producto.costo|default:'' }}"
-                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                                       class="pl-8 pr-12 block w-full py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-colors duration-200"
                                        placeholder="0.00">
                                 <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                                     <span class="text-gray-500">ARS</span>
@@ -227,17 +227,17 @@
                     <div class="mt-6 p-4 bg-white rounded-lg border border-gray-200">
                         <h4 class="text-sm font-medium text-gray-700 mb-4">Márgenes de Ganancia</h4>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                            <div class="bg-green-50 p-3 rounded-lg">
+                            <div class="bg-[#f8faf9] p-3 rounded-lg">
                                 <span class="text-gray-600">Margen Público:</span>
-                                <span id="marginPublic" class="font-semibold text-green-700">-</span>
+                                <span id="marginPublic" class="font-semibold text-[#2d4030]">-</span>
                             </div>
-                            <div class="bg-green-50 p-3 rounded-lg">
+                            <div class="bg-[#f8faf9] p-3 rounded-lg">
                                 <span class="text-gray-600">Margen Distribuidor:</span>
-                                <span id="marginDistributor" class="font-semibold text-green-700">-</span>
+                                <span id="marginDistributor" class="font-semibold text-[#2d4030]">-</span>
                             </div>
-                            <div class="bg-green-50 p-3 rounded-lg">
+                            <div class="bg-[#f8faf9] p-3 rounded-lg">
                                 <span class="text-gray-600">Margen Revendedor:</span>
-                                <span id="marginReseller" class="font-semibold text-green-700">-</span>
+                                <span id="marginReseller" class="font-semibold text-[#2d4030]">-</span>
                             </div>
                         </div>
                     </div>
@@ -251,7 +251,7 @@
                                    name="es_exclusivo" 
                                    id="es_exclusivo" 
                                    {% if producto.es_exclusivo %}checked{% endif %}
-                                   class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-green-500 transition-colors duration-200">
+                                   class="h-5 w-5 rounded border-gray-300 text-[#3e5740] focus:ring-[#f8faf9]0 transition-colors duration-200">
                             <label for="es_exclusivo" class="ml-2 block text-sm font-medium text-gray-700">
                                 Producto Exclusivo
                             </label>
@@ -268,12 +268,12 @@
                 <!-- Form Actions -->
                 <div class="p-8 bg-gray-50 flex items-center justify-end space-x-4">
                     <a href="{% url 'core:home' %}" 
-                       class="px-6 py-3 bg-white border-2 border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 flex items-center space-x-2">
+                       class="px-6 py-3 bg-white border-2 border-gray-300 rounded-lg font-semibold text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f8faf9]0 transition-all duration-200 flex items-center space-x-2">
                         <i class="fas fa-times"></i>
                         <span>Cancelar</span>
                     </a>
                     <button type="submit"
-                            class="px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-lg font-semibold hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-all duration-200 flex items-center space-x-2">
+                            class="px-6 py-3 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white rounded-lg font-semibold hover:from-[#2d4030] hover:to-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#f8faf9]0 transition-all duration-200 flex items-center space-x-2">
                         <i class="fas fa-save"></i>
                         <span>Guardar Cambios</span>
                     </button>

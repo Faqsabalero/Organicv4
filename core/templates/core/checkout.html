@@ -4,23 +4,23 @@
 {% block title %}Proceder al Pago - Organic Shops{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-green-50 to-green-100 py-12">
+<div class="min-h-screen bg-gradient-to-br from-[#f8faf9] to-[#f0f4f1] py-12">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Progress Steps -->
         <div class="mb-8">
             <div class="flex items-center justify-center space-x-4">
                 <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">
+                    <div class="w-8 h-8 rounded-full bg-[#3e5740] text-white flex items-center justify-center">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
-                    <div class="ml-2 text-sm font-medium text-green-600">Carrito</div>
+                    <div class="ml-2 text-sm font-medium text-[#3e5740]">Carrito</div>
                 </div>
-                <div class="h-1 w-16 bg-green-600"></div>
+                <div class="h-1 w-16 bg-[#3e5740]"></div>
                 <div class="flex items-center">
-                    <div class="w-8 h-8 rounded-full bg-green-600 text-white flex items-center justify-center">
+                    <div class="w-8 h-8 rounded-full bg-[#3e5740] text-white flex items-center justify-center">
                         <i class="fas fa-credit-card"></i>
                     </div>
-                    <div class="ml-2 text-sm font-medium text-green-600">Pago</div>
+                    <div class="ml-2 text-sm font-medium text-[#3e5740]">Pago</div>
                 </div>
                 <div class="h-1 w-16 bg-gray-300"></div>
                 <div class="flex items-center">
@@ -34,14 +34,14 @@
 
         <div class="bg-white rounded-2xl shadow-[0_20px_50px_rgba(8,_112,_84,_0.1)] border border-gray-100 overflow-hidden transform transition-all duration-300 hover:shadow-[0_20px_50px_rgba(8,_112,_84,_0.15)]">
             <!-- Header -->
-            <div class="px-6 py-6 bg-gradient-to-r from-green-600 to-green-700">
+            <div class="px-6 py-6 bg-gradient-to-r from-[#3e5740] to-[#2d4030]">
                 <div class="flex items-center space-x-4">
                     <div class="h-12 w-12 rounded-full bg-white/20 flex items-center justify-center">
                         <i class="fas fa-credit-card text-2xl text-white"></i>
                     </div>
                     <div>
                         <h2 class="text-2xl font-bold text-white">Proceder al Pago</h2>
-                        <p class="text-green-100 text-sm">Complete sus datos para finalizar la compra</p>
+                        <p class="text-[#f0f4f1] text-sm">Complete sus datos para finalizar la compra</p>
                     </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                                            id="codigo_cupon"
                                            name="codigo_cupon"
                                            placeholder="Ingresa el código de cupón"
-                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30"
+                                           class="block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-all duration-200 hover:border-[#b8c9bb] hover:bg-[#f8faf9]/30"
                                            value="{{ request.POST.codigo_cupon|default:'' }}">
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                            required
                                            value="{{ user.nombre|default:'' }}"
                                            placeholder="Ingresa tu nombre completo" 
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30">
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-all duration-200 hover:border-[#b8c9bb] hover:bg-[#f8faf9]/30">
                                 </div>
                             </div>
 
@@ -106,7 +106,7 @@
                                            required
                                            value="{{ user.email|default:'' }}"
                                            placeholder="tuemail@ejemplo.com" 
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30">
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-all duration-200 hover:border-[#b8c9bb] hover:bg-[#f8faf9]/30">
                                 </div>
                             </div>
 
@@ -127,7 +127,7 @@
                                            placeholder="12345678" 
                                            pattern="[0-9]{7,8}"
                                            title="Ingresa un DNI válido (7-8 dígitos)"
-                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30">
+                                           class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-all duration-200 hover:border-[#b8c9bb] hover:bg-[#f8faf9]/30">
                                 </div>
                                 <p class="text-xs text-gray-500">Formato: 7-8 dígitos sin puntos</p>
                             </div>
@@ -148,7 +148,7 @@
                                     <select id="ciudad" 
                                             name="ciudad" 
                                             required
-                                            class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 hover:border-green-300 hover:bg-green-50/30">
+                                            class="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#f8faf9]0 focus:border-transparent transition-all duration-200 hover:border-[#b8c9bb] hover:bg-[#f8faf9]/30">
                                         <option value="">Seleccione una ciudad</option>
                                         <option value="santa fe" {% if user.ciudad == 'santa fe' %}selected{% endif %}>Santa Fe</option>
                                         <option value="cordoba" {% if user.ciudad == 'cordoba' %}selected{% endif %}>Córdoba</option>
@@ -169,7 +169,7 @@
 
                                 <button type="submit" 
                                         id="finalizarCompra"
-                                        class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
+                                        class="flex-1 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white px-6 py-4 rounded-lg font-semibold text-lg hover:from-[#2d4030] hover:to-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-[#f8faf9]0 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
                                     <span>Finalizar Compra</span>
                                     <i class="fas fa-arrow-right"></i>
                                 </button>
@@ -201,7 +201,7 @@
                                             </div>
                                         </div>
                                         <div class="flex-shrink-0">
-                                            <span class="text-green-600 font-semibold">${{ item.producto.precio|multiply:item.cantidad|floatformat:2 }}</span>
+                                            <span class="text-[#3e5740] font-semibold">${{ item.producto.precio|multiply:item.cantidad|floatformat:2 }}</span>
                                         </div>
                                     </div>
                                     {% endfor %}
@@ -210,17 +210,17 @@
                                 <div class="mt-6 pt-6 border-t border-gray-200">
                                     <div class="flex justify-between items-center text-lg font-bold">
                                         <span class="text-gray-900">Total:</span>
-                                        <span class="text-green-600">${{ total }} ARS</span>
+                                        <span class="text-[#3e5740]">${{ total }} ARS</span>
                                     </div>
                                 </div>
 
-                                <div class="mt-6 p-4 bg-green-50 rounded-lg border border-green-100">
+                                <div class="mt-6 p-4 bg-[#f8faf9] rounded-lg border border-[#f0f4f1]">
                                     <div class="flex items-center justify-center space-x-3">
-                                        <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+                                        <i class="fas fa-shield-alt text-[#3e5740] text-xl"></i>
                                         <div class="text-center">
-                                            <p class="font-medium text-green-800">Pago 100% Seguro</p>
+                                            <p class="font-medium text-[#1f2b20]">Pago 100% Seguro</p>
                                             <div class="flex items-center mt-2 space-x-2">
-                                                <span class="text-sm text-green-600">Procesado por</span>
+                                                <span class="text-sm text-[#3e5740]">Procesado por</span>
                                                 <img src="https://www.mercadopago.com/org-img/MP3/API/logos/mp-logo.png" 
                                                      alt="Mercado Pago" 
                                                      class="h-6"
@@ -242,8 +242,8 @@
 <div id="registroModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center hidden z-50">
     <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 transform transition-all duration-300 scale-95">
         <div class="text-center mb-6">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-user-plus text-2xl text-green-600"></i>
+            <div class="w-16 h-16 bg-[#f0f4f1] rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-user-plus text-2xl text-[#3e5740]"></i>
             </div>
             <h3 class="text-2xl font-bold text-gray-900">¿Deseas registrarte?</h3>
             <p class="text-gray-600 mt-2">
@@ -253,7 +253,7 @@
         
         <div class="space-y-4">
             <button onclick="redirigirARegistro()" 
-                    class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white px-6 py-3 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
+                    class="w-full bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white px-6 py-3 rounded-lg font-semibold text-lg hover:from-[#2d4030] hover:to-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-[#f8faf9]0 focus:ring-offset-2 transition-all duration-300 flex items-center justify-center space-x-2">
                 <i class="fas fa-user-plus"></i>
                 <span>Sí, quiero registrarme</span>
             </button>
@@ -281,11 +281,11 @@ document.addEventListener('DOMContentLoaded', function() {
         if (dni.length < 7 || dni.length > 8) {
             this.setCustomValidity('El DNI debe tener entre 7 y 8 dígitos');
             this.classList.add('border-red-500');
-            this.classList.remove('border-green-500');
+            this.classList.remove('border-[#f8faf9]0');
         } else {
             this.setCustomValidity('');
             this.classList.remove('border-red-500');
-            this.classList.add('border-green-500');
+            this.classList.add('border-[#f8faf9]0');
         }
     });
     
@@ -358,7 +358,7 @@ function redirigirARegistro() {
     const modalContent = document.querySelector('#registroModal .bg-white');
     modalContent.innerHTML = `
         <div class="text-center">
-            <div class="animate-spin rounded-full h-12 w-12 border-4 border-green-600 border-t-transparent mx-auto"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-4 border-[#3e5740] border-t-transparent mx-auto"></div>
             <p class="mt-4 text-gray-600">Redirigiendo al registro...</p>
         </div>
     `;

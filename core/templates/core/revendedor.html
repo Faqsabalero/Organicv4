@@ -6,14 +6,14 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <!-- Header -->
-        <div class="px-6 py-4 bg-green-700">
+        <div class="px-6 py-4 bg-[#2d4030]">
             <h2 class="text-2xl font-bold text-white">Mi Panel de Revendedor</h2>
         </div>
 
         {# 
         <!-- Tabla de Asignaciones - COMENTADO POR REQUERIMIENTO -->
         <div class="p-6">
-            <h3 class="text-xl font-semibold text-green-700 mb-4">Mis Asignaciones</h3>
+            <h3 class="text-xl font-semibold text-[#2d4030] mb-4">Mis Asignaciones</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -71,7 +71,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {% if asignacion.estado == 'PAGADO' %}bg-[#f0f4f1] text-[#1f2b20]{% else %}bg-yellow-100 text-yellow-800{% endif %}">
                                     {{ asignacion.get_estado_display }}
                                 </span>
                             </td>
@@ -93,7 +93,7 @@
         <div class="p-6 border-b border-gray-200">
             <div class="text-center">
                 <a href="{% url 'core:register' %}" 
-                   class="inline-block bg-gradient-to-r from-green-600 to-green-700 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-green-700 hover:to-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
+                   class="inline-block bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-[#2d4030] hover:to-[#1f2b20] focus:outline-none focus:ring-2 focus:ring-[#f8faf9]0 focus:ring-offset-2 transition-all duration-300 transform hover:scale-[1.02] shadow-lg">
                     Registrar Cliente
                 </a>
                 <p class="mt-3 text-sm text-gray-600">
@@ -104,7 +104,7 @@
 
         <!-- Tabla de Clientes Registrados -->
         <div class="p-6">
-            <h3 class="text-xl font-semibold text-green-700 mb-4">Mis Clientes Registrados</h3>
+            <h3 class="text-xl font-semibold text-[#2d4030] mb-4">Mis Clientes Registrados</h3>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
@@ -152,7 +152,7 @@
                                 <div class="text-sm text-gray-500">{{ cliente.num_compras|default:"0" }} compra{{ cliente.num_compras|pluralize }}</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#f0f4f1] text-[#1f2b20]">
                                     ${{ cliente.comision_generada|default:"0.00" }}
                                 </span>
                             </td>
@@ -169,16 +169,16 @@
             </div>
             
             {% if clientes_registrados %}
-            <div class="mt-6 bg-green-50 rounded-lg p-4 border border-green-200">
+            <div class="mt-6 bg-[#f8faf9] rounded-lg p-4 border border-[#d9e2db]">
                 <div class="flex items-center">
                     <div class="flex-shrink-0">
-                        <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                            <span class="text-green-600 font-semibold">$</span>
+                        <div class="w-8 h-8 rounded-full bg-[#f0f4f1] flex items-center justify-center">
+                            <span class="text-[#3e5740] font-semibold">$</span>
                         </div>
                     </div>
                     <div class="ml-3">
-                        <h4 class="text-sm font-medium text-green-800">Resumen de Comisiones</h4>
-                        <div class="mt-1 text-sm text-green-700">
+                        <h4 class="text-sm font-medium text-[#1f2b20]">Resumen de Comisiones</h4>
+                        <div class="mt-1 text-sm text-[#2d4030]">
                             <p>Total de clientes registrados: <strong>{{ clientes_registrados|length }}</strong></p>
                             <p>Comisión total generada: <strong>${{ total_comisiones|default:"0.00" }}</strong></p>
                         </div>

@@ -10,16 +10,16 @@
     <!-- Tabla de productos con stock -->
     <div class="overflow-x-auto mb-12 shadow-xl rounded-xl border border-gray-300 bg-white">
         <table class="min-w-full rounded-xl border-collapse border border-gray-300">
-            <thead class="bg-gradient-to-r from-green-600 to-green-400 text-white rounded-t-xl">
+            <thead class="bg-gradient-to-r from-[#3e5740] to-[#8fa891] text-white rounded-t-xl">
                 <tr>
-                    <th class="py-5 px-8 text-left font-semibold tracking-wide border-r border-green-500">Nombre</th>
-                    <th class="py-5 px-8 text-left font-semibold tracking-wide border-r border-green-500">Descripción</th>
+                    <th class="py-5 px-8 text-left font-semibold tracking-wide border-r border-[#f8faf9]0">Nombre</th>
+                    <th class="py-5 px-8 text-left font-semibold tracking-wide border-r border-[#f8faf9]0">Descripción</th>
                     <th class="py-5 px-8 text-left font-semibold tracking-wide">Stock Actual</th>
                 </tr>
             </thead>
             <tbody>
                 {% for producto in productos %}
-                <tr class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-green-50 hover:to-green-100 transition-colors duration-300 cursor-pointer">
+                <tr class="border-b border-gray-300 hover:bg-gradient-to-r hover:from-[#f8faf9] hover:to-[#f0f4f1] transition-colors duration-300 cursor-pointer">
                     <td class="py-5 px-8 text-gray-900 font-semibold border-r border-gray-300">{{ producto.nombre }}</td>
                     <td class="py-5 px-8 text-gray-700 border-r border-gray-300">{{ producto.descripcion }}</td>
                     <td class="py-5 px-8 text-gray-900 font-bold">{{ producto.stock }}</td>
@@ -41,19 +41,19 @@
             {{ form.non_field_errors }}
             <div>
                 <label for="{{ form.producto.id_for_label }}" class="block text-gray-800 font-semibold mb-3">Producto</label>
-                {{ form.producto|add_class:"w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-4 focus:ring-green-600 transition" }}
+                {{ form.producto|add_class:"w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-4 focus:ring-[#3e5740] transition" }}
                 {% for error in form.producto.errors %}
                     <p class="text-red-600 text-sm mt-2">{{ error }}</p>
                 {% endfor %}
             </div>
             <div>
                 <label for="{{ form.cantidad.id_for_label }}" class="block text-gray-800 font-semibold mb-3">Cantidad</label>
-                {{ form.cantidad|add_class:"w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-4 focus:ring-green-600 transition" }}
+                {{ form.cantidad|add_class:"w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-4 focus:ring-[#3e5740] transition" }}
                 {% for error in form.cantidad.errors %}
                     <p class="text-red-600 text-sm mt-2">{{ error }}</p>
                 {% endfor %}
             </div>
-            <button type="submit" class="w-full bg-gradient-to-r from-green-600 to-green-400 text-white py-4 rounded-xl hover:from-green-700 hover:to-green-500 transition-colors duration-300 font-bold shadow-lg">Agregar Stock</button>
+            <button type="submit" class="w-full bg-gradient-to-r from-[#3e5740] to-[#8fa891] text-white py-4 rounded-xl hover:from-[#2d4030] hover:to-[#f8faf9]0 transition-colors duration-300 font-bold shadow-lg">Agregar Stock</button>
         </form>
     </div>
 </div>
