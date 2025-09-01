@@ -70,16 +70,8 @@
     <header class="navbar-glass sticky top-0 z-[40] shadow-lg transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
             <a href="{% url 'core:home' %}" class="flex items-center space-x-3 group">
-                <div class="relative h-12 w-12 logo-container flex items-center justify-center bg-white rounded-full shadow-md">
-                    <div class="text-lg font-bold text-green-800 flex items-center">
-                        <span class="text-green-800 text-xs">O</span>
-                        <span class="text-green-600 text-sm">🌿</span>
-                        <span class="text-green-800 text-xs">S</span>
-                    </div>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-xl font-bold text-white transition-all duration-300 group-hover:text-green-200">Organic Shops</span>
-                    <span class="text-xs text-green-200 font-medium tracking-wider">NATURAL & SALUDABLE</span>
+                <div class="relative h-12 w-auto logo-container flex items-center justify-center">
+                    <img src="{% static 'images/logo.jpg' %}" alt="Organic Shops" class="h-12 w-auto object-contain transition-all duration-300 group-hover:scale-105">
                 </div>
             </a>
             
@@ -328,15 +320,10 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <!-- Logo and Copyright -->
                 <div class="flex items-center gap-3">
-                    <div class="h-8 w-8 rounded-full bg-white flex items-center justify-center">
-                        <div class="text-sm font-bold text-green-800 flex items-center">
-                            <span class="text-green-800 text-xs">O</span>
-                            <span class="text-green-600 text-xs">🌿</span>
-                            <span class="text-green-800 text-xs">S</span>
-                        </div>
+                    <div class="h-8 w-auto flex items-center justify-center">
+                        <img src="{% static 'images/logo.jpg' %}" alt="Organic Shops" class="h-8 w-auto object-contain">
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-bold">Organic Shops</span>
                         <span class="text-xs text-green-200">© {% now "Y" %} Todos los derechos reservados</span>
                     </div>
                 </div>
