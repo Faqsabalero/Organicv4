@@ -84,6 +84,19 @@
     @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#3e5740] focus:border-transparent transition-all duration-200;
 }
 
+/* Fix para campos con iconos - asegurar padding izquierdo suficiente */
+.form-input.pl-10,
+input.pl-10,
+select.pl-10 {
+    padding-left: 2.75rem !important;
+}
+
+/* Asegurar que los iconos no interfieran con el texto */
+.relative .absolute.inset-y-0.left-0 {
+    z-index: 10;
+    pointer-events: none;
+}
+
 .form-label {
     @apply block text-sm font-medium text-gray-700 mb-1;
 }

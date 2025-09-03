@@ -197,6 +197,15 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('border-[#f8faf9]0');
         }
     });
+    
+    // Asegurar padding correcto para campos con iconos
+    const fieldsWithIcons = ['id_ciudad'];
+    fieldsWithIcons.forEach(fieldId => {
+        const element = document.getElementById(fieldId);
+        if (element) {
+            element.style.paddingLeft = '2.75rem';
+        }
+    });
 });
 </script>
 {% endblock %}

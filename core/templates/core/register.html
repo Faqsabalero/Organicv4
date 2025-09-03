@@ -297,6 +297,11 @@
                 'transition-colors',
                 'duration-200'
             );
+            
+            // Asegurar padding específico para campos con iconos
+            if (['ciudad', 'provincia', 'telefono'].includes(input)) {
+                element.style.paddingLeft = '2.75rem';
+            }
         }
     });
 
