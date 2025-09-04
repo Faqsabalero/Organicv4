@@ -128,16 +128,10 @@ class RegistroRapidoForm(forms.ModelForm):
                 'placeholder': '12345678',
                 'pattern': '[0-9]{7,8}'
             }),
-            'ciudad': forms.Select(attrs={
-                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200'
-            }, choices=[
-                ('', 'Seleccione una ciudad'),
-                ('santa fe', 'Santa Fe'),
-                ('cordoba', 'Córdoba'),
-                ('rosario', 'Rosario'),
-                ('esperanza', 'Esperanza'),
-                ('rafaela', 'Rafaela'),
-            ]),
+            'ciudad': forms.TextInput(attrs={
+                'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
+                'placeholder': 'Ingresa tu ciudad'
+            }),
             'domicilio': forms.TextInput(attrs={
                 'class': 'pl-10 block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200',
                 'placeholder': 'Calle 123, Ciudad'
