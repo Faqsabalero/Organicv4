@@ -279,7 +279,7 @@
 <script>
     // Estilizar inputs
     const inputs = [
-        'username', 'nombre', 'email', 'dni', 'ciudad', 'provincia', 'telefono', 'rol', 'password1', 'password2'
+        'username', 'nombre', 'email', 'dni', 'ciudad', 'provincia', 'domicilio', 'telefono', 'rol', 'password1', 'password2'
     ];
 
     inputs.forEach(input => {
@@ -299,7 +299,7 @@
             );
             
             // Asegurar padding específico para campos con iconos
-            if (['ciudad', 'provincia', 'telefono'].includes(input)) {
+            if (['ciudad', 'provincia', 'domicilio', 'telefono'].includes(input)) {
                 element.style.paddingLeft = '2.75rem';
             }
         }

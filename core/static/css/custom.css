@@ -87,7 +87,8 @@
 /* Fix para campos con iconos - asegurar padding izquierdo suficiente */
 .form-input.pl-10,
 input.pl-10,
-select.pl-10 {
+select.pl-10,
+textarea.pl-10 {
     padding-left: 2.75rem !important;
 }
 
@@ -95,6 +96,11 @@ select.pl-10 {
 .relative .absolute.inset-y-0.left-0 {
     z-index: 10;
     pointer-events: none;
+}
+
+/* Específico para el campo domicilio para asegurar que no haya overlap */
+#id_domicilio {
+    padding-left: 2.75rem !important;
 }
 
 .form-label {
