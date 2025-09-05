@@ -96,7 +96,6 @@
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
 <section class="relative bg-gradient-to-br from-[#f8faf9] to-[#f0f4f1] flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-16 md:py-24 gap-10 rounded-3xl shadow-enhanced mx-4 my-8 animate-fadeIn" id="home">
     <div class="md:w-1/2 text-center md:text-left">
         <h1 class="text-4xl md:text-6xl font-extrabold text-[#1f2b20] leading-tight">
@@ -123,15 +122,15 @@
     <div class="md:w-1/2 flex justify-center relative" style="animation-delay: 0.3s;">
 <div class="w-full max-w-3xl relative overflow-hidden rounded-2xl shadow-enhanced select-none transform hover:scale-[1.02] transition-transform duration-300" id="carousel-container">
     <div class="relative w-full h-72 sm:h-[500px]" id="carousel" role="region" aria-label="Carrusel de imágenes destacadas">
-        <!-- Carousel items -->
         <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-100 transform translate-x-0" data-carousel-item="">
             <img src="{% static "images/carrousel .PNG" %}" 
                  alt="Productos orgánicos naturales" 
-                 class="w-full h-full object-cover" 
-                 loading="lazy"
+                 class="w-full h-full object-cover block" 
+                 loading="eager"
+                 style="min-height: 100%; object-fit: cover; object-position: center;"
                  onerror="this.src='{% static "images/logo.jpg" %}';" />
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
                     Productos Naturales y Orgánicos
                 </h2>
             </div>
@@ -139,11 +138,12 @@
         <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
             <img src="{% static "images/carrousel  2.PNG" %}" 
                  alt="Productos naturales para el cuidado de la piel" 
-                 class="w-full h-full object-cover" 
-                 loading="lazy"
+                 class="w-full h-full object-cover block" 
+                 loading="eager"
+                 style="min-height: 100%; object-fit: cover; object-position: center;"
                  onerror="this.src='{% static "images/logo.jpg" %}';" />
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
                     Cuidado Natural de la Piel
                 </h2>
             </div>
@@ -151,11 +151,12 @@
         <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
             <img src="{% static "images/carrousel  3.PNG" %}" 
                  alt="Ingredientes naturales y orgánicos" 
-                 class="w-full h-full object-cover" 
-                 loading="lazy"
+                 class="w-full h-full object-cover block" 
+                 loading="eager"
+                 style="min-height: 100%; object-fit: cover; object-position: center;"
                  onerror="this.src='{% static "images/logo.jpg" %}';" />
             <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <h2 class="text-white text-2xl sm:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
                     Ingredientes 100% Naturales
                 </h2>
             </div>
