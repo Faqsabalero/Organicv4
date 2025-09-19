@@ -48,41 +48,136 @@
         animation: slideInRight 0.7s ease-in-out;
     }
 
-    /* Mobile responsive carousel fixes */
+    /* Mobile responsive carousel fixes - Unificado */
     @media (max-width: 768px) {
         #carousel-container {
-            max-width: 100%;
-            margin: 0 1rem;
+            max-width: 100% !important;
+            margin: 0 1rem !important;
+            padding: 1rem 0 !important;
         }
-        
+
         #carousel {
-            height: 300px;
+            height: 280px !important;
+            min-height: 280px !important;
+            position: relative !important;
+            overflow: hidden !important;
+            border-radius: 1rem !important;
         }
-        
+
+        .carousel-item {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            display: none !important;
+        }
+
+        .carousel-item.active {
+            display: block !important;
+        }
+
         #carousel img {
-            object-fit: cover;
-            object-position: center;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            display: block !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
         }
-        
+
         #carousel h2 {
-            font-size: 1.5rem;
-            padding: 0 1rem;
+            font-size: 1.25rem !important;
+            padding: 0 1rem !important;
+            position: relative !important;
+            z-index: 10 !important;
         }
-        
+
         #prevBtn, #nextBtn {
-            padding: 0.5rem;
-            font-size: 1rem;
+            padding: 0.5rem !important;
+            font-size: 1rem !important;
+            width: 2.5rem !important;
+            height: 2.5rem !important;
+            z-index: 20 !important;
+            position: absolute !important;
+            background: rgba(0,0,0,0.5) !important;
+            border: none !important;
+            border-radius: 50% !important;
+            color: white !important;
+        }
+
+        #carousel-dots {
+            position: absolute !important;
+            bottom: 1rem !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 20 !important;
+        }
+
+        #carousel-dots button {
+            width: 0.5rem !important;
+            height: 0.5rem !important;
+            border-radius: 50% !important;
+            background: rgba(255,255,255,0.6) !important;
+            border: none !important;
+            margin: 0 0.25rem !important;
         }
     }
 
     @media (max-width: 480px) {
         #carousel {
-            height: 250px;
+            height: 240px !important;
+            min-height: 240px !important;
         }
-        
+
         #carousel h2 {
-            font-size: 1.25rem;
+            font-size: 1.125rem !important;
+            padding: 0 0.75rem !important;
         }
+
+        #prevBtn, #nextBtn {
+            width: 2rem !important;
+            height: 2rem !important;
+            padding: 0.375rem !important;
+        }
+
+        #prevBtn {
+            left: 0.5rem !important;
+        }
+
+        #nextBtn {
+            right: 0.5rem !important;
+        }
+    }
+
+    /* Asegurar visibilidad del carrusel */
+    #carousel-container {
+        position: relative !important;
+        overflow: visible !important;
+        min-height: 200px !important;
+    }
+
+    #carousel {
+        position: relative !important;
+        overflow: hidden !important;
+        background-color: #f3f4f6 !important;
+    }
+
+    .carousel-item img {
+        opacity: 1 !important;
+        visibility: visible !important;
+        background-color: #f3f4f6 !important;
+    }
+
+    /* Fallback para imágenes que no cargan */
+    .carousel-item img[src=""] {
+        opacity: 0 !important;
+    }
+
+    .carousel-item img:not([src=""]) {
+        opacity: 1 !important;
     }
 
     .hover-scale {
