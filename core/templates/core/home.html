@@ -48,67 +48,58 @@
         animation: slideInRight 0.7s ease-in-out;
     }
 
-    /* Mobile responsive carousel fixes - Unificado */
+    /* Mobile responsive carousel fixes */
     @media (max-width: 768px) {
-        #carousel-container {
+        #carousel-container-mobile {
             max-width: 100% !important;
-            margin: 0 1rem !important;
-            padding: 1rem 0 !important;
+            margin: 0 !important;
         }
 
-        #carousel {
+        #carousel-mobile {
             height: 280px !important;
             min-height: 280px !important;
             position: relative !important;
             overflow: hidden !important;
             border-radius: 1rem !important;
+            background-color: #f3f4f6 !important;
         }
 
-        .carousel-item {
+        #carousel-mobile .carousel-item {
             position: absolute !important;
             top: 0 !important;
             left: 0 !important;
             width: 100% !important;
             height: 100% !important;
-            display: none !important;
         }
 
-        .carousel-item.active {
-            display: block !important;
-        }
-
-        #carousel img {
+        #carousel-mobile img {
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
             object-position: center !important;
             display: block !important;
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
         }
 
-        #carousel h2 {
-            font-size: 1.25rem !important;
+        #carousel-mobile h2 {
+            font-size: 1.125rem !important;
             padding: 0 1rem !important;
             position: relative !important;
             z-index: 10 !important;
         }
 
-        #prevBtn, #nextBtn {
+        #prevBtn-mobile, #nextBtn-mobile {
             padding: 0.5rem !important;
-            font-size: 1rem !important;
-            width: 2.5rem !important;
-            height: 2.5rem !important;
+            width: 2rem !important;
+            height: 2rem !important;
             z-index: 20 !important;
             position: absolute !important;
-            background: rgba(0,0,0,0.5) !important;
+            background: rgba(0,0,0,0.7) !important;
             border: none !important;
             border-radius: 50% !important;
             color: white !important;
         }
 
-        #carousel-dots {
+        #carousel-dots-mobile {
             position: absolute !important;
             bottom: 1rem !important;
             left: 50% !important;
@@ -116,7 +107,7 @@
             z-index: 20 !important;
         }
 
-        #carousel-dots button {
+        #carousel-dots-mobile button {
             width: 0.5rem !important;
             height: 0.5rem !important;
             border-radius: 50% !important;
@@ -127,39 +118,33 @@
     }
 
     @media (max-width: 480px) {
-        #carousel {
+        #carousel-mobile {
             height: 240px !important;
             min-height: 240px !important;
         }
 
-        #carousel h2 {
-            font-size: 1.125rem !important;
+        #carousel-mobile h2 {
+            font-size: 1rem !important;
             padding: 0 0.75rem !important;
         }
 
-        #prevBtn, #nextBtn {
-            width: 2rem !important;
-            height: 2rem !important;
-            padding: 0.375rem !important;
-        }
-
-        #prevBtn {
+        #prevBtn-mobile {
             left: 0.5rem !important;
         }
 
-        #nextBtn {
+        #nextBtn-mobile {
             right: 0.5rem !important;
         }
     }
 
     /* Asegurar visibilidad del carrusel */
-    #carousel-container {
+    #carousel-container, #carousel-container-mobile {
         position: relative !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         min-height: 200px !important;
     }
 
-    #carousel {
+    #carousel, #carousel-mobile {
         position: relative !important;
         overflow: hidden !important;
         background-color: #f3f4f6 !important;
@@ -169,15 +154,6 @@
         opacity: 1 !important;
         visibility: visible !important;
         background-color: #f3f4f6 !important;
-    }
-
-    /* Fallback para imágenes que no cargan */
-    .carousel-item img[src=""] {
-        opacity: 0 !important;
-    }
-
-    .carousel-item img:not([src=""]) {
-        opacity: 1 !important;
     }
 
     .hover-scale {
@@ -191,1047 +167,177 @@
 {% endblock %}
 
 {% block content %}
-<section class="relative bg-gradient-to-br from-[#f8faf9] to-[#f0f4f1] flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 py-16 md:py-24 gap-10 rounded-3xl shadow-enhanced mx-4 my-8 animate-fadeIn" id="home">
-    <div class="md:w-1/2 text-center md:text-left">
-        <h1 class="text-4xl md:text-6xl font-extrabold text-[#1f2b20] leading-tight">
-            Cuidado Natural <span class="text-[#3e5740]">para tu bienestar</span>
-        </h1>
-        <p class="mt-6 text-lg text-gray-700 max-w-md mx-auto md:mx-0 leading-relaxed">
-            Descubre nuestra línea de productos orgánicos para el cuidado personal: shampoos, cremas y aceites esenciales.
-        </p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <a href="#products" class="inline-block px-8 py-4 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white font-semibold rounded-lg shadow-enhanced hover:from-[#2d4030] hover:to-[#1f2b20] transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#6b8a6e] focus:ring-offset-2">
-                <span class="flex items-center justify-center space-x-2">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Ver Productos</span>
-                </span>
-            </a>
-            <a href="#contact" class="inline-block px-8 py-4 bg-white text-[#2d4030] font-semibold rounded-lg shadow-enhanced hover:bg-[#f8faf9] transition-all duration-300 transform hover:scale-105 border-2 border-[#3e5740] focus:outline-none focus:ring-2 focus:ring-[#6b8a6e] focus:ring-offset-2">
-                <span class="flex items-center justify-center space-x-2">
-                    <i class="fas fa-envelope"></i>
-                    <span>Contáctanos</span>
-                </span>
-            </a>
+<section class="relative bg-gradient-to-br from-[#f8faf9] to-[#f0f4f1] max-w-7xl mx-auto px-6 py-16 md:py-24 rounded-3xl shadow-enhanced mx-4 my-8 animate-fadeIn" id="home">
+    <!-- Carrusel - Visible solo en móviles, arriba del contenido -->
+    <div class="block md:hidden mb-8" style="animation-delay: 0.3s;">
+        <div class="w-full relative overflow-hidden rounded-2xl shadow-enhanced select-none" id="carousel-container-mobile">
+            <div class="relative w-full h-64" id="carousel-mobile" role="region" aria-label="Carrusel de imágenes destacadas">
+                <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-100 transform translate-x-0" data-carousel-item="">
+                    <img src="{% static 'images/carrousel .PNG' %}" 
+                         alt="Productos orgánicos naturales" 
+                         class="w-full h-full object-cover block" 
+                         loading="eager"
+                         style="min-height: 100%; object-fit: cover; object-position: center;" />
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h2 class="text-white text-lg font-bold drop-shadow-lg px-4 text-center">
+                            Productos Naturales y Orgánicos
+                        </h2>
+                    </div>
+                </div>
+                <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
+                    <img src="{% static 'images/carrousel  2.PNG' %}" 
+                         alt="Productos naturales para el cuidado de la piel" 
+                         class="w-full h-full object-cover block" 
+                         loading="eager"
+                         style="min-height: 100%; object-fit: cover; object-position: center;" />
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h2 class="text-white text-lg font-bold drop-shadow-lg px-4 text-center">
+                            Cuidado Natural de la Piel
+                        </h2>
+                    </div>
+                </div>
+                <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
+                    <img src="{% static 'images/carrousel  3.PNG' %}" 
+                         alt="Ingredientes naturales y orgánicos" 
+                         class="w-full h-full object-cover block" 
+                         loading="eager"
+                         style="min-height: 100%; object-fit: cover; object-position: center;" />
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h2 class="text-white text-lg font-bold drop-shadow-lg px-4 text-center">
+                            Ingredientes 100% Naturales
+                        </h2>
+                    </div>
+                </div>
+                <button aria-label="Anterior" 
+                        class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" 
+                        id="prevBtn-mobile">
+                    <i class="fas fa-chevron-left text-sm"></i>
+                </button>
+                <button aria-label="Siguiente" 
+                        class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" 
+                        id="nextBtn-mobile">
+                    <i class="fas fa-chevron-right text-sm"></i>
+                </button>
+                <!-- Indicadores de puntos -->
+                <div id="carousel-dots-mobile" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                    <button aria-label="Ir a la diapositiva 1" class="w-2 h-2 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="0"></button>
+                    <button aria-label="Ir a la diapositiva 2" class="w-2 h-2 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="1"></button>
+                    <button aria-label="Ir a la diapositiva 3" class="w-2 h-2 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="2"></button>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="md:w-1/2 flex justify-center relative" style="animation-delay: 0.3s;">
-<div class="w-full max-w-3xl relative overflow-hidden rounded-2xl shadow-enhanced select-none transform hover:scale-[1.02] transition-transform duration-300" id="carousel-container">
-    <div class="relative w-full h-72 sm:h-[500px]" id="carousel" role="region" aria-label="Carrusel de imágenes destacadas">
-        <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-100 transform translate-x-0" data-carousel-item="">
-            <img src="{% static "images/carrousel .PNG" %}" 
-                 alt="Productos orgánicos naturales" 
-                 class="w-full h-full object-cover block" 
-                 loading="eager"
-                 style="min-height: 100%; object-fit: cover; object-position: center;"
-                 onerror="this.src='{% static "images/logo.jpg" %}';" />
-            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
-                    Productos Naturales y Orgánicos
-                </h2>
-            </div>
-        </div>
-        <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
-            <img src="{% static "images/carrousel  2.PNG" %}" 
-                 alt="Productos naturales para el cuidado de la piel" 
-                 class="w-full h-full object-cover block" 
-                 loading="eager"
-                 style="min-height: 100%; object-fit: cover; object-position: center;"
-                 onerror="this.src='{% static "images/logo.jpg" %}';" />
-            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
-                    Cuidado Natural de la Piel
-                </h2>
-            </div>
-        </div>
-        <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
-            <img src="{% static "images/carrousel  3.PNG" %}" 
-                 alt="Ingredientes naturales y orgánicos" 
-                 class="w-full h-full object-cover block" 
-                 loading="eager"
-                 style="min-height: 100%; object-fit: cover; object-position: center;"
-                 onerror="this.src='{% static "images/logo.jpg" %}';" />
-            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
-                    Ingredientes 100% Naturales
-                </h2>
-            </div>
-        </div>
-    <button aria-label="Anterior" 
-            class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-3 sm:p-4 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 hover:scale-110" 
-            id="prevBtn">
-        <i class="fas fa-chevron-left text-lg sm:text-xl"></i>
-    </button>
-    <button aria-label="Siguiente" 
-            class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-3 sm:p-4 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 hover:scale-110" 
-            id="nextBtn">
-        <i class="fas fa-chevron-right text-lg sm:text-xl"></i>
-    </button>
 
-    <!-- Indicadores de puntos -->
-    <div id="carousel-dots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        <button aria-label="Ir a la diapositiva 1" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="0"></button>
-        <button aria-label="Ir a la diapositiva 2" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="1"></button>
-        <button aria-label="Ir a la diapositiva 3" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="2"></button>
-    </div>
+    <!-- Contenido principal con layout responsive -->
+    <div class="flex flex-col md:flex-row items-center gap-10">
+        <div class="w-full md:w-1/2 text-center md:text-left">
+            <h1 class="text-4xl md:text-6xl font-extrabold text-[#1f2b20] leading-tight">
+                Cuidado Natural <span class="text-[#3e5740]">para tu bienestar</span>
+            </h1>
+            <p class="mt-6 text-lg text-gray-700 max-w-md mx-auto md:mx-0 leading-relaxed">
+                Descubre nuestra línea de productos orgánicos para el cuidado personal: shampoos, cremas y aceites esenciales.
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a href="#products" class="inline-block px-8 py-4 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white font-semibold rounded-lg shadow-enhanced hover:from-[#2d4030] hover:to-[#1f2b20] transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-[#6b8a6e] focus:ring-offset-2">
+                    <span class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Ver Productos</span>
+                    </span>
+                </a>
+                <a href="#contact" class="inline-block px-8 py-4 bg-white text-[#2d4030] font-semibold rounded-lg shadow-enhanced hover:bg-[#f8faf9] transition-all duration-300 transform hover:scale-105 border-2 border-[#3e5740] focus:outline-none focus:ring-2 focus:ring-[#6b8a6e] focus:ring-offset-2">
+                    <span class="flex items-center justify-center space-x-2">
+                        <i class="fas fa-envelope"></i>
+                        <span>Contáctanos</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Carrusel - Visible solo en desktop, al lado del contenido -->
+        <div class="hidden md:flex md:w-1/2 justify-center relative" style="animation-delay: 0.3s;">
+            <div class="w-full max-w-3xl relative overflow-hidden rounded-2xl shadow-enhanced select-none transform hover:scale-[1.02] transition-transform duration-300" id="carousel-container">
+                <div class="relative w-full h-72 sm:h-[500px]" id="carousel" role="region" aria-label="Carrusel de imágenes destacadas">
+                    <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-100 transform translate-x-0" data-carousel-item="">
+                        <img src="{% static 'images/carrousel .PNG' %}" 
+                             alt="Productos orgánicos naturales" 
+                             class="w-full h-full object-cover block" 
+                             loading="eager"
+                             style="min-height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                                Productos Naturales y Orgánicos
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
+                        <img src="{% static 'images/carrousel  2.PNG' %}" 
+                             alt="Productos naturales para el cuidado de la piel" 
+                             class="w-full h-full object-cover block" 
+                             loading="eager"
+                             style="min-height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                                Cuidado Natural de la Piel
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
+                        <img src="{% static 'images/carrousel  3.PNG' %}" 
+                             alt="Ingredientes naturales y orgánicos" 
+                             class="w-full h-full object-cover block" 
+                             loading="eager"
+                             style="min-height: 100%; object-fit: cover; object-position: center;" />
+                        <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                            <h2 class="text-white text-xl sm:text-2xl md:text-4xl font-bold drop-shadow-lg px-4 text-center">
+                                Ingredientes 100% Naturales
+                            </h2>
+                        </div>
+                    </div>
+                    <button aria-label="Anterior" 
+                            class="absolute top-1/2 left-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-3 sm:p-4 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 hover:scale-110" 
+                            id="prevBtn">
+                        <i class="fas fa-chevron-left text-lg sm:text-xl"></i>
+                    </button>
+                    <button aria-label="Siguiente" 
+                            class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white rounded-full p-3 sm:p-4 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300 hover:scale-110" 
+                            id="nextBtn">
+                        <i class="fas fa-chevron-right text-lg sm:text-xl"></i>
+                    </button>
+                    <!-- Indicadores de puntos -->
+                    <div id="carousel-dots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                        <button aria-label="Ir a la diapositiva 1" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="0"></button>
+                        <button aria-label="Ir a la diapositiva 2" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="1"></button>
+                        <button aria-label="Ir a la diapositiva 3" class="w-3 h-3 rounded-full bg-white/60 hover:bg-white/80 focus:outline-none focus:ring-2 focus:ring-white transition-all duration-300" data-slide="2"></button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- About Section -->
 <section class="relative max-w-7xl mx-auto px-6 py-16 md:py-24 animate-fadeIn overflow-hidden" id="about" style="background-color: #f5f5ea;">
-    <!-- Elementos decorativos de fondo -->
-    <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-10 left-10 w-32 h-32 opacity-30">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-[#b8c9bb]">
-                <path d="M20,50 Q30,20 50,30 Q70,20 80,50 Q70,80 50,70 Q30,80 20,50 Z" fill="currentColor"/>
-            </svg>
-        </div>
-        <div class="absolute top-20 right-20 w-24 h-24 opacity-30">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-[#b8c9bb]">
-                <path d="M20,50 Q30,20 50,30 Q70,20 80,50 Q70,80 50,70 Q30,80 20,50 Z" fill="currentColor"/>
-            </svg>
-        </div>
-        <div class="absolute bottom-20 left-1/4 w-20 h-20 opacity-30">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-[#b8c9bb]">
-                <path d="M20,50 Q30,20 50,30 Q70,20 80,50 Q70,80 50,70 Q30,80 20,50 Z" fill="currentColor"/>
-            </svg>
-        </div>
-        <div class="absolute bottom-10 right-1/3 w-28 h-28 opacity-30">
-            <svg viewBox="0 0 100 100" class="w-full h-full text-[#b8c9bb]">
-                <path d="M20,50 Q30,20 50,30 Q70,20 80,50 Q70,80 50,70 Q30,80 20,50 Z" fill="currentColor"/>
-            </svg>
-        </div>
-    </div>
-
     <div class="relative text-center max-w-4xl mx-auto mb-20">
-        <div class="flex items-center justify-center mb-8">
-            <svg viewBox="0 0 100 100" class="w-8 h-8 text-[#3e5740] mr-4">
-                <path d="M20,50 Q30,20 50,30 Q70,20 80,50 Q70,80 50,70 Q30,80 20,50 Z" fill="currentColor"/>
-            </svg>
-            <h2 class="text-5xl md:text-6xl font-extrabold text-gray-800">
-                Nuestros pilares
-            </h2>
-            <svg viewBox="0 0 100 100" class="w-8 h-8 text-[#3e5740] ml-4">
-                <path d="M20,50 Q30,20 50,30 Q70,20 80,50 Q70,80 50,70 Q30,80 20,50 Z" fill="currentColor"/>
-            </svg>
-        </div>
-    </div>
-    
-    <div class="relative flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 max-w-6xl mx-auto">
-        <!-- Pilar 1: Movimiento natural y orgánico -->
-        <div class="relative group cursor-pointer transform hover:scale-105 transition-all duration-500" 
-             data-modal="natural-modal">
-            <div class="relative w-64 h-80 md:w-72 md:h-96">
-                <!-- Forma de hoja -->
-                <svg viewBox="0 0 200 300" class="w-full h-full">
-                    <defs>
-                        <linearGradient id="leafGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#065f46;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#047857;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M100,20 Q140,40 160,80 Q170,120 160,160 Q140,200 120,240 Q100,280 80,240 Q60,200 40,160 Q30,120 40,80 Q60,40 100,20 Z" 
-                          fill="url(#leafGradient1)" 
-                          class="drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-500"/>
-                    <!-- Venas de la hoja -->
-                    <path d="M100,30 Q120,60 130,100 Q135,140 130,180 Q120,220 100,250" 
-                          stroke="rgba(255,255,255,0.3)" 
-                          stroke-width="2" 
-                          fill="none"/>
-                    <path d="M100,80 Q80,90 70,110" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                    <path d="M100,120 Q120,130 130,150" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                    <path d="M100,160 Q80,170 70,190" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                </svg>
-                
-                <!-- Contenido del texto -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-8 py-12">
-                    <h3 class="text-white text-xl md:text-2xl font-bold mb-4 leading-tight">
-                        Movimiento<br>natural y<br>orgánico
-                    </h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pilar 2: Beneficios reales para tu salud (centrado y más abajo) -->
-        <div class="relative group cursor-pointer transform hover:scale-105 transition-all duration-500 md:mt-16" 
-             data-modal="health-modal">
-            <div class="relative w-64 h-80 md:w-72 md:h-96">
-                <!-- Forma de hoja -->
-                <svg viewBox="0 0 200 300" class="w-full h-full">
-                    <defs>
-                        <linearGradient id="leafGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#065f46;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#047857;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M100,20 Q140,40 160,80 Q170,120 160,160 Q140,200 120,240 Q100,280 80,240 Q60,200 40,160 Q30,120 40,80 Q60,40 100,20 Z" 
-                          fill="url(#leafGradient2)" 
-                          class="drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-500"/>
-                    <!-- Venas de la hoja -->
-                    <path d="M100,30 Q120,60 130,100 Q135,140 130,180 Q120,220 100,250" 
-                          stroke="rgba(255,255,255,0.3)" 
-                          stroke-width="2" 
-                          fill="none"/>
-                    <path d="M100,80 Q80,90 70,110" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                    <path d="M100,120 Q120,130 130,150" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                    <path d="M100,160 Q80,170 70,190" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                </svg>
-                
-                <!-- Contenido del texto -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-8 py-12">
-                    <h3 class="text-white text-xl md:text-2xl font-bold mb-4 leading-tight">
-                        Beneficios<br>reales para<br>tu salud
-                    </h3>
-                </div>
-            </div>
-        </div>
-
-        <!-- Pilar 3: Proteger al medio ambiente -->
-        <div class="relative group cursor-pointer transform hover:scale-105 transition-all duration-500" 
-             data-modal="environment-modal">
-            <div class="relative w-64 h-80 md:w-72 md:h-96">
-                <!-- Forma de hoja -->
-                <svg viewBox="0 0 200 300" class="w-full h-full">
-                    <defs>
-                        <linearGradient id="leafGradient3" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#065f46;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#047857;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M100,20 Q140,40 160,80 Q170,120 160,160 Q140,200 120,240 Q100,280 80,240 Q60,200 40,160 Q30,120 40,80 Q60,40 100,20 Z" 
-                          fill="url(#leafGradient3)" 
-                          class="drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-500"/>
-                    <!-- Venas de la hoja -->
-                    <path d="M100,30 Q120,60 130,100 Q135,140 130,180 Q120,220 100,250" 
-                          stroke="rgba(255,255,255,0.3)" 
-                          stroke-width="2" 
-                          fill="none"/>
-                    <path d="M100,80 Q80,90 70,110" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                    <path d="M100,120 Q120,130 130,150" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                    <path d="M100,160 Q80,170 70,190" 
-                          stroke="rgba(255,255,255,0.2)" 
-                          stroke-width="1" 
-                          fill="none"/>
-                </svg>
-                
-                <!-- Contenido del texto -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center text-center px-8 py-12">
-                    <h3 class="text-white text-xl md:text-2xl font-bold mb-4 leading-tight">
-                        Proteger al<br>medio<br>ambiente.
-                    </h3>
-                </div>
-            </div>
-        </div>
+        <h2 class="text-5xl md:text-6xl font-extrabold text-gray-800">
+            Nuestros pilares
+        </h2>
     </div>
 </section>
-
-<!-- Banner Section -->
-<section class="relative py-24 overflow-hidden z-[50]">
-    <div class="absolute inset-0 bg-gradient-to-r from-[#3e5740] to-[#6b8a6e] z-[51]">
-        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-    </div>
-
-    <div class="relative max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12 z-[52]">
-        <div class="md:w-1/2 text-center md:text-left animate-fadeIn">
-            <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-semibold mb-4">
-                Descubre más
-            </span>
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Cuida tu piel con el poder de la naturaleza
-            </h2>
-            <p class="text-[#f0f4f1] text-lg mb-8 leading-relaxed">
-                Descubre nuestra línea completa de productos orgánicos para el cuidado de la piel y el cabello, formulados con ingredientes naturales de la más alta calidad.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="#products" class="inline-flex items-center justify-center px-8 py-4 bg-white text-[#1f2b20] font-semibold rounded-lg shadow-enhanced hover:bg-[#f8faf9] transition-all duration-300 transform hover:scale-105">
-                    <span class="flex items-center">
-                        <i class="fas fa-leaf mr-2"></i>
-                        Ver Catálogo
-                    </span>
-                </a>
-                <a href="#contact" class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                    <span class="flex items-center">
-                        <i class="fas fa-phone-alt mr-2"></i>
-                        Contactar
-                    </span>
-                </a>
-            </div>
-        </div>
-
-        <div class="md:w-1/2 relative animate-fadeIn" style="animation-delay: 0.3s;">
-            <div class="relative w-full aspect-square max-w-md mx-auto">
-                <div class="absolute inset-0 animate-spin-slow">
-                    <div class="absolute inset-0 border-2 border-white/20 rounded-full"></div>
-                    <div class="absolute inset-4 border-2 border-white/20 rounded-full"></div>
-                    <div class="absolute inset-8 border-2 border-white/20 rounded-full"></div>
-                </div>
-                <div class="absolute inset-12 rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
-                    <img src="https://images.pexels.com/photos/3621234/pexels-photo-3621234.jpeg" 
-                         alt="Productos orgánicos y naturales" 
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
-                         loading="lazy" />
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Products Section -->
-<section class="relative max-w-7xl mx-auto px-6 py-16 md:py-24 overflow-hidden" id="products">
-    <!-- Background with animated gradient -->
-    <div class="absolute inset-0 bg-gradient-to-br from-[#f8faf9] via-white to-[#f8faf9] animate-gradient-slow"></div>
-    
-    <!-- Decorative elements -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-[#d9e2db] rounded-full filter blur-3xl transform translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-[#d9e2db] rounded-full filter blur-3xl transform -translate-x-1/2 translate-y-1/2 animate-pulse-slow"></div>
-    </div>
-
-    <div class="relative">
-        <div class="text-center max-w-3xl mx-auto mb-16">
-            <span class="inline-block px-4 py-2 bg-[#f0f4f1] text-[#1f2b20] rounded-full text-sm font-semibold mb-4 transform hover:scale-105 transition-transform duration-300">
-                Nuestros Productos
-            </span>
-            <h2 class="text-4xl md:text-5xl font-extrabold text-[#1f2b20] mb-6">
-                Explora nuestra <span class="text-[#3e5740] relative">
-                    línea de cuidado natural
-                    <span class="absolute bottom-0 left-0 w-full h-1 bg-[#8fa891] transform origin-left scale-x-0 transition-transform duration-300 group-hover:scale-x-100"></span>
-                </span>
-            </h2>
-            <p class="text-gray-600 text-lg leading-relaxed">
-                Shampoos, cremas y aceites esenciales elaborados con ingredientes orgánicos certificados para el cuidado integral de tu piel y cabello.
-            </p>
-        </div>
-
-        <!-- Sección Salud -->
-        <div class="max-w-6xl mx-auto mb-12">
-            <!-- Category Header -->
-            <div class="relative rounded-2xl overflow-hidden shadow-enhanced mb-8 cursor-pointer group category-header transform hover:scale-[1.02] transition-all duration-500" data-category="salud">
-                <!-- Background Pattern -->
-                <div class="absolute inset-0 bg-gradient-to-r from-[#3e5740]/10 to-[#1f2b20]/10 z-10"></div>
-                <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.05\" fill-rule=\"evenodd\"%3E%3Ccircle cx=\"3\" cy=\"3\" r=\"3\"/%3E%3Ccircle cx=\"13\" cy=\"13\" r=\"3\"/%3E%3C/g%3E%3C/svg%3E')] opacity-30 z-20"></div>
-                
-                <!-- Main Image -->
-                <div class="relative h-80 overflow-hidden">
-                    <img src="{% static "images/baner salud.jpg" %}" 
-                         alt="Salud" 
-                         class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
-                         loading="lazy" />
-                    
-                    <!-- Gradient Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#141a15]/70 via-green-800/60 to-black/70 opacity-60 group-hover:opacity-75 transition-all duration-500 z-30"></div>
-                    
-                    <!-- Content Container -->
-                    <div class="absolute inset-0 flex flex-col items-center justify-center p-8 z-40">
-                        <!-- Category Icon -->
-                        <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-500">
-                            <i class="fas fa-leaf text-white text-2xl group-hover:rotate-12 transition-transform duration-500"></i>
-                        </div>
-                        
-                        <!-- Title -->
-                        <h3 class="text-white text-4xl font-extrabold text-center drop-shadow-lg group-hover:scale-105 transition-transform duration-500 mb-4">
-                            Salud y Bienestar Natural
-                        </h3>
-                        
-                        <!-- Subtitle -->
-                        <p class="text-white/90 text-lg text-center max-w-lg mb-6 transform opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                            Descubre productos naturales para tu bienestar integral
-                        </p>
-                        
-                        <!-- Chevron Button -->
-                        <div class="flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                            <span class="px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2 group-hover:bg-white/20 transition-all duration-500">
-                                <span class="text-white text-sm font-medium">Ver Productos</span>
-                                <i class="fas fa-chevron-down text-white transition-transform duration-500 group-hover:rotate-180"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Decorative Elements -->
-                <div class="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[#8fa891]/20 to-transparent rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-                <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-[#8fa891]/20 to-transparent rounded-full filter blur-2xl transform translate-x-1/2 translate-y-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-            </div>
-            <!-- Products Grid (Initially Hidden) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 products-grid hidden opacity-0 translate-y-4 transition-all duration-300" data-category="salud">
-            {% for producto in productos_salud %}
-            <div class="group bg-white rounded-xl shadow-enhanced overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-100 animate-fadeIn"
-                 style="--delay: {{ forloop.counter }}; animation-delay: calc(var(--delay) * 0.1s)">
-                <div class="relative overflow-hidden">
-                    <img src="{{ producto.imagen_url }}" 
-                         alt="{{ producto.nombre }}" 
-                         class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110"
-                         loading="lazy" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-[#1f2b20] group-hover:text-[#3e5740] transition-colors duration-300">
-                            {{ producto.nombre }}
-                        </h3>
-                        <span class="px-3 py-1 bg-[#f0f4f1] text-[#1f2b20] rounded-full text-sm font-semibold">
-                            ${{ producto.precio }} ARS
-                        </span>
-                    </div>
-                    <p class="text-gray-600 flex-grow leading-relaxed mb-6">{{ producto.descripcion }}</p>
-                    {% if user.is_authenticated and user.rol == 'ADMIN' %}
-                    <div class="text-gray-500 text-sm mb-4">
-                        <i class="fas fa-tag mr-2"></i>Costo: ${{ producto.costo }} ARS
-                    </div>
-                    {% endif %}
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="{% url 'core:agregar_carrito' producto.id %}" 
-                           class="flex-1 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white py-3 px-4 rounded-lg font-semibold hover:from-[#2d4030] hover:to-[#1f2b20] transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Agregar al Carrito</span>
-                        </a>
-                        {% if user.is_authenticated and user.rol == 'ADMIN' %}
-                        <a href="{% url 'core:editar_producto' producto.id %}" 
-                           class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
-                            <i class="fas fa-edit"></i>
-                            <span>Editar</span>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-span-full text-center py-12">
-                <div class="flex flex-col items-center justify-center text-gray-500">
-                    <i class="fas fa-box-open text-5xl mb-4"></i>
-                    <p class="text-xl font-medium">No hay productos disponibles en esta categoría</p>
-                    <p class="text-gray-400 mt-2">Vuelve a consultar más tarde</p>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Sección Belleza -->
-    <div class="max-w-6xl mx-auto mb-12">
-            <!-- Category Header -->
-            <div class="relative rounded-2xl overflow-hidden shadow-enhanced mb-8 cursor-pointer group category-header transform hover:scale-[1.02] transition-all duration-500" data-category="belleza">
-                <!-- Background Pattern -->
-                <div class="absolute inset-0 bg-gradient-to-r from-rose-600/10 to-rose-800/10 z-10"></div>
-                <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"30\" height=\"30\" viewBox=\"0 0 30 30\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cpath d=\"M15 0C6.716 0 0 6.716 0 15c0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15zm0 27C8.373 27 3 21.627 3 15S8.373 3 15 3s12 5.373 12 12-5.373 12-12 12z\" fill=\"%23FFF\" fill-opacity=\"0.05\"/%3E%3C/svg%3E')] opacity-30 z-20"></div>
-                
-                <!-- Main Image -->
-                <div class="relative h-80 overflow-hidden">
-                    <img src="{% static "images/baner cosmetica.jpg" %}" 
-                         alt="Belleza" 
-                         class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
-                         loading="lazy" />
-                    
-                    <!-- Gradient Overlay -->
-                    <div class="absolute inset-0 bg-gradient-to-br from-rose-900/70 via-rose-800/60 to-black/70 opacity-60 group-hover:opacity-75 transition-all duration-500 z-30"></div>
-                    
-                    <!-- Content Container -->
-                    <div class="absolute inset-0 flex flex-col items-center justify-center p-8 z-40">
-                        <!-- Category Icon -->
-                        <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-500">
-                            <i class="fas fa-spa text-white text-2xl group-hover:rotate-12 transition-transform duration-500"></i>
-                        </div>
-                        
-                        <!-- Title -->
-                        <h3 class="text-white text-4xl font-extrabold text-center drop-shadow-lg group-hover:scale-105 transition-transform duration-500 mb-4">
-                            Belleza Natural
-                        </h3>
-                        
-                        <!-- Subtitle -->
-                        <p class="text-white/90 text-lg text-center max-w-lg mb-6 transform opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                            Realza tu belleza con productos naturales y orgánicos
-                        </p>
-                        
-                        <!-- Chevron Button -->
-                        <div class="flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                            <span class="px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2 group-hover:bg-white/20 transition-all duration-500">
-                                <span class="text-white text-sm font-medium">Ver Productos</span>
-                                <i class="fas fa-chevron-down text-white transition-transform duration-500 group-hover:rotate-180"></i>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Decorative Elements -->
-                <div class="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-rose-400/20 to-transparent rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-                <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-rose-400/20 to-transparent rounded-full filter blur-2xl transform translate-x-1/2 translate-y-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-            </div>
-        <!-- Products Grid (Initially Hidden) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 products-grid hidden opacity-0 translate-y-4 transition-all duration-300" data-category="belleza">
-            {% for producto in productos_belleza %}
-            <div class="group bg-white rounded-xl shadow-enhanced overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-100 animate-fadeIn"
-                 style="--delay: {{ forloop.counter }}; animation-delay: calc(var(--delay) * 0.1s)">
-                <div class="relative overflow-hidden">
-                    <img src="{{ producto.imagen_url }}" 
-                         alt="{{ producto.nombre }}" 
-                         class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110"
-                         loading="lazy" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-[#1f2b20] group-hover:text-[#3e5740] transition-colors duration-300">
-                            {{ producto.nombre }}
-                        </h3>
-                        <span class="px-3 py-1 bg-[#f0f4f1] text-[#1f2b20] rounded-full text-sm font-semibold">
-                            ${{ producto.precio }} ARS
-                        </span>
-                    </div>
-                    <p class="text-gray-600 flex-grow leading-relaxed mb-6">{{ producto.descripcion }}</p>
-                    {% if user.is_authenticated and user.rol == 'ADMIN' %}
-                    <div class="text-gray-500 text-sm mb-4">
-                        <i class="fas fa-tag mr-2"></i>Costo: ${{ producto.costo }} ARS
-                    </div>
-                    {% endif %}
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="{% url 'core:agregar_carrito' producto.id %}" 
-                           class="flex-1 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white py-3 px-4 rounded-lg font-semibold hover:from-[#2d4030] hover:to-[#1f2b20] transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Agregar al Carrito</span>
-                        </a>
-                        {% if user.is_authenticated and user.rol == 'ADMIN' %}
-                        <a href="{% url 'core:editar_producto' producto.id %}" 
-                           class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
-                            <i class="fas fa-edit"></i>
-                            <span>Editar</span>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-span-full text-center py-12">
-                <div class="flex flex-col items-center justify-center text-gray-500">
-                    <i class="fas fa-box-open text-5xl mb-4"></i>
-                    <p class="text-xl font-medium">No hay productos disponibles en esta categoría</p>
-                    <p class="text-gray-400 mt-2">Vuelve a consultar más tarde</p>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-
-    <!-- Sección Higiene Personal -->
-    <div class="max-w-6xl mx-auto">
-        <!-- Category Header -->
-        <div class="relative rounded-2xl overflow-hidden shadow-enhanced mb-8 cursor-pointer group category-header transform hover:scale-[1.02] transition-all duration-500" data-category="higiene">
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-purple-800/10 z-10"></div>
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"40\" height=\"40\" viewBox=\"0 0 40 40\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.05\" fill-rule=\"evenodd\"%3E%3Cpath d=\"M0 40L40 0H20L0 20M40 40V20L20 40\"/%3E%3C/g%3E%3C/svg%3E')] opacity-30 z-20"></div>
-            
-            <!-- Main Image -->
-            <div class="relative h-80 overflow-hidden">
-                <img src="{% static "images/banner higiene.PNG" %}" 
-                     alt="Higiene Personal" 
-                     class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
-                     loading="lazy" />
-                
-                <!-- Gradient Overlay -->
-                <div class="absolute inset-0 bg-gradient-to-br from-purple-900/70 via-purple-800/60 to-black/70 opacity-60 group-hover:opacity-75 transition-all duration-500 z-30"></div>
-                
-                <!-- Content Container -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center p-8 z-40">
-                    <!-- Category Icon -->
-                    <div class="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center mb-6 transform group-hover:scale-110 transition-all duration-500">
-                        <i class="fas fa-shower text-white text-2xl group-hover:rotate-12 transition-transform duration-500"></i>
-                    </div>
-                    
-                    <!-- Title -->
-                    <h3 class="text-white text-4xl font-extrabold text-center drop-shadow-lg group-hover:scale-105 transition-transform duration-500 mb-4">
-                        Higiene Personal Consciente
-                    </h3>
-                    
-                    <!-- Subtitle -->
-                    <p class="text-white/90 text-lg text-center max-w-lg mb-6 transform opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                        Cuida tu cuerpo con productos respetuosos con el medio ambiente
-                    </p>
-                    
-                    <!-- Chevron Button -->
-                    <div class="flex items-center justify-center transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                        <span class="px-6 py-3 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center gap-2 group-hover:bg-white/20 transition-all duration-500">
-                            <span class="text-white text-sm font-medium">Ver Productos</span>
-                            <i class="fas fa-chevron-down text-white transition-transform duration-500 group-hover:rotate-180"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Decorative Elements -->
-            <div class="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-purple-400/20 to-transparent rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-            <div class="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-purple-400/20 to-transparent rounded-full filter blur-2xl transform translate-x-1/2 translate-y-1/2 group-hover:scale-150 transition-transform duration-700"></div>
-        </div>
-        <!-- Products Grid (Initially Hidden) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 products-grid hidden opacity-0 translate-y-4 transition-all duration-300" data-category="higiene">
-            {% for producto in productos_higiene %}
-            <div class="group bg-white rounded-xl shadow-enhanced overflow-hidden flex flex-col transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border border-gray-100 animate-fadeIn"
-                 style="--delay: {{ forloop.counter }}; animation-delay: calc(var(--delay) * 0.1s)">
-                <div class="relative overflow-hidden">
-                    <img src="{{ producto.imagen_url }}" 
-                         alt="{{ producto.nombre }}" 
-                         class="w-full h-56 object-cover transform transition-transform duration-500 group-hover:scale-110"
-                         loading="lazy" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
-                <div class="p-6 flex flex-col flex-grow">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-xl font-bold text-[#1f2b20] group-hover:text-[#3e5740] transition-colors duration-300">
-                            {{ producto.nombre }}
-                        </h3>
-                        <span class="px-3 py-1 bg-[#f0f4f1] text-[#1f2b20] rounded-full text-sm font-semibold">
-                            ${{ producto.precio }} ARS
-                        </span>
-                    </div>
-                    <p class="text-gray-600 flex-grow leading-relaxed mb-6">{{ producto.descripcion }}</p>
-                    {% if user.is_authenticated and user.rol == 'ADMIN' %}
-                    <div class="text-gray-500 text-sm mb-4">
-                        <i class="fas fa-tag mr-2"></i>Costo: ${{ producto.costo }} ARS
-                    </div>
-                    {% endif %}
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <a href="{% url 'core:agregar_carrito' producto.id %}" 
-                           class="flex-1 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white py-3 px-4 rounded-lg font-semibold hover:from-[#2d4030] hover:to-[#1f2b20] transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
-                            <i class="fas fa-shopping-cart"></i>
-                            <span>Agregar al Carrito</span>
-                        </a>
-                        {% if user.is_authenticated and user.rol == 'ADMIN' %}
-                        <a href="{% url 'core:editar_producto' producto.id %}" 
-                           class="flex-1 bg-gray-100 text-gray-700 py-3 px-4 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
-                            <i class="fas fa-edit"></i>
-                            <span>Editar</span>
-                        </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <div class="col-span-full text-center py-12">
-                <div class="flex flex-col items-center justify-center text-gray-500">
-                    <i class="fas fa-box-open text-5xl mb-4"></i>
-                    <p class="text-xl font-medium">No hay productos disponibles en esta categoría</p>
-                    <p class="text-gray-400 mt-2">Vuelve a consultar más tarde</p>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<!--
-Hidden Store Banner
-<section class="relative py-24 overflow-hidden animate-fadeIn">
-    <div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-black">
-        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-    </div>
-    
-    <div class="relative max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-12">
-        <div class="md:w-1/2 text-center md:text-left">
-            <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-semibold mb-4">
-                Exclusivo
-            </span>
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-                Descubre nuestra <br>
-                <span class="text-[#8fa891]">Tienda Exclusiva</span>
-            </h2>
-            <p class="text-gray-300 text-lg mb-8 leading-relaxed">
-                Accede a productos premium y ofertas especiales disponibles solo para miembros registrados.
-            </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="{% url 'core:tienda_oculta' %}" 
-                   class="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#8fa891] to-[#6b8a6e] text-white font-semibold rounded-lg shadow-enhanced hover:from-[#6b8a6e] hover:to-[#3e5740] transition-all duration-300 transform hover:scale-105 group">
-                    <span class="flex items-center">
-                        <i class="fas fa-lock mr-2 group-hover:rotate-12 transition-transform duration-300"></i>
-                        Acceder
-                    </span>
-                </a>
-                <a href="{% url 'core:register' %}" 
-                   class="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
-                    <span class="flex items-center">
-                        <i class="fas fa-user-plus mr-2"></i>
-                        Registrarse
-                    </span>
-                </a>
-            </div>
-        </div>
-
-        <div class="md:w-1/2 relative">
-            <div class="relative w-full aspect-square max-w-md mx-auto">
-                <div class="absolute inset-0 animate-spin-slow">
-                    <div class="absolute inset-0 border-2 border-[#8fa891]/20 rounded-full"></div>
-                    <div class="absolute inset-4 border-2 border-[#8fa891]/20 rounded-full"></div>
-                    <div class="absolute inset-8 border-2 border-[#8fa891]/20 rounded-full"></div>
-                </div>
-                <div class="absolute inset-12 rounded-full overflow-hidden border-4 border-[#8fa891]/30 shadow-2xl">
-                    <img src="https://storage.googleapis.com/a1aa/image/bbfdf398-ba34-4073-d181-ad22223184cc.jpg" 
-                         alt="Tienda Exclusiva" 
-                         class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-700"
-                         loading="lazy" />
-                </div>
-            </div>
-        </div>
-<!-- Contact Section -->
-<section class="relative max-w-7xl mx-auto px-6 py-16 md:py-24 overflow-hidden" id="contact">
-    <!-- Fondo con color personalizado -->
-    <div class="absolute inset-0" style="background-color: #f5f5ea;"></div>
-    
-    <!-- Elementos decorativos -->
-    <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-0 right-0 w-96 h-96 bg-white/30 rounded-full filter blur-3xl transform translate-x-1/2 -translate-y-1/2 animate-pulse-slow"></div>
-        <div class="absolute bottom-0 left-0 w-96 h-96 bg-white/30 rounded-full filter blur-3xl transform -translate-x-1/2 translate-y-1/2 animate-pulse-slow"></div>
-    </div>
-
-    <div class="relative max-w-6xl mx-auto">
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-            <span class="inline-block px-4 py-2 bg-[#3e5740] text-white rounded-full text-sm font-semibold mb-4 transform hover:scale-105 transition-transform duration-300">
-                Contáctanos
-            </span>
-            <h2 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-6">
-                Estamos aquí para <span class="text-[#3e5740] relative">ayudarte</span>
-            </h2>
-            <p class="text-gray-700 text-lg max-w-2xl mx-auto leading-relaxed">
-                ¿Tienes alguna pregunta o necesitas asistencia? No dudes en contactarnos a través de cualquiera de nuestros canales de comunicación.
-            </p>
-        </div>
-
-        <!-- Contact Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-            <!-- Instagram Card -->
-            <div class="bg-white rounded-2xl p-8 shadow-enhanced transform hover:scale-[1.02] transition-all duration-500 group">
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-[#3e5740] to-[#2d4030] rounded-full flex items-center justify-center mb-6 transform group-hover:rotate-12 transition-all duration-500">
-                        <i class="fab fa-instagram text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Instagram</h3>
-                    <p class="text-gray-600 text-center mb-6">Síguenos para ver nuestras últimas novedades</p>
-                    <a href="https://instagram.com/organic_shops" target="_blank" 
-                       class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white font-semibold rounded-lg transform transition-all duration-300 hover:scale-105">
-                        <i class="fab fa-instagram mr-2"></i>
-                        <span>@organic_shops</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Email Card -->
-            <div class="bg-white rounded-2xl p-8 shadow-enhanced transform hover:scale-[1.02] transition-all duration-500 group">
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-[#3e5740] to-[#2d4030] rounded-full flex items-center justify-center mb-6 transform group-hover:rotate-12 transition-all duration-500">
-                        <i class="fas fa-envelope text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">Correo Electrónico</h3>
-                    <p class="text-gray-600 text-center mb-6">Escríbenos tus consultas o sugerencias</p>
-                    <a href="mailto:contacto@organic-shops.com" 
-                       class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white font-semibold rounded-lg transform transition-all duration-300 hover:scale-105">
-                        <i class="fas fa-envelope mr-2"></i>
-                        <span>Enviar Email</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- WhatsApp Card -->
-            <div class="bg-white rounded-2xl p-8 shadow-enhanced transform hover:scale-[1.02] transition-all duration-500 group">
-                <div class="flex flex-col items-center">
-                    <div class="w-20 h-20 bg-gradient-to-br from-[#3e5740] to-[#2d4030] rounded-full flex items-center justify-center mb-6 transform group-hover:rotate-12 transition-all duration-500">
-                        <i class="fab fa-whatsapp text-white text-3xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">WhatsApp</h3>
-                    <p class="text-gray-600 text-center mb-6">Contáctanos directamente por WhatsApp</p>
-                    <a href="https://wa.me/1234567890" target="_blank" 
-                       class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-[#3e5740] to-[#2d4030] text-white font-semibold rounded-lg transform transition-all duration-300 hover:scale-105">
-                        <i class="fab fa-whatsapp mr-2"></i>
-                        <span>Chatear</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Decorative Elements -->
-        <div class="absolute left-0 bottom-0 w-32 h-32 bg-gradient-to-br from-[#8fa891]/20 to-transparent rounded-full filter blur-2xl"></div>
-        <div class="absolute right-0 top-0 w-32 h-32 bg-gradient-to-tl from-[#8fa891]/20 to-transparent rounded-full filter blur-2xl"></div>
-        </div>
-    </div>
-
-    <!-- Decorative circles -->
-    <div class="absolute top-1/2 left-0 w-32 h-32 bg-[#f0f4f1] rounded-full filter blur-2xl opacity-20 transform -translate-y-1/2 animate-pulse-slow"></div>
-    <div class="absolute top-1/2 right-0 w-32 h-32 bg-[#f0f4f1] rounded-full filter blur-2xl opacity-20 transform -translate-y-1/2 animate-pulse-slow"></div>
-</section>
-
-<style>
-    @keyframes gradient-slow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    @keyframes pulse-slow {
-        0%, 100% { opacity: 0.2; }
-        50% { opacity: 0.3; }
-    }
-
-    .animate-gradient-slow {
-        animation: gradient-slow 8s ease infinite;
-        background-size: 200% 200%;
-    }
-
-    .animate-pulse-slow {
-        animation: pulse-slow 4s ease-in-out infinite;
-    }
-</style>
-
-<!-- Modales -->
-<div aria-hidden="true" aria-labelledby="natural-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="natural-modal" role="dialog" style="display: none;">
-    <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
-        <button type="button" id="natural-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none">
-            <i class="fas fa-times text-xl"></i>
-        </button>
-        <div class="text-center">
-            <div class="w-16 h-16 bg-[#f0f4f1] rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-leaf text-[#3e5740] text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4" id="natural-modal-title">
-                Movimiento Natural y Orgánico
-            </h3>
-            <p class="text-gray-600 leading-relaxed mb-6">
-                Promovemos un estilo de vida natural y orgánico a través de nuestros productos. Creemos en el poder de la naturaleza para nutrir y cuidar tu cuerpo de manera integral, respetando los procesos naturales y evitando químicos agresivos.
-            </p>
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3 text-left">
-                    <div class="flex-shrink-0 w-10 h-10 bg-[#f0f4f1] rounded-full flex items-center justify-center">
-                        <i class="fas fa-seedling text-[#3e5740]"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-900">Ingredientes Orgánicos</h4>
-                        <p class="text-sm text-gray-500">Certificados y de origen natural</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-3 text-left">
-                    <div class="flex-shrink-0 w-10 h-10 bg-[#f0f4f1] rounded-full flex items-center justify-center">
-                        <i class="fas fa-ban text-[#3e5740]"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-900">Sin Químicos Sintéticos</h4>
-                        <p class="text-sm text-gray-500">Libres de parabenos, sulfatos y conservantes artificiales</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div aria-hidden="true" aria-labelledby="health-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="health-modal" role="dialog" style="display: none;">
-    <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
-        <button type="button" id="health-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none">
-            <i class="fas fa-times text-xl"></i>
-        </button>
-        <div class="text-center">
-            <div class="w-16 h-16 bg-[#f0f4f1] rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-heart text-[#3e5740] text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4" id="health-modal-title">
-                Beneficios Reales para tu Salud
-            </h3>
-            <p class="text-gray-600 leading-relaxed mb-6">
-                Nuestros productos están diseñados para ofrecer beneficios reales y tangibles para tu salud y bienestar. Cada fórmula está respaldada por investigación científica y probada dermatológicamente para garantizar resultados efectivos y seguros.
-            </p>
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3 text-left">
-                    <div class="flex-shrink-0 w-10 h-10 bg-[#f0f4f1] rounded-full flex items-center justify-center">
-                        <i class="fas fa-microscope text-[#3e5740]"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-900">Científicamente Probado</h4>
-                        <p class="text-sm text-gray-500">Fórmulas respaldadas por investigación</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-3 text-left">
-                    <div class="flex-shrink-0 w-10 h-10 bg-[#f0f4f1] rounded-full flex items-center justify-center">
-                        <i class="fas fa-shield-alt text-[#3e5740]"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-900">Dermatológicamente Testado</h4>
-                        <p class="text-sm text-gray-500">Seguro para todo tipo de piel</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div aria-hidden="true" aria-labelledby="environment-modal-title" aria-modal="true" class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-[100]" id="environment-modal" role="dialog" style="display: none;">
-    <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 relative transform transition-all duration-300 scale-95 opacity-0">
-        <button type="button" id="environment-modal-close" class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 focus:outline-none">
-            <i class="fas fa-times text-xl"></i>
-        </button>
-        <div class="text-center">
-            <div class="w-16 h-16 bg-[#f0f4f1] rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-globe-americas text-[#3e5740] text-2xl"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-gray-900 mb-4" id="environment-modal-title">
-                Proteger al Medio Ambiente
-            </h3>
-            <p class="text-gray-600 leading-relaxed mb-6">
-                Nuestro compromiso con el planeta es fundamental. Implementamos prácticas sostenibles en toda nuestra cadena de producción, desde la selección de ingredientes hasta el empaque final, minimizando nuestro impacto ambiental y contribuyendo a un futuro más verde.
-            </p>
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3 text-left">
-                    <div class="flex-shrink-0 w-10 h-10 bg-[#f0f4f1] rounded-full flex items-center justify-center">
-                        <i class="fas fa-recycle text-[#3e5740]"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-900">Empaques Sostenibles</h4>
-                        <p class="text-sm text-gray-500">Materiales reciclables y biodegradables</p>
-                    </div>
-                </div>
-                <div class="flex items-center space-x-3 text-left">
-                    <div class="flex-shrink-0 w-10 h-10 bg-[#f0f4f1] rounded-full flex items-center justify-center">
-                        <i class="fas fa-leaf text-[#3e5740]"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-gray-900">Huella de Carbono Reducida</h4>
-                        <p class="text-sm text-gray-500">Procesos eco-amigables y energía renovable</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block extra_scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Category Toggle Functionality
-    const categoryHeaders = document.querySelectorAll('.category-header');
-    categoryHeaders.forEach(header => {
-        header.addEventListener('click', function() {
-            const category = this.dataset.category;
-            const productsGrid = document.querySelector(`.products-grid[data-category="${category}"]`);
-            
-            // Toggle active state for header
-            this.classList.toggle('is-active');
-            
-            // Toggle products visibility with animation
-            if (productsGrid.classList.contains('hidden')) {
-                productsGrid.classList.remove('hidden');
-                setTimeout(() => {
-                    productsGrid.classList.add('opacity-100', 'translate-y-0');
-                    productsGrid.classList.remove('opacity-0', 'translate-y-4');
-                }, 10);
-            } else {
-                productsGrid.classList.add('opacity-0', 'translate-y-4');
-                productsGrid.classList.remove('opacity-100', 'translate-y-0');
-                setTimeout(() => {
-                    productsGrid.classList.add('hidden');
-                }, 300);
-            }
+    // Función para inicializar carrusel
+    const initCarousel = (carouselId, prevBtnId, nextBtnId, dotsId) => {
+        const carousel = document.getElementById(carouselId);
+        if (!carousel) return;
 
-            // Rotate chevron icon
-            const chevron = this.querySelector('.fa-chevron-down');
-            chevron.style.transform = productsGrid.classList.contains('hidden') ? 
-                'rotate(0deg)' : 'rotate(180deg)';
-        });
-    });
-
-    // Contact Form Submission
-    const contactForm = document.querySelector('#contact form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            const submitBtn = document.getElementById('submitBtn');
-            const originalContent = submitBtn.innerHTML;
-            
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = `
-                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-            `;
-
-            // Simulate form submission delay
-            setTimeout(() => {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalContent;
-                showToast('Mensaje enviado', 'Te responderemos pronto', 'check');
-            }, 1000);
-        });
-    }
-
-    // Toast Notification System
-    function showToast(title, message, icon = 'check') {
-        const toast = document.createElement('div');
-        toast.className = 'fixed bottom-4 right-4 transform translate-y-full opacity-0 transition-all duration-300';
-        toast.innerHTML = `
-            <div class="bg-white rounded-lg shadow-enhanced border border-gray-100 p-4 flex items-center space-x-3">
-                <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#f0f4f1] flex items-center justify-center">
-                    <i class="fas fa-${icon} text-[#3e5740]"></i>
-                </div>
-                <div>
-                    <p class="font-medium text-gray-900">${title}</p>
-                    <p class="text-sm text-gray-500">${message}</p>
-                </div>
-            </div>
-        `;
-        
-        document.body.appendChild(toast);
-        requestAnimationFrame(() => {
-            toast.classList.remove('translate-y-full', 'opacity-0');
-        });
-
-        setTimeout(() => {
-            toast.classList.add('translate-y-full', 'opacity-0');
-            setTimeout(() => {
-                document.body.removeChild(toast);
-            }, 300);
-        }, 3000);
-    }
-
-    // Carrusel mejorado con animaciones y soporte táctil
-    const initCarousel = () => {
-        const carousel = document.getElementById('carousel');
-        const items = document.querySelectorAll('[data-carousel-item]');
-        const dots = document.querySelectorAll('#carousel-dots button');
+        const items = carousel.querySelectorAll('[data-carousel-item]');
+        const dots = document.querySelectorAll('#' + dotsId + ' button');
         const totalItems = items.length;
         let currentIndex = 0;
         let isAnimating = false;
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        // Precargar imágenes
-        const preloadImages = () => {
-            items.forEach(item => {
-                const img = item.querySelector('img');
-                if (img) {
-                    const preloadImg = new Image();
-                    preloadImg.src = img.src;
-                    preloadImg.onerror = () => {
-                        img.src = 'https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg';
-                    };
-                }
-            });
-        };
 
         // Actualizar indicadores de puntos
         const updateDots = (newIndex) => {
@@ -1256,13 +362,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const translateValue = direction === 'next' ? 100 : -100;
 
             // Configurar posiciones iniciales
-            nextItem.style.transform = `translateX(${translateValue}%)`;
+            nextItem.style.transform = 'translateX(' + translateValue + '%)';
             nextItem.style.display = 'block';
             nextItem.style.opacity = '1';
 
             // Animar transición
             requestAnimationFrame(() => {
-                currentItem.style.transform = `translateX(${-translateValue}%)`;
+                currentItem.style.transform = 'translateX(' + (-translateValue) + '%)';
                 currentItem.style.opacity = '0';
                 nextItem.style.transform = 'translateX(0)';
             });
@@ -1278,52 +384,23 @@ document.addEventListener('DOMContentLoaded', function() {
             updateDots(index);
         };
 
-        // Manejadores de eventos táctiles
-        const handleTouchStart = (e) => {
-            touchStartX = e.touches[0].clientX;
-        };
-
-        const handleTouchMove = (e) => {
-            if (!touchStartX) return;
-            touchEndX = e.touches[0].clientX;
-            const diff = touchStartX - touchEndX;
-
-            // Prevenir scroll vertical mientras se desliza
-            if (Math.abs(diff) > 5) {
-                e.preventDefault();
-            }
-        };
-
-        const handleTouchEnd = () => {
-            if (!touchStartX || !touchEndX) return;
-            const diff = touchStartX - touchEndX;
-
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) {
-                    // Deslizar a la izquierda
-                    const newIndex = (currentIndex + 1) % totalItems;
-                    showItem(newIndex, 'next');
-                } else {
-                    // Deslizar a la derecha
-                    const newIndex = (currentIndex - 1 + totalItems) % totalItems;
-                    showItem(newIndex, 'prev');
-                }
-            }
-
-            touchStartX = 0;
-            touchEndX = 0;
-        };
-
         // Event Listeners
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            const newIndex = (currentIndex - 1 + totalItems) % totalItems;
-            showItem(newIndex, 'prev');
-        });
+        const prevBtn = document.getElementById(prevBtnId);
+        const nextBtn = document.getElementById(nextBtnId);
 
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            const newIndex = (currentIndex + 1) % totalItems;
-            showItem(newIndex, 'next');
-        });
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                const newIndex = (currentIndex - 1 + totalItems) % totalItems;
+                showItem(newIndex, 'prev');
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const newIndex = (currentIndex + 1) % totalItems;
+                showItem(newIndex, 'next');
+            });
+        }
 
         dots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
@@ -1333,157 +410,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        carousel.addEventListener('touchstart', handleTouchStart, { passive: false });
-        carousel.addEventListener('touchmove', handleTouchMove, { passive: false });
-        carousel.addEventListener('touchend', handleTouchEnd);
-
-        // Auto rotación con pausa al hover
-        let autoplayInterval;
-        
-        const startAutoplay = () => {
-            autoplayInterval = setInterval(() => {
-                const newIndex = (currentIndex + 1) % totalItems;
-                showItem(newIndex, 'next');
-            }, 5000);
-        };
-
-        const stopAutoplay = () => {
-            clearInterval(autoplayInterval);
-        };
-
-        carousel.addEventListener('mouseenter', stopAutoplay);
-        carousel.addEventListener('mouseleave', startAutoplay);
-        carousel.addEventListener('touchstart', stopAutoplay);
-        carousel.addEventListener('touchend', () => {
-            setTimeout(startAutoplay, 3000);
-        });
-
         // Inicialización
-        preloadImages();
         updateDots(0);
-        startAutoplay();
     };
 
-    // Iniciar carrusel cuando el DOM esté listo
+    // Inicializar carruseles
     try {
-        initCarousel();
+        initCarousel('carousel', 'prevBtn', 'nextBtn', 'carousel-dots');
+        initCarousel('carousel-mobile', 'prevBtn-mobile', 'nextBtn-mobile', 'carousel-dots-mobile');
     } catch (error) {
-        console.error('Error al inicializar el carrusel:', error);
+        console.error('Error al inicializar los carruseles:', error);
     }
-
-    // El código del carrusel ya está manejado por la función initCarousel()
-
-    // Enhanced Modal System with smooth animations
-    function setupModals() {
-        const modals = document.querySelectorAll('[aria-modal="true"]');
-        const modalTriggers = document.querySelectorAll('[data-modal]');
-        const closeButtons = document.querySelectorAll('button[id$="-close"]');
-
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (!modal) return;
-
-            modal.style.display = 'flex';
-            modal.style.opacity = '0';
-            const modalContent = modal.querySelector('.bg-white');
-
-            requestAnimationFrame(() => {
-                modal.style.opacity = '1';
-                if (modalContent) {
-                    modalContent.style.transform = 'scale(1)';
-                    modalContent.style.opacity = '1';
-                }
-            });
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (!modal) return;
-
-            const modalContent = modal.querySelector('.bg-white');
-            
-            if (modalContent) {
-                modalContent.style.transform = 'scale(0.95)';
-                modalContent.style.opacity = '0';
-            }
-            modal.style.opacity = '0';
-
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
-
-        modalTriggers.forEach(trigger => {
-            trigger.addEventListener('click', () => {
-                const modalId = trigger.getAttribute('data-modal');
-                if (modalId) openModal(modalId);
-            });
-        });
-
-        closeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                closeModal(button.id.replace('-close', ''));
-            });
-        });
-
-        modals.forEach(modal => {
-            modal.style.display = 'none';
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal(modal.id);
-            });
-        });
-
-        // Handle Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                modals.forEach(modal => {
-                    if (modal.style.display === 'flex') {
-                        closeModal(modal.id);
-                    }
-                });
-            }
-        });
-    }
-
-    // Initialize modals
-    setupModals();
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const target = document.getElementById(targetId);
-            
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Intersection Observer for animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fadeIn');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    // Observe elements with animation classes
-    document.querySelectorAll('.animate-on-scroll').forEach(el => {
-        observer.observe(el);
-    });
 });
 </script>
 {% endblock %}

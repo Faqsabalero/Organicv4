@@ -1,0 +1,107 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Inicio - Organic Shops{% endblock %}
+
+{% block extra_head %}
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .animate-gradient {
+        background-size: 200% 200%;
+        animation: gradient 15s ease infinite;
+    }
+
+    .animate-spin-slow {
+        animation: spin 20s linear infinite;
+    }
+
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    .carousel-item {
+        transition: opacity 0.7s ease-in-out;
+    }
+
+    .carousel-item.active {
+        animation: slideInRight 0.7s ease-in-out;
+    }
+
+    /* Mobile responsive carousel fixes */
+    @media (max-width: 768px) {
+        #carousel-container-mobile {
+            max-width: 100% !important;
+            margin: 0 !important;
+        }
+
+        #carousel-mobile {
+            height: 280px !important;
+            min-height: 280px !important;
+            position: relative !important;
+            overflow: hidden !important;
+            border-radius: 1rem !important;
+            background-color: #f3f4f6 !important;
+        }
+
+        #carousel-mobile .carousel-item {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        #carousel-mobile img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            object-position: center !important;
+            display: block !important;
+        }
+
+        #carousel-mobile h2 {
+            font-size: 1.125rem !important;
+            padding: 0 1rem !important;
+            position: relative !important;
+            z-index: 10 !important;
+        }
+
+        #prevBtn-mobile, #nextBtn-mobile {
+            padding: 0.5rem !important;
+            width: 2rem !important;
+            height: 2rem !important;
+            z-index: 20 !important;
+            position: absolute !important;
+            background: rgba(0,0,0,0.7) !important;
+            <attempt_completion>
+<result>
+He modificado la estructura del archivo home.html para que en resoluciones móviles el carrusel se muestre arriba del título "Cuidado Natural para tu bienestar" y en resoluciones más grandes mantenga el layout lado a lado actual. También actualicé el JavaScript para manejar ambos carruseles (móvil y desktop) de forma independiente.
+
+Esto asegura que en móviles el carrusel sea visible y tenga un tamaño considerable, mientras que en pantallas grandes se mantiene el diseño original.
+
+Por favor, prueba la página en dispositivos móviles para verificar que el carrusel ahora aparece arriba del título y es visible correctamente.
+
+Si necesitas que realice algún ajuste adicional, por favor indícalo.
+</result>
+</attempt_completion>
