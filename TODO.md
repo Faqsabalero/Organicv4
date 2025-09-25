@@ -26,10 +26,15 @@
 - [x] Add console logging for image loading states
 - [x] Implement error handling for transition failures
 
+## ✅ Additional Features Added
+- [x] Auto-play functionality enabled with 3-second intervals
+- [x] Both desktop and mobile carousels now advance automatically
+
 ## 🔄 Testing Phase
 - [ ] Test carousel on different devices
 - [ ] Verify smooth transitions without white flashes
 - [ ] Test with slow network connections
+- [ ] Verify auto-play functionality works correctly
 
 ## ✅ Files Edited:
 - [x] core/templates/core/home.html - Enhanced JavaScript with image preloading and improved transition logic

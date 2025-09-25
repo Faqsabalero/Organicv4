@@ -179,9 +179,7 @@
                          loading="eager"
                          style="min-height: 100%; object-fit: cover; object-position: center;" />
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                        <h2 class="text-white text-lg font-bold drop-shadow-lg px-4 text-center">
-                            Productos Naturales y Orgánicos
-                        </h2>
+                        
                     </div>
                 </div>
                 <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
@@ -191,9 +189,7 @@
                          loading="eager"
                          style="min-height: 100%; object-fit: cover; object-position: center;" />
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                        <h2 class="text-white text-lg font-bold drop-shadow-lg px-4 text-center">
-                            Cuidado Natural de la Piel
-                        </h2>
+                       
                     </div>
                 </div>
                 <div class="carousel-item absolute inset-0 transition-all duration-700 ease-in-out opacity-0 transform translate-x-full" data-carousel-item="">
@@ -203,9 +199,7 @@
                          loading="eager"
                          style="min-height: 100%; object-fit: cover; object-position: center;" />
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-                        <h2 class="text-white text-lg font-bold drop-shadow-lg px-4 text-center">
-                            Ingredientes 100% Naturales
-                        </h2>
+                       
                     </div>
                 </div>
                 <button aria-label="Anterior" 
@@ -526,15 +520,13 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // Auto-play opcional (comentado por defecto)
-        /*
+        // Auto-play cada 3 segundos
         setInterval(() => {
             if (!isAnimating && imagesLoaded) {
                 const newIndex = (currentIndex + 1) % totalItems;
                 showItem(newIndex, 'next');
             }
-        }, 5000);
-        */
+        }, 3000);
 
         // Inicialización
         updateDots(0);
