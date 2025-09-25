@@ -328,6 +328,48 @@
 {% block extra_scripts %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Función para precargar imágenes
+    const preloadImages = (carousel) => {
+        const images = carousel.querySelectorAll('img');
+        const imagePromises = [];
+
+        images.forEach(img => {
+            const promise = new Promise((resolve, reject) => {
+                if (img.complete && img.naturalHeight !== 0) {
+                    img.classList.add('loaded');
+                    img.classList.remove('loading');
+                    resolve(img);
+                } else {
+                    img.classList.add('loading');
+                    img.classList.remove('loaded');
+                    
+                    const tempImg = new Image();
+                    tempImg.onload = () => {
+                        img.classList.add('loaded');
+                        img.classList.remove('loading');
+                        resolve(img);
+                    };
+                    tempImg.onerror = () => {
+                        console.warn('Error loading carousel image:', img.src);
+                        img.classList.remove('loading');
+                        // Set a fallback background color
+                        img.style.backgroundColor = '#f3f4f6';
+                        resolve(img); // Still resolve to not block the carousel
+                    };
+                    tempImg.src = img.src;
+                }
+            });
+            imagePromises.push(promise);
+        });
+
+        return Promise.all(imagePromises);
+    };
+
+    // Función para verificar si una imagen está cargada
+    const isImageLoaded = (img) => {
+        return img.complete && img.naturalHeight !== 0 && img.classList.contains('loaded');
+    };
+
     // Función para inicializar carrusel
     const initCarousel = (carouselId, prevBtnId, nextBtnId, dotsId) => {
         const carousel = document.getElementById(carouselId);
@@ -338,6 +380,31 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalItems = items.length;
         let currentIndex = 0;
         let isAnimating = false;
+        let imagesLoaded = false;
+
+        console.log(`Inicializando carrusel: ${carouselId}`);
+
+        // Precargar todas las imágenes
+        preloadImages(carousel).then(() => {
+            imagesLoaded = true;
+            console.log(`Imágenes precargadas para: ${carouselId}`);
+            
+            // Mostrar el primer item una vez que las imágenes estén cargadas
+            items.forEach((item, index) => {
+                if (index === 0) {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateX(0)';
+                    item.classList.add('active');
+                } else {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(100%)';
+                    item.classList.remove('active');
+                }
+            });
+        }).catch(error => {
+            console.error('Error precargando imágenes:', error);
+            imagesLoaded = true; // Continue anyway
+        });
 
         // Actualizar indicadores de puntos
         const updateDots = (newIndex) => {
@@ -352,36 +419,85 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         };
 
-        // Mostrar slide
+        // Mostrar slide con verificación de carga de imágenes
         const showItem = (index, direction = 'next') => {
-            if (isAnimating) return;
-            isAnimating = true;
+            if (isAnimating || !imagesLoaded) {
+                console.log('Transición bloqueada - animando:', isAnimating, 'imágenes cargadas:', imagesLoaded);
+                return;
+            }
 
             const currentItem = items[currentIndex];
             const nextItem = items[index];
-            const translateValue = direction === 'next' ? 100 : -100;
+            const nextImg = nextItem.querySelector('img');
 
-            // Configurar posiciones iniciales
-            nextItem.style.transform = 'translateX(' + translateValue + '%)';
-            nextItem.style.display = 'block';
-            nextItem.style.opacity = '1';
+            // Verificar que la imagen del siguiente item esté cargada
+            if (!isImageLoaded(nextImg)) {
+                console.log('Imagen no cargada, esperando...');
+                nextItem.classList.add('loading');
+                
+                // Intentar cargar la imagen antes de la transición
+                const tempImg = new Image();
+                tempImg.onload = () => {
+                    nextImg.classList.add('loaded');
+                    nextItem.classList.remove('loading');
+                    performTransition();
+                };
+                tempImg.onerror = () => {
+                    console.warn('Error cargando imagen durante transición');
+                    nextItem.classList.remove('loading');
+                    performTransition(); // Continue anyway
+                };
+                tempImg.src = nextImg.src;
+                return;
+            }
 
-            // Animar transición
-            requestAnimationFrame(() => {
-                currentItem.style.transform = 'translateX(' + (-translateValue) + '%)';
-                currentItem.style.opacity = '0';
-                nextItem.style.transform = 'translateX(0)';
-            });
+            performTransition();
 
-            // Limpiar después de la animación
-            setTimeout(() => {
-                currentItem.style.display = 'none';
-                currentItem.style.transform = '';
-                isAnimating = false;
-            }, 700);
+            function performTransition() {
+                isAnimating = true;
+                console.log(`Transición de ${currentIndex} a ${index}`);
 
-            currentIndex = index;
-            updateDots(index);
+                // Remover clases de estado anterior
+                currentItem.classList.remove('active');
+                currentItem.classList.add('transitioning');
+                nextItem.classList.add('transitioning');
+
+                // Configurar posiciones iniciales
+                const translateValue = direction === 'next' ? 100 : -100;
+                nextItem.style.transform = `translateX(${translateValue}%)`;
+                nextItem.style.opacity = '0';
+
+                // Forzar reflow
+                nextItem.offsetHeight;
+
+                // Animar transición
+                requestAnimationFrame(() => {
+                    currentItem.style.transform = `translateX(${-translateValue}%)`;
+                    currentItem.style.opacity = '0';
+                    nextItem.style.transform = 'translateX(0)';
+                    nextItem.style.opacity = '1';
+                });
+
+                // Limpiar después de la animación
+                setTimeout(() => {
+                    // Limpiar item anterior
+                    currentItem.style.transform = '';
+                    currentItem.style.opacity = '0';
+                    currentItem.classList.remove('transitioning');
+
+                    // Configurar nuevo item activo
+                    nextItem.classList.remove('transitioning');
+                    nextItem.classList.add('active');
+                    nextItem.style.transform = 'translateX(0)';
+                    nextItem.style.opacity = '1';
+
+                    isAnimating = false;
+                    console.log(`Transición completada a índice: ${index}`);
+                }, 700);
+
+                currentIndex = index;
+                updateDots(index);
+            }
         };
 
         // Event Listeners
@@ -410,8 +526,25 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
+        // Auto-play opcional (comentado por defecto)
+        /*
+        setInterval(() => {
+            if (!isAnimating && imagesLoaded) {
+                const newIndex = (currentIndex + 1) % totalItems;
+                showItem(newIndex, 'next');
+            }
+        }, 5000);
+        */
+
         // Inicialización
         updateDots(0);
+        
+        // Configurar estado inicial
+        items.forEach((item, index) => {
+            if (index === 0) {
+                item.classList.add('active');
+            }
+        });
     };
 
     // Inicializar carruseles
